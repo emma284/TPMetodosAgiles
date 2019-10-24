@@ -15,6 +15,7 @@ public class Licencia {
     private int numeroDeRenovacion;
     private int numeroDeCopia;
     private Titular titular;
+    private Usuario usuario;
 
     public String getIdLicencia() {
         return idLicencia;
@@ -62,6 +63,14 @@ public class Licencia {
 
     public void setTitular(Titular titular) {
         this.titular = titular;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
     
