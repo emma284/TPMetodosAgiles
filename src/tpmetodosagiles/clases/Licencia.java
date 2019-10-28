@@ -5,23 +5,27 @@
  */
 package tpmetodosagiles.clases;
 
-import java.sql.Date;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
+@Entity
 public class Licencia {
+    @Id
     private String idLicencia;
     private Date fechaEmision;
     private char claseLicencia;
     private int numeroDeRenovacion;
     private int numeroDeCopia;
-    private Titular titular;
-    private Usuario usuario;
+//    private Titular titular;
+//    private Usuario usuario;
 
     public String getIdLicencia() {
         return idLicencia;
     }
 
-    private void setIdLicencia(String idLicencia) {
+    public void setIdLicencia(String idLicencia) {
         this.idLicencia = idLicencia;
     }
 
@@ -57,21 +61,21 @@ public class Licencia {
         this.numeroDeCopia = numeroDeCopia;
     }
 
-    public Titular getTitular() {
-        return titular;
-    }
+//    public Titular getTitular() {
+//        return titular;
+//    }
 
-    public void setTitular(Titular titular) {
-        this.titular = titular;
-    }
+//    public void setTitular(Titular titular) {
+//        this.titular = titular;
+//    }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
     
     
 }
