@@ -6,14 +6,19 @@
 package tpmetodosagiles.entidades;
 
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 
 @Entity
 public class Licencia {
     @Id
-    private String idLicencia;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column
+    private int idLicencia;
     private Date fechaEmision;
     private char claseLicencia;
     private int numeroDeRenovacion;
@@ -21,11 +26,11 @@ public class Licencia {
 //    private Titular titular;
 //    private Usuario usuario;
 
-    public String getIdLicencia() {
+    public int getIdLicencia() {
         return idLicencia;
     }
 
-    public void setIdLicencia(String idLicencia) {
+    public void setIdLicencia(int idLicencia) {
         this.idLicencia = idLicencia;
     }
 
