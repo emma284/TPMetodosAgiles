@@ -7,5 +7,6 @@ package tpmetodosagiles.gestores;
 
 
 public class GestorDeCuentas {
-    
+    //TODO Valida que el inicio de sesión sea válido 
+    // en una futura versión/iteración implementará dar de alta usuario
 }

@@ -82,7 +82,7 @@ public class testLicencia extends Application {
         savebtn.setTooltip(new Tooltip("Guardar Datos de Licencia"));
         savebtn.setFont(Font.font("SanSerif", 15));
         savebtn.setOnAction(e ->{
-                licencia.setIdLicencia(idLicencia.getText());
+                licencia.setIdLicencia(Integer.parseInt(idLicencia.getText()));
                 licencia.setClaseLicencia((claseLicencia.getText()).charAt(0));
                 licencia.setNumeroDeRenovacion(Integer.parseInt(numeroDeRenovacion.getText()));
                 try {

@@ -5,7 +5,15 @@
  */
 package tpmetodosagiles.gestores;
 
+import tpmetodosagiles.entidades.Licencia;
+
 
 public class GestorDeLicencias {
     
+    public static boolean emitirLicencia(Licencia unaLicencia){
+        boolean bool=false;
+        //TODO Este metodo genera una licencia y la guarda en la base de datos
+        // retorna falso si se genera un error
+        return bool;
+    }
 }

@@ -6,8 +6,7 @@
 package tpmetodosagiles.entidades;
 
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,9 +34,10 @@ public class Titular {
     //fotografia;
     
     @Column (name = "fecha_de_nacimiento")
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
     
-    //direccion;
+    @Column (name = "direccion")
+    private String direccion;
     
     @Column (name = "grupo_sanguinio")
     private String grupoSanguinio;
@@ -46,8 +46,10 @@ public class Titular {
     private Boolean esDonante;
     
     @Column (name = "fecha_entrada_sistema")
-    private LocalDateTime fechaEntradaSistema;
+    private Date fechaEntradaSistema;
     
+    @Column (name = "fecha_emision_licencia_tipo_b")
+    private Date fechaEmisionLicenciaTipoB;
     //TODO Seguir completando atributos
     private Usuario usuarioResponsable;
 
