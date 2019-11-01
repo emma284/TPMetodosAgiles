@@ -80,5 +80,26 @@ public class GestorDeDatosDeInterface {
         return coleccion;
     }
     
+    public static Collection <String> getLicenciasBasicas(){
+        Collection <String> coleccion = new ArrayList<String>();
+        coleccion.add("A");
+        coleccion.add("B");
+        coleccion.add("F");
+        coleccion.add("G");
+        
+        return coleccion;
+    }
     
+    public static Collection <String> getLicencias(){
+        Collection <String> coleccion = new ArrayList<String>();
+        coleccion.add("A");
+        coleccion.add("B");
+        coleccion.add("C");
+        coleccion.add("D");
+        coleccion.add("E");
+        coleccion.add("F");
+        coleccion.add("G");
+        
+        return coleccion;
+    }
 }

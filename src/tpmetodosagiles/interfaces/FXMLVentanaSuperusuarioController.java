@@ -38,18 +38,29 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     
     @FXML
     private void irAEmitirLicencia(ActionEvent event) throws IOException{
-        //TODO: Cambiar a pantalla de 'Emitir Licencia' 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLEmitirLicencia.fxml"));
+        GridPane emitirLicenciaGridPane = (GridPane) fxmlLoader.load();
+        
+        try {
+            gpAreaDeTrabajo.getChildren().clear();
+            gpAreaDeTrabajo.getChildren().add(emitirLicenciaGridPane);
+            FXMLEmitirLicenciaController controller = fxmlLoader.getController();
+            controller.setUsuario(usuarioActual);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
     }
     
     @FXML
     private void irADarDeAltaTitular(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDarAltaTitular.fxml"));
-        //fxmlLoader.setController(new FXMLDarAltaTitularController(usuarioActual));
         GridPane darDeAltaTitularGridPane = (GridPane) fxmlLoader.load();
         
         try {
             gpAreaDeTrabajo.getChildren().clear();
             gpAreaDeTrabajo.getChildren().add(darDeAltaTitularGridPane);
+            FXMLDarAltaTitularController controller = fxmlLoader.getController();
+            controller.setUsuario(usuarioActual);
         } catch (Exception e) {
             e.printStackTrace();
         }

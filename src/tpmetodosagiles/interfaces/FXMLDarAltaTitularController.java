@@ -67,6 +67,10 @@ public class FXMLDarAltaTitularController implements Initializable {
         usuarioActual = usuario;
     }
     
+    public void setUsuario(Usuario usr){
+        usuarioActual = usr;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO Seguir agregando datos a los combobox
@@ -88,6 +92,8 @@ public class FXMLDarAltaTitularController implements Initializable {
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
         
+        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicenciasBasicas() );
+        cbClaseLicencia.setItems(claseLicencia);
     }
     
 }

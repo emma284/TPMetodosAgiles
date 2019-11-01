@@ -8,6 +8,7 @@ package tpmetodosagiles.interfaces;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import tpmetodosagiles.entidades.Usuario;
 
 /**
  * FXML Controller class
@@ -19,6 +20,13 @@ public class FXMLEmitirLicenciaController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    private Usuario usuarioActual;
+    
+    public void setUsuario(Usuario usr){
+        usuarioActual = usr;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO setDatosTitular()
