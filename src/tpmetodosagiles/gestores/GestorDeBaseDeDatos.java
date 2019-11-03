@@ -5,19 +5,47 @@
  */
 package tpmetodosagiles.gestores;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
 
 
 public class GestorDeBaseDeDatos {
-    public static boolean guardarLicencia(Licencia unaLicencia){
-        boolean bool=false;
-        //TODO Guarda en la base la licencia
-        return bool;
+    private EntityManagerFactory emf;			
+    private EntityManager em;
+    
+    public GestorDeBaseDeDatos() {
+	emf = Persistence.createEntityManagerFactory("persistencia");
+	em = emf.createEntityManager();
     }
-    public static boolean guardarTitular(Titular unTitular){
-        boolean bool=false;
-        //TODO Guarda en la base un titular
-        return bool;
+    
+    public boolean guardarLicencia(Licencia unaLicencia){
+        try{
+            em.getTransaction().begin();
+            em.persist(unaLicencia);
+            em.getTransaction().commit();
+        }
+        catch(Exception e){
+            System.out.println("------------------------\n" + e.getMessage());
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean guardarTitular(Titular unTitular){
+        try{
+            em.getTransaction().begin();
+            em.persist(unTitular);
+            em.getTransaction().commit();
+        }
+        catch(Exception e){
+            System.out.println("------------------------\n" + e.getMessage());
+            return false;
+        }
+        
+        return true;
     }
 }

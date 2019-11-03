@@ -7,11 +7,17 @@ package tpmetodosagiles.entidades;
 
 
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,19 +31,22 @@ public class Titular {
     @Column (name = "tipo_de_documento")
     private String tipoDeDocumento;
     
+    @Column (name = "numero_documento")
+    private int numeroDocumento;
+    
     @Column (name = "apellido")
     private String apellido;
     
     @Column (name = "nombre")
     private String nombre;
     
-    //fotografia;
+    //TODO: Emir-Luciano: fotografia;
     
     @Column (name = "fecha_de_nacimiento")
     private Date fechaNacimiento;
     
-    @Column (name = "direccion")
-    private String direccion;
+    @Column (name = "domicilio")
+    private String domicilio;
     
     @Column (name = "grupo_sanguinio")
     private String grupoSanguinio;
@@ -45,12 +54,22 @@ public class Titular {
     @Column (name = "es_donante")
     private Boolean esDonante;
     
+    @Column (name = "sexo")
+    private char sexo;
+    
     @Column (name = "fecha_entrada_sistema")
     private Date fechaEntradaSistema;
     
     @Column (name = "fecha_emision_licencia_tipo_b")
     private Date fechaEmisionLicenciaTipoB;
-    //TODO Seguir completando atributos
+    
+    //TODO: Emir-Luciano: Agregar Observaciones 
+    
+    @OneToMany(mappedBy = "idLicencia", cascade= CascadeType.ALL)
+    private List<Licencia> licencias;
+    
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
     private Usuario usuarioResponsable;
 
 }

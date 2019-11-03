@@ -92,10 +92,10 @@
       <Label text="Grupo Sanguínio:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
       <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
          <children>
-            <ComboBox fx:id="cbGrupoSanguinio" prefHeight="25.0" prefWidth="60.0" />
+            <ComboBox fx:id="cbGrupoSanguinio" prefHeight="25.0" prefWidth="70.0" />
             <Label text="Es Donante:">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="36.0" />
                </HBox.margin>
             </Label>
             <ComboBox fx:id="cbEsDonante" prefHeight="25.0" prefWidth="60.0">
@@ -105,7 +105,7 @@
             </ComboBox>
             <Label text="Sexo:">
                <HBox.margin>
-                  <Insets left="44.0" />
+                  <Insets left="36.0" />
                </HBox.margin>
             </Label>
             <ComboBox fx:id="cbSexo" prefWidth="100.0">

@@ -177,10 +177,9 @@ public class FXMLDarAltaTitularController implements Initializable {
             mensajeErrores.setHeaderText("Debe corregir los siguientes puntos antes de proseguir");
             mensajeErrores.setContentText(errores.toString());
             
-            mensajeErrores.initModality(Modality.WINDOW_MODAL);
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
             mensajeErrores.show();
         }
-        //System.out.println(errores);
         
         return datosCorrectos;
     } 

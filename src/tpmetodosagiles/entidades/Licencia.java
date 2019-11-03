@@ -6,25 +6,48 @@
 package tpmetodosagiles.entidades;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "licencia")
 public class Licencia {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column
+    @Column (name="id")
     private int idLicencia;
+    
+    @Column (name = "fecha_emision")
     private Date fechaEmision;
+    
+    @Column (name = "fecha_vencimiento")
+    private Date fechaVencimiento;
+    
+    @Column (name = "clase_licencia")
     private char claseLicencia;
+    
+    @Column (name = "numero_renovacion")
     private int numeroDeRenovacion;
+    
+    @Column (name = "numero_copia")
     private int numeroDeCopia;
-//    private Titular titular;
-//    private Usuario usuario;
+    
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_titular")
+    private Titular titular;
+    
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuarioResponsable;
 
     public int getIdLicencia() {
         return idLicencia;

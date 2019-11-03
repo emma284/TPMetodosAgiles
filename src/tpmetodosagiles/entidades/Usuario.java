@@ -6,17 +6,56 @@
 package tpmetodosagiles.entidades;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name = "usuario")
 public class Usuario {
-    private String nombre;
-    private String apellido;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column (name = "id")
+    private int idUsuario;
+    
+    @Column (name = "username")
+    private String username;
+    
+    @Column (name = "contrasenia")
+    private String contrasenia;
+    
+    @Column (name = "rol")
     private char rol;
-    private int dni;
-    private Date fechaNacimiento;
-    private char sexo;
-    private String domicilio;
+    
+    @Column (name = "tipo_de_documento")
+    private String tipoDeDocumento;
+    
+    @Column (name = "numero_documento")
+    private int numeroDocumento;
+    
+    @Column (name = "apellido")
+    private String apellido;
+    
+    @Column (name = "nombre")
+    private String nombre;
+    
+    //TODO: Emir-Luciano: fotografia;
     //private String fotografia;
+    
+    @Column (name = "fecha_de_nacimiento")
+    private Date fechaNacimiento;
+    
+    @Column (name = "domicilio")
+    private String domicilio;
+    
+    @Column (name = "sexo")
+    private char sexo;
+    
+    
+    
     
     public String getNombre(){
         return this.nombre;
@@ -36,12 +75,6 @@ public class Usuario {
     public void setRol(char rol) {
         this.rol = rol;
     }
-    public int getDni() {
-        return dni;
-    }
-    public void setDni(int dni) {
-        this.dni = dni;
-    }
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -60,8 +93,5 @@ public class Usuario {
     public void setSexo(char sexo) {
         this.sexo = sexo;
     }
-
-    
-    
 
 }
