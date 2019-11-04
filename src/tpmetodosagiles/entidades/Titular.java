@@ -71,5 +71,139 @@ public class Titular {
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuarioResponsable;
+    
+    public Titular(){
+        
+    }
+    
+    public Titular(String tipoDeDocumento, int numeroDocumento, 
+            String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
+            Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
+        
+        this.tipoDeDocumento = tipoDeDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
+        this.grupoSanguinio = grupoSanguinio;
+        this.esDonante = esDonante;
+        this.sexo = sexo;
+        this.fechaEntradaSistema = fechaEntradaSistema;
+        this.fechaEmisionLicenciaTipoB = fechaEmisionLicenciaTipoB;
+        
+    }
+
+    public Integer getIdTitular() {
+        return idTitular;
+    }
+
+    public void setIdTitular(Integer idTitular) {
+        this.idTitular = idTitular;
+    }
+
+    public String getTipoDeDocumento() {
+        return tipoDeDocumento;
+    }
+
+    public void setTipoDeDocumento(String tipoDeDocumento) {
+        this.tipoDeDocumento = tipoDeDocumento;
+    }
+
+    public int getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(int numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getGrupoSanguinio() {
+        return grupoSanguinio;
+    }
+
+    public void setGrupoSanguinio(String grupoSanguinio) {
+        this.grupoSanguinio = grupoSanguinio;
+    }
+
+    public Boolean getEsDonante() {
+        return esDonante;
+    }
+
+    public void setEsDonante(Boolean esDonante) {
+        this.esDonante = esDonante;
+    }
+
+    public char getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public Date getFechaEntradaSistema() {
+        return fechaEntradaSistema;
+    }
+
+    public void setFechaEntradaSistema(Date fechaEntradaSistema) {
+        this.fechaEntradaSistema = fechaEntradaSistema;
+    }
+
+    public Date getFechaEmisionLicenciaTipoB() {
+        return fechaEmisionLicenciaTipoB;
+    }
+
+    public void setFechaEmisionLicenciaTipoB(Date fechaEmisionLicenciaTipoB) {
+        this.fechaEmisionLicenciaTipoB = fechaEmisionLicenciaTipoB;
+    }
+
+    public List<Licencia> getLicencias() {
+        return licencias;
+    }
+
+    public void setLicencias(List<Licencia> licencias) {
+        this.licencias = licencias;
+    }
+
+    public Usuario getUsuarioResponsable() {
+        return usuarioResponsable;
+    }
+
+    public void setUsuarioResponsable(Usuario usuarioResponsable) {
+        this.usuarioResponsable = usuarioResponsable;
+    }
 
 }

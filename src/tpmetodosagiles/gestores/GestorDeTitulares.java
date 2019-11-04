@@ -5,14 +5,22 @@
  */
 package tpmetodosagiles.gestores;
 
+import java.util.Date;
 import tpmetodosagiles.entidades.Titular;
 
-
 public class GestorDeTitulares {
-    public static boolean emitirTitular(Titular unTitular){
-        boolean bool=false;
-        //TODO Este metodo genera un titular y lo guarda en la base de datos
-        // retorna falso si se genera un error
-        return bool;
+    
+    private static GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+    
+    public static boolean emitirTitular(String tipoDeDocumento, int numeroDocumento, 
+            String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
+            Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
+        
+        Titular unTitular = new Titular(tipoDeDocumento, numeroDocumento, apellido, nombre, 
+                fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, fechaEntradaSistema, 
+                fechaEmisionLicenciaTipoB);
+        
+        return gbd.guardarTitular(unTitular);
+        
     }
 }

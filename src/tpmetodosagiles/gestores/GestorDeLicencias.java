@@ -5,15 +5,20 @@
  */
 package tpmetodosagiles.gestores;
 
+import java.util.Date;
 import tpmetodosagiles.entidades.Licencia;
 
 
 public class GestorDeLicencias {
     
-    public static boolean emitirLicencia(Licencia unaLicencia){
-        boolean bool=false;
-        //TODO Este metodo genera una licencia y la guarda en la base de datos
-        // retorna falso si se genera un error
-        return bool;
+    private static GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+    
+    public static boolean emitirLicencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, 
+            int numeroDeRenovacion, int numeroDeCopia){
+        
+        Licencia unaLicencia = new Licencia(fechaEmision, fechaVencimiento, claseLicencia, 
+                numeroDeRenovacion, numeroDeCopia);
+        
+        return gbd.guardarLicencia(unaLicencia);
     }
 }

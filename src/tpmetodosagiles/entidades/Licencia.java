@@ -48,6 +48,21 @@ public class Licencia {
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuarioResponsable;
+    
+    public Licencia(){
+        
+    }
+    
+    public Licencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, int numeroDeRenovacion, 
+            int numeroDeCopia){
+        
+        this.fechaEmision = fechaEmision;
+        this.fechaVencimiento = fechaVencimiento;
+        this.claseLicencia = claseLicencia;
+        this.numeroDeRenovacion = numeroDeRenovacion;
+        this.numeroDeCopia = numeroDeCopia;
+        
+    }
 
     public int getIdLicencia() {
         return idLicencia;
