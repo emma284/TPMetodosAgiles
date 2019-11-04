@@ -116,7 +116,6 @@ public class testLicencia extends Application {
     
     
 	private void clearFields() {
-		// TODO Auto-generated method stub
 		idLicencia.clear();
 		claseLicencia.clear();
 		numeroDeRenovacion.clear();

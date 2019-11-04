@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.*;
 import tpmetodosagiles.entidades.Usuario;
+import tpmetodosagiles.gestores.GestorDeConfiguracion;
 
 /**
  * FXML Controller class
@@ -27,12 +28,16 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     @FXML
     private VBox vbMenu;
     
-    private Usuario usuarioActual;
+    private GestorDeConfiguracion configuracion;
+
+    public void setConfiguracion(GestorDeConfiguracion configuracion) {
+        this.configuracion = configuracion;
+    }
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
     
     
@@ -45,7 +50,7 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
             gpAreaDeTrabajo.getChildren().clear();
             gpAreaDeTrabajo.getChildren().add(emitirLicenciaGridPane);
             FXMLEmitirLicenciaController controller = fxmlLoader.getController();
-            controller.setUsuario(usuarioActual);
+            controller.setConfiguracion(configuracion);
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -60,7 +65,7 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
             gpAreaDeTrabajo.getChildren().clear();
             gpAreaDeTrabajo.getChildren().add(darDeAltaTitularGridPane);
             FXMLDarAltaTitularController controller = fxmlLoader.getController();
-            controller.setUsuario(usuarioActual);
+            controller.setConfiguracion(configuracion);
         } catch (Exception e) {
             e.printStackTrace();
         }

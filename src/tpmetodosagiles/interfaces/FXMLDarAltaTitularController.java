@@ -8,10 +8,8 @@ package tpmetodosagiles.interfaces;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.temporal.TemporalUnit;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,11 +17,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import tpmetodosagiles.entidades.Usuario;
+import javax.swing.filechooser.FileSystemView;
+import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.layouts.TextFieldSoloLetras;
 import tpmetodosagiles.layouts.TextFieldSoloNumeros;
@@ -66,24 +65,20 @@ public class FXMLDarAltaTitularController implements Initializable {
     @FXML
     private ImageView imgFotoTitular;
     
-    private Usuario usuarioActual;
-    
-    public FXMLDarAltaTitularController(){
+    private GestorDeConfiguracion configuracion;
+
+    public GestorDeConfiguracion getConfiguracion() {
+        return configuracion;
+    }
+
+    public void setConfiguracion(GestorDeConfiguracion configuracion) {
+        this.configuracion = configuracion;
     }
     
-    public FXMLDarAltaTitularController(Usuario usuario){
-        this();
-        
-        usuarioActual = usuario;
-    }
-    
-    public void setUsuario(Usuario usr){
-        usuarioActual = usr;
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO Seguir agregando datos a los combobox
+        
         ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
         cbTipoDocumento.setItems(tiposDocumentos);
         
@@ -110,6 +105,22 @@ public class FXMLDarAltaTitularController implements Initializable {
         tfNroInterno.setLongitudMaxima(5);
         tfPiso.setLongitudMaxima(2);
     }
+    
+    @FXML
+    private void seleccionarFotografia(ActionEvent event){
+        FileChooser.ExtensionFilter filtroImagenes = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.jpeg");
+        FileChooser fc = new FileChooser();
+        fc.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
+        fc.getExtensionFilters().add(filtroImagenes);
+        File file = fc.showOpenDialog(configuracion.getVentanaActual());
+        
+        if(file == null)
+            return;
+        
+        Image foto = new Image(file.toURI().toString());
+        imgFotoTitular.setImage(foto);
+    }
+    
     
     @FXML
     private void darDeAltaTitular(ActionEvent event){

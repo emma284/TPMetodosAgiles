@@ -123,7 +123,7 @@
          <image>
             <Image url="@../recursos/imagenes/imgDeInterface/foto_usuario.png" />
          </image></ImageView>
-      <Button mnemonicParsing="false" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" onAction="#seleccionarFotografia"  />
       <Button mnemonicParsing="false" onAction="#darDeAltaTitular" text="Dar de Alta" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" GridPane.valignment="BOTTOM" />
    </children>
    <opaqueInsets>

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import tpmetodosagiles.entidades.Usuario;
+import tpmetodosagiles.gestores.GestorDeConfiguracion;
 
 /**
  * FXML Controller class
@@ -21,10 +22,10 @@ public class FXMLEmitirLicenciaController implements Initializable {
      * Initializes the controller class.
      */
     
-    private Usuario usuarioActual;
-    
-    public void setUsuario(Usuario usr){
-        usuarioActual = usr;
+    private GestorDeConfiguracion configuracion;
+
+    public void setConfiguracion(GestorDeConfiguracion configuracion) {
+        this.configuracion = configuracion;
     }
     
     @Override
