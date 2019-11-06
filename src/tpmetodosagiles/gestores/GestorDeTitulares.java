@@ -9,10 +9,10 @@ import java.util.Date;
 import tpmetodosagiles.entidades.Titular;
 
 public class GestorDeTitulares {
+            
+    private GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
     
-    private static GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
-    
-    public static boolean emitirTitular(String tipoDeDocumento, int numeroDocumento, 
+    public boolean emitirTitular(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
             Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
         
@@ -22,5 +22,11 @@ public class GestorDeTitulares {
         
         return gbd.guardarTitular(unTitular);
         
+    }
+
+    public Titular getTitularPorDNI(String numDocumento) {
+        Titular unTitular = gbd.getTitularPorDNI(numDocumento);
+        
+        return unTitular;
     }
 }
