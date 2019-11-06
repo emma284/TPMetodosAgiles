@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="677.0" vgap="10.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLEmitirLicenciaController">
+<GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="677.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLEmitirLicenciaController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="150.0" prefWidth="200.0" />
@@ -37,7 +37,7 @@
       <Label prefWidth="111.0" text="Tipo de Documento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
       <ComboBox fx:id="cbTipoDocumento" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Label text="Nro de Documento:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <TextField fx:id="tfNumeroDocumento" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <TextField fx:id="tfNumeroDocumento" onAction="#onEnter" GridPane.columnIndex="4" GridPane.rowIndex="1" />
       <Pane prefHeight="250.0" prefWidth="607.0" style="-fx-background-color: #DDD; -fx-background-radius: 8px; -fx-border: 2px; -fx-border-color: #555; -fx-border-radius: 8px;" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2">
          <children>
             <GridPane hgap="5.0" prefHeight="250.0" prefWidth="607.0" vgap="10.0">

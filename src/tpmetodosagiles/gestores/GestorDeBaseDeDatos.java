@@ -48,4 +48,10 @@ public class GestorDeBaseDeDatos {
         
         return true;
     }
+
+    public Titular getTitularPorDNI(String numDocumento) {
+       Titular unTitular = new Titular();
+       
+       return unTitular;
+    }
 }
