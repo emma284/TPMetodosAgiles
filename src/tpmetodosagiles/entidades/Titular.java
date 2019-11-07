@@ -73,7 +73,18 @@ public class Titular {
     private Usuario usuarioResponsable;
     
     public Titular(){
-        
+        this.idTitular = -1;
+        this.tipoDeDocumento = "";
+        this.numeroDocumento = 0;
+        this.apellido = "";
+        this.nombre = "";
+        this.fechaNacimiento = null;
+        this.domicilio = "";
+        this.grupoSanguinio = "";
+        this.esDonante = false;
+        this.sexo = 'M';
+        this.fechaEntradaSistema = null;
+        this.fechaEmisionLicenciaTipoB = null;
     }
     
     public Titular(String tipoDeDocumento, int numeroDocumento, 

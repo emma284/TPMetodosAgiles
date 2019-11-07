@@ -5,6 +5,7 @@
  */
 package tpmetodosagiles.gestores;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -51,7 +52,10 @@ public class GestorDeBaseDeDatos {
 
     public Titular getTitularPorDNI(String numDocumento) {
        Titular unTitular = new Titular();
-       
+       List<Titular> result = em.createQuery("SELECT t FROM titular t WHERE t.numero_documento = " + numDocumento + ";").getResultList();
+       if(!result.isEmpty()){
+           unTitular = result.get(0);
+       }
        return unTitular;
     }
 }

@@ -30,6 +30,8 @@
         <property name="hbm2ddl.auto">create</property>
   
        	<mapping class="tpmetodosagiles.entidades.Licencia" />
+       	<mapping class="tpmetodosagiles.entidades.Titular" />
+       	<mapping class="tpmetodosagiles.entidades.Usuario" />
         <!-- <mapping resource="bean/User.hbm.xml" /> --> 
           
     </session-factory>

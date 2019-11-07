@@ -54,9 +54,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void onEnter(ActionEvent ae){
-       System.out.println(tfNumeroDocumento.getText()) ;
-       
        unTitular = gestorTitular.getTitularPorDNI(tfNumeroDocumento.getText());
-       
+       System.out.println(unTitular.toString());
     }
 }
