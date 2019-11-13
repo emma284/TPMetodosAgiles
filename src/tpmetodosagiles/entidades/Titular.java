@@ -217,4 +217,11 @@ public class Titular {
         this.usuarioResponsable = usuarioResponsable;
     }
 
+    @Override
+    public String toString(){
+        String titular = "";
+        titular += this.apellido;
+        titular += this.nombre;
+        return titular;
+    }
 }

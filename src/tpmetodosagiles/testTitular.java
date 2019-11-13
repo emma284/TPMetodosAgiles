@@ -32,6 +32,8 @@ import org.hibernate.cfg.Configuration;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
+import tpmetodosagiles.gestores.GestorDeTitulares;
+import tpmetodosagiles.gestores.util.MySession;
 
 
 public class testTitular extends Application {
@@ -41,13 +43,13 @@ public class testTitular extends Application {
     private DatePicker fechaNacimiento, fechaEntradaSistema, fechaEmisionLicenciaTipoB;
     private ComboBox tipoDocumento, grupoSanguineo, sexo;
     private CheckBox esDonante;
-    private Button savebtn;
+    private Button savebtn, consulbtn;
     
     @Override
     public void start(Stage stage) throws Exception {
 //        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Group root = new Group();
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 400, 700);
         
         
         idTitular = new TextField();
@@ -78,9 +80,9 @@ public class testTitular extends Application {
         esDonante = new CheckBox();
 
         numeroDocumento = new TextField();
-        numeroDocumento.setTooltip(new Tooltip("Ingrese Numero de Renovacion"));
+        numeroDocumento.setTooltip(new Tooltip("Ingrese Numero de Documento"));
         numeroDocumento.setFont(Font.font("SanSerif", 15));
-        numeroDocumento.setPromptText("Numero de Renovacion");
+        numeroDocumento.setPromptText("Numero de Documento");
         numeroDocumento.setMaxWidth(200);
 
         apellido = new TextField();
@@ -119,9 +121,9 @@ public class testTitular extends Application {
         fechaEmisionLicenciaTipoB.setMaxWidth(200);
         fechaEmisionLicenciaTipoB.setStyle("-fx-font-size:15");
 
-        //Hibernate Configuration
-        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-        SessionFactory sf = cfg.buildSessionFactory();
+//        Hibernate Configuration
+//        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+//        SessionFactory sf = cfg.buildSessionFactory();
 
         Titular unTitular = new Titular();
 
@@ -145,21 +147,31 @@ public class testTitular extends Application {
                 };
 
 
-                Session session = sf.openSession();
+                Session session = MySession.get();
                 session.beginTransaction();
                 session.save(unTitular);
                 session.getTransaction().commit();
-                session.close();
 
                 clearFields();
 
+        });
+        
+        consulbtn = new Button("Consulta");
+        consulbtn.setTooltip(new Tooltip("Guardar Datos de Licencia"));
+        consulbtn.setFont(Font.font("SanSerif", 15));
+        consulbtn.setOnAction(e ->{
+            Session session = MySession.get();
+            session.beginTransaction();
+            GestorDeTitulares gestorTitular = new GestorDeTitulares();
+            Titular otroTitular = gestorTitular.getTitularPorDNI("12345678");
+            System.out.println(otroTitular.toString());
         });
 
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(idTitular, tipoDocumento, numeroDocumento,
                 apellido, nombre, fechaNacimiento, domicilio, sexo,
                 grupoSanguineo, fechaEntradaSistema, fechaEmisionLicenciaTipoB,
-                esDonante, savebtn);
+                esDonante, savebtn, consulbtn);
         vbox.setPadding(new Insets(10));		
         root.getChildren().add(vbox);
         
