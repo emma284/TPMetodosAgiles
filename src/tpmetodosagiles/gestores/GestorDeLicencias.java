@@ -14,11 +14,22 @@ public class GestorDeLicencias {
     private static GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
     
     public static boolean emitirLicencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, 
-            int numeroDeRenovacion, int numeroDeCopia){
+        int numeroDeRenovacion, int numeroDeCopia){
         
         /*Licencia unaLicencia = new Licencia(fechaEmision, fechaVencimiento, claseLicencia, 
                 numeroDeRenovacion, numeroDeCopia);
         
         return gbd.guardarLicencia(unaLicencia);*/return true;
+    }
+    
+    //TODO calcular vigencia de licencia
+    
+    public boolean validarDatosCreacionDeLicencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, 
+        int numeroDeRenovacion, int numeroDeCopia){
+        boolean datosCorrectos = true;
+        
+       //TODO validar si es posible emitir licencia
+        
+        return datosCorrectos;
     }
 }

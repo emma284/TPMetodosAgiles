@@ -152,10 +152,10 @@ public class FXMLDarAltaTitularController implements Initializable {
             errores.append("-El campo 'Fecha de Nacimiento' no puede estár vacío.\n");
             datosCorrectos = false;
         }
-        else if (dpFechaNacimiento.getValue().compareTo(LocalDate.now().minusYears(17)) > 0){    //Si el titular tiene menos de 17 años
+        /*else if (dpFechaNacimiento.getValue().compareTo(LocalDate.now().minusYears(17)) > 0){    //Si el titular tiene menos de 17 años
             errores.append("-El titular debe tener al menos 17 años.\n");
             datosCorrectos = false;
-        }
+        }*/
         if (cbCalleTitular.getValue() == null){
             errores.append("-El campo 'Calle' no puede estár vacío.\n");
             datosCorrectos = false;
