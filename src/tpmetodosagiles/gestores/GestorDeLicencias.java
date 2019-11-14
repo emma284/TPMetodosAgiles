@@ -16,9 +16,9 @@ public class GestorDeLicencias {
     public static boolean emitirLicencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, 
             int numeroDeRenovacion, int numeroDeCopia){
         
-        Licencia unaLicencia = new Licencia(fechaEmision, fechaVencimiento, claseLicencia, 
+        /*Licencia unaLicencia = new Licencia(fechaEmision, fechaVencimiento, claseLicencia, 
                 numeroDeRenovacion, numeroDeCopia);
         
-        return gbd.guardarLicencia(unaLicencia);
+        return gbd.guardarLicencia(unaLicencia);*/return true;
     }
 }

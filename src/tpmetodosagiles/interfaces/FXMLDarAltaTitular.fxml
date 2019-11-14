@@ -89,7 +89,7 @@
             <Insets top="-5.0" />
          </GridPane.margin>
       </HBox>
-      <Label text="Grupo Sanguínio:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+      <Label text="Grupo Sanguíneo:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
       <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
          <children>
             <ComboBox fx:id="cbGrupoSanguinio" prefHeight="25.0" prefWidth="70.0" />
