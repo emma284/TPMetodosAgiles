@@ -44,13 +44,16 @@ public class GestorDeBaseDeDatos {
         return true;
     }
     
-    public Titular getTitularPorDNI(String numDocumento) {
+    public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {
         session.beginTransaction();
         Titular unTitular = new Titular();
         List<Titular> result = session.createSQLQuery("SELECT * FROM titular t "
-        + "WHERE t.numero_documento = " + numDocumento).addEntity(Titular.class).list();
+            + "WHERE t.numero_documento = " + numDocumento
+            + " AND t.tipo_de_documento = '" + tipoDocumento + "'").addEntity(Titular.class).list();
         if (!result.isEmpty()) {
             unTitular = result.get(0);
+        }else{
+            System.out.println("Lista vacia");
         }
         return unTitular;
     }

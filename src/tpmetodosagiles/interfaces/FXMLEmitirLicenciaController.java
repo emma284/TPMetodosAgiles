@@ -77,20 +77,24 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO setDatosTitular()
-        // Metodo que busca en la base un titular por DNI ingresado y si existe
-        // carga los datos y licencias vigentes en la interfaz 
+        ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
+        cbTipoDocumento.setItems(tiposDocumentos);
+        //cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());
         
+        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
+        cbClaseLicencia.setItems(claseLicencia);
     }   
     
     public void setDatosTitular(){
-        
+        // TODO setDatosTitular()
+        // Metodo que busca en la base un titular por DNI ingresado y si existe
+        // carga los datos y licencias vigentes en la interfaz 
     }
     
     
     @FXML
     public void onEnter(ActionEvent ae){
-       //unTitular = gestorTitular.getTitularPorDNI(tfNumeroDocumento.getText());
+       unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
        //borrar desde acá
        /*unTitular = new Titular();
        unTitular.setNombre("emmanuel");
@@ -108,9 +112,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
        dpFechaNacimiento.setValue(dateToLocalDate(unTitular.getFechaNacimiento()));
        
        //Listas de los desplegables
-       ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
-        cbTipoDocumento.setItems(tiposDocumentos);
-        cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());
+       
         
         ObservableList <String> grupoSanguineo = FXCollections.observableArrayList( GestorDeDatosDeInterface.getGrupoSanguinio() );
         cbGrupoSanguineo.setItems(grupoSanguineo);
@@ -138,10 +140,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
         
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
-        
-        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicenciasBasicas() );
-        cbClaseLicencia.setItems(claseLicencia);
-       
+               
     }
     public LocalDate dateToLocalDate(Date fecha){
 //        Instant instant = Instant.ofEpochMilli(fecha.getTime());

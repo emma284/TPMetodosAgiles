@@ -163,7 +163,7 @@ public class testTitular extends Application {
             Session session = MySession.get();
             session.beginTransaction();
             GestorDeTitulares gestorTitular = new GestorDeTitulares();
-            Titular otroTitular = gestorTitular.getTitularPorDNI("12345678");
+            Titular otroTitular = gestorTitular.getTitularPorDNI("DNI","12345678");
             System.out.println(otroTitular.toString());
         });
 

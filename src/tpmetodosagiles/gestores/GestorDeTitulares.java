@@ -24,8 +24,8 @@ public class GestorDeTitulares {
         
     }
 
-    public Titular getTitularPorDNI(String numDocumento) {
-        Titular unTitular = gbd.getTitularPorDNI(numDocumento);
+    public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {
+        Titular unTitular = gbd.getTitularPorDNI(tipoDocumento, numDocumento);
         
         return unTitular;
     }
