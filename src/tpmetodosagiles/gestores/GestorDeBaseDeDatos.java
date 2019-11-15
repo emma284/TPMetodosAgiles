@@ -58,6 +58,32 @@ public class GestorDeBaseDeDatos {
         return unTitular;
     }
     
+    public Licencia getTitularPorIDTitularYClase(int idTitular, char claseLicencia) {
+        session.beginTransaction();
+        Licencia unaLicencia = new Licencia();
+        
+        List<Licencia> result = session.createSQLQuery("SELECT * FROM licencia l "
+            + "WHERE l.id_titular = " + idTitular
+            + " AND l.clase_licencia = '" + claseLicencia + "'").addEntity(Licencia.class).list();
+        if (!result.isEmpty()){
+            unaLicencia = result.get(0);
+        }
+        else{
+            System.out.println("Lista vacia");
+        }
+        return unaLicencia;
+        
+        /*Licencia unTitular = new Titular();
+        List<Titular> result = session.createSQLQuery("SELECT * FROM titular t "
+            + "WHERE t.numero_documento = " + numDocumento
+            + " AND t.tipo_de_documento = '" + tipoDocumento + "'").addEntity(Titular.class).list();
+        if (!result.isEmpty()) {
+            unTitular = result.get(0);
+        }else{
+            System.out.println("Lista vacia");
+        }
+        return unTitular;*/
+    }
 }
 
 
