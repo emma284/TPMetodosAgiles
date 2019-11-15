@@ -5,7 +5,7 @@
  */
 package tpmetodosagiles.entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +27,10 @@ public class Licencia {
     private int idLicencia;
     
     @Column (name = "fecha_emision")
-    private Date fechaEmision;
+    private LocalDate fechaEmision;
     
     @Column (name = "fecha_vencimiento")
-    private Date fechaVencimiento;
+    private LocalDate fechaVencimiento;
     
     @Column (name = "clase_licencia")
     private char claseLicencia;
@@ -53,7 +53,7 @@ public class Licencia {
         
     }
     
-    public Licencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, int numeroDeRenovacion, 
+    public Licencia(LocalDate fechaEmision, LocalDate fechaVencimiento, char claseLicencia, int numeroDeRenovacion, 
             int numeroDeCopia){
         
         this.fechaEmision = fechaEmision;
@@ -72,11 +72,11 @@ public class Licencia {
         this.idLicencia = idLicencia;
     }
 
-    public Date getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 

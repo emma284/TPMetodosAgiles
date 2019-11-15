@@ -6,7 +6,7 @@
 package tpmetodosagiles.entidades;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,7 +43,7 @@ public class Titular {
     //TODO: Emir-Luciano: fotografia;
     
     @Column (name = "fecha_de_nacimiento")
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     
     @Column (name = "domicilio")
     private String domicilio;
@@ -58,10 +58,10 @@ public class Titular {
     private char sexo;
     
     @Column (name = "fecha_entrada_sistema")
-    private Date fechaEntradaSistema;
+    private LocalDate fechaEntradaSistema;
     
     @Column (name = "fecha_emision_licencia_tipo_b")
-    private Date fechaEmisionLicenciaTipoB;
+    private LocalDate fechaEmisionLicenciaTipoB;
     
     //TODO: Emir-Luciano: Agregar Observaciones 
     
@@ -88,8 +88,8 @@ public class Titular {
     }
     
     public Titular(String tipoDeDocumento, int numeroDocumento, 
-            String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
+            String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
+            Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB){
         
         this.tipoDeDocumento = tipoDeDocumento;
         this.numeroDocumento = numeroDocumento;
@@ -145,11 +145,11 @@ public class Titular {
         this.nombre = nombre;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -185,19 +185,19 @@ public class Titular {
         this.sexo = sexo;
     }
 
-    public Date getFechaEntradaSistema() {
+    public LocalDate getFechaEntradaSistema() {
         return fechaEntradaSistema;
     }
 
-    public void setFechaEntradaSistema(Date fechaEntradaSistema) {
+    public void setFechaEntradaSistema(LocalDate fechaEntradaSistema) {
         this.fechaEntradaSistema = fechaEntradaSistema;
     }
 
-    public Date getFechaEmisionLicenciaTipoB() {
+    public LocalDate getFechaEmisionLicenciaTipoB() {
         return fechaEmisionLicenciaTipoB;
     }
 
-    public void setFechaEmisionLicenciaTipoB(Date fechaEmisionLicenciaTipoB) {
+    public void setFechaEmisionLicenciaTipoB(LocalDate fechaEmisionLicenciaTipoB) {
         this.fechaEmisionLicenciaTipoB = fechaEmisionLicenciaTipoB;
     }
 

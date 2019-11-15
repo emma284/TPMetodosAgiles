@@ -5,7 +5,6 @@
  */
 package tpmetodosagiles.gestores;
 
-import java.util.Date;
 import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -16,8 +15,8 @@ public class GestorDeTitulares {
     private GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
     
     public boolean emitirTitular(String tipoDeDocumento, int numeroDocumento, 
-            String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
+            String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
+            Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB){
         
         Titular unTitular = new Titular(tipoDeDocumento, numeroDocumento, apellido, nombre, 
                 fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, fechaEntradaSistema, 
@@ -34,13 +33,12 @@ public class GestorDeTitulares {
     }
     
     public boolean validarDatosCreacionDeTitular(String tipoDeDocumento, int numeroDocumento, 
-        String apellido, String nombre, Date fechaNacimiento, String domicilio, String grupoSanguinio, 
-        Boolean esDonante, char sexo, Date fechaEntradaSistema, Date fechaEmisionLicenciaTipoB){
+        String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
+        Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB){
         boolean datosCorrectos = true;
         StringBuffer errores = new StringBuffer("");
         
-        LocalDate dateNacimiento = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        if(dateNacimiento.compareTo(LocalDate.now().minusYears(17)) > 0){
+        if(fechaNacimiento.compareTo(LocalDate.now().minusYears(17)) > 0){
             errores.append("-El titular debe tener al menos 17 años.\n");
             datosCorrectos = false;
         }

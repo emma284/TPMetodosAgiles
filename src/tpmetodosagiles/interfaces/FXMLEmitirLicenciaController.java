@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,7 +108,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
        tfNombres.setText(unTitular.getNombre());
        tfApellidos.setText(unTitular.getApellido());
        
-       dpFechaNacimiento.setValue(dateToLocalDate(unTitular.getFechaNacimiento()));
+       dpFechaNacimiento.setValue(unTitular.getFechaNacimiento());
        
        //Listas de los desplegables
        
@@ -141,11 +140,5 @@ public class FXMLEmitirLicenciaController implements Initializable {
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
                
-    }
-    public LocalDate dateToLocalDate(Date fecha){
-//        Instant instant = Instant.ofEpochMilli(fecha.getTime());
-//        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-//        return localDateTime.toLocalDate(); 
-        return (LocalDateTime.ofInstant((Instant.ofEpochMilli(fecha.getTime())), ZoneId.systemDefault())).toLocalDate();
     }
 }
