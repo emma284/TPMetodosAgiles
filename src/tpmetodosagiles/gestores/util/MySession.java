@@ -19,12 +19,12 @@ public class MySession {
             
     private static void inicializar(){
         if(sessionFactory==null)
-        sessionFactory = cfg.buildSessionFactory();
+            sessionFactory = cfg.buildSessionFactory();
     }
 
-    public static Session get(){
+    public static Session get() throws Exception{
         inicializar();
-        return sessionFactory.getCurrentSession();
+        return sessionFactory.openSession();
     }
     
 }

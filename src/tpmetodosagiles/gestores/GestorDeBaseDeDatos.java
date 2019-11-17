@@ -7,9 +7,14 @@
 package tpmetodosagiles.gestores;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import org.hibernate.Session;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
+import tpmetodosagiles.entidades.Usuario;
 import tpmetodosagiles.gestores.util.MySession;
 
 
@@ -17,26 +22,42 @@ public class GestorDeBaseDeDatos {
     private Session session = null;
     
     public GestorDeBaseDeDatos() {
-        session = MySession.get();
+        try {
+            session = MySession.get();
+        } catch (Exception ex) {
+            Alert mensajeErrores = new Alert(Alert.AlertType.ERROR);
+            mensajeErrores.setTitle("Sin conexión al servidor");
+            mensajeErrores.setHeaderText("No se pudo establecer conexión con el servidor. Intente nuevamente más tarde.");
+            mensajeErrores.setContentText(ex.getMessage());
+            
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }
     }
+    
+    
     public boolean guardarLicencia(Licencia unaLicencia){
         try {
+        //session = MySession.get();
         session.beginTransaction();
         session.save(unaLicencia);
         session.getTransaction().commit();
-//        session.close();    
+        session.close();    
         } catch (Exception e) {
             System.out.println("------------------------\n" + e.getMessage());
             return false;
         }
         return true;
     }
+    
+    
     public boolean guardarTitular(Titular unTitular){
         try {
+            //session = MySession.get();
             session.beginTransaction();
             session.save(unTitular);
             session.getTransaction().commit();
-//            session.close();
+//          session.close();
         } catch (Exception e) {
             System.out.println("------------------------\n" + e.getMessage());
             return false;
@@ -46,19 +67,16 @@ public class GestorDeBaseDeDatos {
     
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {
         session.beginTransaction();
-        Titular unTitular = new Titular();
         List<Titular> result = session.createSQLQuery("SELECT * FROM titular t "
             + "WHERE t.numero_documento = " + numDocumento
             + " AND t.tipo_de_documento = '" + tipoDocumento + "'").addEntity(Titular.class).list();
         if (!result.isEmpty()) {
-            unTitular = result.get(0);
-        }else{
-            System.out.println("Lista vacia");
+            return result.get(0);
         }
-        return unTitular;
+        return null;
     }
     
-    public Licencia getTitularPorIDTitularYClase(int idTitular, char claseLicencia) {
+    public Licencia getLicenciaPorIDTitularYClase(int idTitular, char claseLicencia) {
         session.beginTransaction();
         Licencia unaLicencia = new Licencia();
         
@@ -83,6 +101,18 @@ public class GestorDeBaseDeDatos {
             System.out.println("Lista vacia");
         }
         return unTitular;*/
+    }
+    
+    
+    public Usuario getUsuarioPorId(int id) {
+        session.beginTransaction();
+        Usuario unUsuario = new Usuario();
+        List<Usuario> result = session.createSQLQuery("SELECT * FROM usuario t "
+            + "WHERE t.id = " + id).addEntity(Usuario.class).list();
+        if (!result.isEmpty()) {
+            unUsuario = result.get(0);
+        }
+        return unUsuario;
     }
 }
 

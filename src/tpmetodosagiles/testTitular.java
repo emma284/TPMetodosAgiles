@@ -17,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -25,6 +26,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -139,18 +141,23 @@ public class testTitular extends Application {
                 unTitular.setTipoDeDocumento(tipoDocumento.getValue().toString());
                 unTitular.setGrupoSanguinio(grupoSanguineo.getValue().toString());
                 unTitular.setNumeroDocumento(Integer.parseInt(numeroDocumento.getText()));
+                
+                unTitular.setFechaNacimiento(fechaNacimiento.getValue());
+
                 try {
-                    Date fechaN = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento.getEditor().getText());
-                    unTitular.setFechaNacimiento(fechaN);
-                } catch (ParseException ex) {
-                    Logger.getLogger(testTitular.class.getName()).log(Level.SEVERE, null, ex);
-                };
+                    Session session = MySession.get();
+                    session.beginTransaction();
+                    session.save(unTitular);
+                    session.getTransaction().commit();
+                } catch (Exception ex) {
+                    Alert mensajeErrores = new Alert(Alert.AlertType.ERROR);
+                    mensajeErrores.setTitle("Sin conexión al servidor");
+                    mensajeErrores.setHeaderText("No se pudo establecer conexión con el servidor. Intente nuevamente más tarde.");
+                    mensajeErrores.setContentText(ex.getMessage());
 
-
-                Session session = MySession.get();
-                session.beginTransaction();
-                session.save(unTitular);
-                session.getTransaction().commit();
+                    mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+                    mensajeErrores.show();
+                }
 
                 clearFields();
 
@@ -160,8 +167,18 @@ public class testTitular extends Application {
         consulbtn.setTooltip(new Tooltip("Guardar Datos de Licencia"));
         consulbtn.setFont(Font.font("SanSerif", 15));
         consulbtn.setOnAction(e ->{
-            Session session = MySession.get();
-            session.beginTransaction();
+            try {
+                Session session = MySession.get();
+                session.beginTransaction();
+            } catch (Exception ex) {
+                Alert mensajeErrores = new Alert(Alert.AlertType.ERROR);
+                mensajeErrores.setTitle("Sin conexión al servidor");
+                mensajeErrores.setHeaderText("No se pudo establecer conexión con el servidor. Intente nuevamente más tarde.");
+                mensajeErrores.setContentText(ex.getMessage());
+
+                mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+                mensajeErrores.show();
+            }
             GestorDeTitulares gestorTitular = new GestorDeTitulares();
             Titular otroTitular = gestorTitular.getTitularPorDNI("DNI","12345678");
             System.out.println(otroTitular.toString());

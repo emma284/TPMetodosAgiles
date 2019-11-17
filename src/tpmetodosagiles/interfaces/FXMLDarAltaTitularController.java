@@ -22,8 +22,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javax.swing.filechooser.FileSystemView;
+import tpmetodosagiles.enums.SexoEnum;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
+import tpmetodosagiles.gestores.GestorDeTitulares;
 import tpmetodosagiles.layouts.TextFieldSoloLetras;
 import tpmetodosagiles.layouts.TextFieldSoloNumeros;
 
@@ -65,15 +67,6 @@ public class FXMLDarAltaTitularController implements Initializable {
     @FXML
     private ImageView imgFotoTitular;
     
-    private GestorDeConfiguracion configuracion;
-
-    public GestorDeConfiguracion getConfiguracion() {
-        return configuracion;
-    }
-
-    public void setConfiguracion(GestorDeConfiguracion configuracion) {
-        this.configuracion = configuracion;
-    }
     
     
     @Override
@@ -112,7 +105,7 @@ public class FXMLDarAltaTitularController implements Initializable {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
         fc.getExtensionFilters().add(filtroImagenes);
-        File file = fc.showOpenDialog(configuracion.getVentanaActual());
+        File file = fc.showOpenDialog(GestorDeConfiguracion.getVentanaActual());
         
         if(file == null)
             return;
@@ -124,10 +117,43 @@ public class FXMLDarAltaTitularController implements Initializable {
     
     @FXML
     private void darDeAltaTitular(ActionEvent event){
-        if (this.datosValidos())
+        //Verifica que todos los datos obligatorios hayan sido cargados a la interface (que no esté vacía la opción)
+        if (!this.datosValidos())
             return;
+        
+        //Obtiene el valor booleano correspondiente al elemento elegido en el ComboBox cbEsDonante
+        boolean esDonante = GestorDeDatosDeInterface.esDonanteToBoolean(cbEsDonante.getValue().toString());
+        //Obtiene el domicilio formateado
+        String domicilio = GestorDeDatosDeInterface.domicilioFormateado(cbCalleTitular.getValue().toString(), tfNroAltura.getText(), tfNroInterno.getText(), tfPiso.getText() );
+        //Obtiene el valor char de sexo
+        char sexo = GestorDeDatosDeInterface.sexoToChar(cbSexo.getValue().toString());
+       
+        
+        //Intenta crear un nuevo titular
+        GestorDeTitulares gestTitular = new GestorDeTitulares();
+        try{
+            gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
+                    tfApellidoTitular.getText(), tfNombreTitular.getText(), dpFechaNacimiento.getValue(), domicilio, 
+                    cbGrupoSanguinio.getValue().toString(), esDonante, sexo,
+                    GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()));
+            
+        }
+        catch(NumberFormatException nfe){
+            //Ocurre si el número de documento no se puede parsear como tal
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos incorrectos");
+            mensajeErrores.setHeaderText("Debe corregir los siguientes puntos antes de proseguir");
+            mensajeErrores.setContentText("El número de documento solo puede contener caracteres numéricos.");
+            
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }
     }
     
+    /**
+     * Valida que se hallan cargado todos los datos de interface obligatorios.
+     * @return <i>boolean:</i> 'true' si los datos de interface son correctos y están completos; 'false' en otro caso.
+     */
     private boolean datosValidos(){
         boolean datosCorrectos = true;
         StringBuffer errores = new StringBuffer("");

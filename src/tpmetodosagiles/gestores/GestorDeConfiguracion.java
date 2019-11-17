@@ -5,20 +5,21 @@
  */
 package tpmetodosagiles.gestores;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.stage.Stage;
 import tpmetodosagiles.entidades.Usuario;
 
 /**
- *
+ * 
+ * Esta clase contendrá los valores comunes y necesarios en distintas interfaces de usuario.
  * @author usuario
  */
 public class GestorDeConfiguracion {
-    private Usuario usuarioActual;
-    private Stage ventanaActual;
-    private GestorDeBaseDeDatos gestorBD;
+    private static Usuario usuarioActual;
+    private static Stage ventanaActual;
 
     public GestorDeConfiguracion(){
-        //TODO: Descomentar...     gestorBD = new GestorDeBaseDeDatos();
     }
     
     public GestorDeConfiguracion(Usuario usr, Stage ventana){
@@ -27,24 +28,20 @@ public class GestorDeConfiguracion {
         ventanaActual = ventana;
     }
     
-    public Usuario getUsuarioActual() {
+    public static Usuario getUsuarioActual() {
         return usuarioActual;
     }
 
-    public Stage getVentanaActual() {
+    public static Stage getVentanaActual() {
         return ventanaActual;
     }
 
-    public GestorDeBaseDeDatos getGestorBD() {
-        return gestorBD;
+    public static void setUsuarioActual(Usuario usuarioActual) {
+        usuarioActual = usuarioActual;
     }
 
-    public void setUsuarioActual(Usuario usuarioActual) {
-        this.usuarioActual = usuarioActual;
-    }
-
-    public void setVentanaActual(Stage ventanaActual) {
-        this.ventanaActual = ventanaActual;
+    public static void setVentanaActual(Stage ventanaActual) {
+        ventanaActual = ventanaActual;
     }
     
     

@@ -84,6 +84,22 @@ public class Licencia {
         return claseLicencia;
     }
 
+    public Titular getTitular() {
+        return titular;
+    }
+
+    public void setTitular(Titular titular) {
+        this.titular = titular;
+    }
+
+    public Usuario getUsuarioResponsable() {
+        return usuarioResponsable;
+    }
+
+    public void setUsuarioResponsable(Usuario usuarioRespon) {
+        this.usuarioResponsable = usuarioRespon;
+    }
+
     public void setClaseLicencia(char claseLicencia) {
         this.claseLicencia = claseLicencia;
     }

@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.time.Period;
 import java.util.Date;
 import tpmetodosagiles.entidades.Licencia;
+import tpmetodosagiles.entidades.Titular;
 
 
 public class GestorDeLicencias {
@@ -24,17 +25,24 @@ public class GestorDeLicencias {
         
         return gbd.guardarLicencia(unaLicencia);*/return true;
     }
+
     
-    //TODO calcular vigencia de licencia
-    public LocalDate calcularVigenciaDeLicencia(LocalDate fechaNacimiento, int idTitular, char claseLicencia){
+    public LocalDate calcularVigenciaDeLicencia(LocalDate fechaNacimiento,Integer idTitular, char claseLicencia){
         
         //LocalDate dateNacimiento = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Period periodo = Period.between(fechaNacimiento, LocalDate.now());
         int edad = periodo.getYears();
-        if(edad > 16 && edad < 21){
+        
+        if(edad < 17){
+            return null;
+        }
+        else if(edad > 16 && edad < 21){
             //caso entre 17 y 21
             Licencia resultado = new Licencia();
-            resultado = gbd.getTitularPorIDTitularYClase(idTitular, claseLicencia);
+            if(idTitular==null)
+                resultado = null;
+            else
+                resultado = gbd.getLicenciaPorIDTitularYClase(idTitular, claseLicencia);
             if(resultado == null){
                 //Caso primera vez que obtiene licencia
                 if(Period.between(fechaNacimiento, LocalDate.now().minusYears(edad)).getMonths() > 10){

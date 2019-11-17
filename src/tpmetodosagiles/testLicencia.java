@@ -85,13 +85,8 @@ public class testLicencia extends Application {
                 licencia.setIdLicencia(Integer.parseInt(idLicencia.getText()));
                 licencia.setClaseLicencia((claseLicencia.getText()).charAt(0));
                 licencia.setNumeroDeRenovacion(Integer.parseInt(numeroDeRenovacion.getText()));
-                try {
-                    Date fechaEmision = new SimpleDateFormat("dd/MM/yyyy").parse(date.getEditor().getText());
-                    licencia.setFechaEmision(fechaEmision);
-                } catch (ParseException ex) {
-                    Logger.getLogger(testLicencia.class.getName()).log(Level.SEVERE, null, ex);
-                }
-;
+                
+                licencia.setFechaEmision(date.getValue());
 
                 licencia.setNumeroDeCopia(Integer.parseInt(numeroDeCopia.getText()));
 

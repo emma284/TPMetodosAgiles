@@ -63,16 +63,12 @@ public class FXMLEmitirLicenciaController implements Initializable {
     @FXML
     private ComboBox cbClaseLicencia;
     
-    private GestorDeConfiguracion configuracion;
     private Titular unTitular;
     
     public FXMLEmitirLicenciaController(){
         gestorTitular = new GestorDeTitulares();
     }
     
-    public void setConfiguracion(GestorDeConfiguracion configuracion) {
-        this.configuracion = configuracion;
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -28,18 +28,11 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     @FXML
     private VBox vbMenu;
     
-    private GestorDeConfiguracion configuracion;
-
-    public void setConfiguracion(GestorDeConfiguracion configuracion) {
-        this.configuracion = configuracion;
-    }
-    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
-    
+    }
     
     @FXML
     private void irAEmitirLicencia(ActionEvent event) throws IOException{
@@ -49,8 +42,7 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
         try {
             gpAreaDeTrabajo.getChildren().clear();
             gpAreaDeTrabajo.getChildren().add(emitirLicenciaGridPane);
-            FXMLEmitirLicenciaController controller = fxmlLoader.getController();
-            controller.setConfiguracion(configuracion);
+            //FXMLEmitirLicenciaController controller = fxmlLoader.getController();
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -64,8 +56,7 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
         try {
             gpAreaDeTrabajo.getChildren().clear();
             gpAreaDeTrabajo.getChildren().add(darDeAltaTitularGridPane);
-            FXMLDarAltaTitularController controller = fxmlLoader.getController();
-            controller.setConfiguracion(configuracion);
+            //FXMLDarAltaTitularController controller = fxmlLoader.getController();
         } catch (Exception e) {
             e.printStackTrace();
         }

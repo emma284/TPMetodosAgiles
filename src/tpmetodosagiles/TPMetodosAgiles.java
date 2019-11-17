@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tpmetodosagiles.entidades.Usuario;
+import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.interfaces.FXMLVentanaSuperusuarioController;
 
@@ -27,11 +28,19 @@ public class TPMetodosAgiles extends Application {
         stage.setScene(scene);
         stage.show();
         
-        
-        FXMLVentanaSuperusuarioController controller = loader.getController();
-        Usuario usr = new Usuario();    //TODO: Cambiar por el usuario administrador (por ahora sus datos internos están en NULL!)
-        GestorDeConfiguracion cfg = new GestorDeConfiguracion(usr, stage);
-        controller.setConfiguracion(cfg);
+        GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+        try{
+            Usuario usr = gbd.getUsuarioPorId(1);
+            GestorDeConfiguracion.setUsuarioActual(usr);
+            GestorDeConfiguracion.setVentanaActual(stage);
+            //FXMLVentanaSuperusuarioController controller = loader.getController();
+            //controller.setConfiguracion(cfg);
+        }
+        catch(Exception e){
+            //TODO: retornar a la ventana de inicio de sesión
+            System.out.println("Unable to connect to server sir");
+            stage.close();
+        }
     }
 
     /**
