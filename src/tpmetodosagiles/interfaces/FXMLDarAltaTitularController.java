@@ -135,7 +135,8 @@ public class FXMLDarAltaTitularController implements Initializable {
             gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
                     tfApellidoTitular.getText(), tfNombreTitular.getText(), dpFechaNacimiento.getValue(), domicilio, 
                     cbGrupoSanguinio.getValue().toString(), esDonante, sexo,
-                    GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()));
+                    GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
+                    cbObservaciones.getValue().toString());
             
         }
         catch(NumberFormatException nfe){

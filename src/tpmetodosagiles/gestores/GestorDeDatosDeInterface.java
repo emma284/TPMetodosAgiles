@@ -70,6 +70,7 @@ public class GestorDeDatosDeInterface {
     
     public static Collection <String> getObservaciones(){
         Collection <String> coleccion = new ArrayList<String>();
+        coleccion.add("Ninguna");
         coleccion.add("Conduce con anteojos");
         coleccion.add("Conducción diurna");
         coleccion.add("Vehículos de transmisión automática");
@@ -130,7 +131,7 @@ public class GestorDeDatosDeInterface {
         StringBuffer domicilio = new StringBuffer();
         
         if(nombreCalle==null){
-            domicilio.append('%');
+            domicilio.append(" %");
         }
         else{
             domicilio.append(nombreCalle);
@@ -138,7 +139,7 @@ public class GestorDeDatosDeInterface {
         }
         
         if(nroAltura==null){
-            domicilio.append('%');
+            domicilio.append(" %");
         }
         else{
             domicilio.append(nroAltura);
@@ -146,7 +147,7 @@ public class GestorDeDatosDeInterface {
         }
         
         if(nroInterno==null){
-            domicilio.append('%');
+            domicilio.append(" %");
         }
         else{
             domicilio.append(nroInterno);
@@ -154,7 +155,7 @@ public class GestorDeDatosDeInterface {
         }
         
         if(nroPiso==null){
-            domicilio.append('%');
+            domicilio.append(" %");
         }
         else{
             domicilio.append(nroPiso);

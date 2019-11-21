@@ -81,32 +81,20 @@ public class FXMLEmitirLicenciaController implements Initializable {
     }   
     
     public void setDatosTitular(){
-        // TODO setDatosTitular()
-        // Metodo que busca en la base un titular por DNI ingresado y si existe
-        // carga los datos y licencias vigentes en la interfaz 
-    }
-    
-    
-    @FXML
-    public void onEnter(ActionEvent ae){
-       unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
-       //borrar desde acá
-       /*unTitular = new Titular();
-       unTitular.setNombre("emmanuel");
-       unTitular.setApellido("ábrego");
-       unTitular.setFechaNacimiento(new Date());
-       unTitular.setEsDonante(true);
-       unTitular.setSexo('m');
-       unTitular.setTipoDeDocumento("DNI");
-       unTitular.setGrupoSanguinio("A+");
-       
-       System.out.println(unTitular.getNombre());*///hasta acá
-       tfNombres.setText(unTitular.getNombre());
-       tfApellidos.setText(unTitular.getApellido());
-       
-       dpFechaNacimiento.setValue(unTitular.getFechaNacimiento());
-       
-       //Listas de los desplegables
+        tfNombres.setText(unTitular.getNombre());
+        tfApellidos.setText(unTitular.getApellido());
+
+        dpFechaNacimiento.setValue(unTitular.getFechaNacimiento());
+
+        String direccion = unTitular.getDomicilio();
+        String[] campos = direccion.split("%");
+        cbCalleTitular.getSelectionModel().select(campos[0]);
+        tfNroAltura.setText(campos[1]);
+        tfNroInterno.setText(campos[2]);
+        tfPiso.setText(campos[3]);
+        
+        cbObservaciones.getSelectionModel().select(unTitular.getObservaciones());
+        //Listas de los desplegables
        
         
         ObservableList <String> grupoSanguineo = FXCollections.observableArrayList( GestorDeDatosDeInterface.getGrupoSanguinio() );
@@ -135,6 +123,27 @@ public class FXMLEmitirLicenciaController implements Initializable {
         
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
-               
+    }
+    
+    
+    @FXML
+    public void onEnter(ActionEvent ae){
+        unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
+        if(unTitular == null){
+            System.out.println("Usuario no encontrado");
+        }else{
+            setDatosTitular();
+        }
+        //borrar desde acá
+        /*unTitular = new Titular();
+        unTitular.setNombre("emmanuel");
+        unTitular.setApellido("ábrego");
+        unTitular.setFechaNacimiento(new Date());
+        unTitular.setEsDonante(true);
+        unTitular.setSexo('m');
+        unTitular.setTipoDeDocumento("DNI");
+        unTitular.setGrupoSanguinio("A+");
+       
+        System.out.println(unTitular.getNombre());*///hasta acá      
     }
 }

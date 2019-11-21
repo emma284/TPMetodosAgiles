@@ -19,7 +19,7 @@ public class GestorDeTitulares {
     
     public boolean emitirTitularYLicencia(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, char claseDeLicencia){
+            Boolean esDonante, char sexo, char claseDeLicencia, String observaciones){
         
         GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
         //Verifica si se trata de una licencia de clase B para indicarlo en el atributo de Titular
@@ -32,7 +32,7 @@ public class GestorDeTitulares {
         //Genera el Titular con sus datos
         Titular unTitular = new Titular(tipoDeDocumento, numeroDocumento, apellido, nombre, 
                 fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, LocalDate.now(), 
-                emisionLicenciaClaseB);
+                emisionLicenciaClaseB, observaciones);
         unTitular.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         //Verifica si el usuario actual ya está en el sistema
         if(gbd.getTitularPorDNI(tipoDeDocumento, ""+numeroDocumento) != null)

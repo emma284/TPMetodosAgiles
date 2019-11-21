@@ -63,6 +63,9 @@ public class Titular {
     @Column (name = "fecha_emision_licencia_tipo_b")
     private LocalDate fechaEmisionLicenciaTipoB;
     
+    @Column (name = "observaciones")
+    private String observaciones;
+    
     //TODO: Emir-Luciano: Agregar Observaciones 
     
     @OneToMany(mappedBy = "idLicencia", cascade= CascadeType.ALL)
@@ -85,11 +88,12 @@ public class Titular {
         this.sexo = 'M';
         this.fechaEntradaSistema = null;
         this.fechaEmisionLicenciaTipoB = null;
+        this.observaciones = "";
     }
     
     public Titular(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB){
+            Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB, String observaciones){
         
         this.tipoDeDocumento = tipoDeDocumento;
         this.numeroDocumento = numeroDocumento;
@@ -102,7 +106,7 @@ public class Titular {
         this.sexo = sexo;
         this.fechaEntradaSistema = fechaEntradaSistema;
         this.fechaEmisionLicenciaTipoB = fechaEmisionLicenciaTipoB;
-        
+        this.observaciones = observaciones;
     }
 
     public Integer getIdTitular() {
@@ -217,6 +221,14 @@ public class Titular {
         this.usuarioResponsable = usuarioResponsable;
     }
 
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+    
     @Override
     public String toString(){
         String titular = "";
