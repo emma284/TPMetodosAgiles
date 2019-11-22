@@ -36,12 +36,12 @@ public class GestorDeConfiguracion {
         return ventanaActual;
     }
 
-    public static void setUsuarioActual(Usuario usuarioActual) {
-        usuarioActual = usuarioActual;
+    public static void setUsuarioActual(Usuario usuario) {
+        usuarioActual = usuario;
     }
 
-    public static void setVentanaActual(Stage ventanaActual) {
-        ventanaActual = ventanaActual;
+    public static void setVentanaActual(Stage ventana) {
+        ventanaActual = ventana;
     }
     
     

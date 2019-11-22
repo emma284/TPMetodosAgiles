@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.entidades.Usuario;
 import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
@@ -64,6 +65,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
     private ComboBox cbClaseLicencia;
     
     private Titular unTitular;
+    private Licencia unaLicencia;
     
     public FXMLEmitirLicenciaController(){
         gestorTitular = new GestorDeTitulares();
@@ -145,5 +147,13 @@ public class FXMLEmitirLicenciaController implements Initializable {
         unTitular.setGrupoSanguinio("A+");
        
         System.out.println(unTitular.getNombre());*///hasta acá      
+    }
+    
+    
+    @FXML
+    public void emitirLicenciaOnClick(){
+        gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
+//        unaLicencia.setClaseLicencia(cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
+//        unaLicencia.setFechaEmision(LocalDate.MIN);
     }
 }

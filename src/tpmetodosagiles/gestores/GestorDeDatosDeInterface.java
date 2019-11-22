@@ -130,7 +130,7 @@ public class GestorDeDatosDeInterface {
     public static String domicilioFormateado(String nombreCalle, String nroAltura, String nroInterno, String nroPiso){
         StringBuffer domicilio = new StringBuffer();
         
-        if(nombreCalle==null){
+        if(nombreCalle.length()==0){
             domicilio.append(" %");
         }
         else{
@@ -138,7 +138,7 @@ public class GestorDeDatosDeInterface {
             domicilio.append('%');
         }
         
-        if(nroAltura==null){
+        if(nroAltura.length()==0){
             domicilio.append(" %");
         }
         else{
@@ -146,7 +146,7 @@ public class GestorDeDatosDeInterface {
             domicilio.append('%');
         }
         
-        if(nroInterno==null){
+        if(nroInterno.length()==0){
             domicilio.append(" %");
         }
         else{
@@ -154,7 +154,7 @@ public class GestorDeDatosDeInterface {
             domicilio.append('%');
         }
         
-        if(nroPiso==null){
+        if(nroPiso.length()==0){
             domicilio.append(" %");
         }
         else{
@@ -170,7 +170,7 @@ public class GestorDeDatosDeInterface {
      * @param <i>domicilio</i> - Domicilio en formato predefinido.
      */
     public static String getdomicilioNombreDeCalle(String domicilio){
-        Pattern patronDomicilio = Pattern.compile("\\A([a-zA-Z ]*)%([0-9]*)%([0-9]*)%([0-9]*)\\Z");
+        Pattern patronDomicilio = Pattern.compile("\\A([a-zA-Z 0-9]*)%([0-9]*)%([0-9]*)%([0-9]*)\\Z");
         Matcher coincidencia = patronDomicilio.matcher(domicilio);
         try{
             String nombreCalle = coincidencia.group(0);

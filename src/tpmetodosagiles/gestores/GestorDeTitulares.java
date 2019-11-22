@@ -9,6 +9,7 @@ import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import tpmetodosagiles.entidades.Licencia;
@@ -34,6 +35,7 @@ public class GestorDeTitulares {
                 fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, LocalDate.now(), 
                 emisionLicenciaClaseB, observaciones);
         unTitular.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
+        System.out.println(unTitular.getUsuarioResponsable().getApellido());
         //Verifica si el usuario actual ya está en el sistema
         if(gbd.getTitularPorDNI(tipoDeDocumento, ""+numeroDocumento) != null)
             return false;
@@ -64,7 +66,10 @@ public class GestorDeTitulares {
 
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {
         Titular unTitular = gbd.getTitularPorDNI(tipoDocumento, numDocumento);
-        
+        List<Licencia> licencias = gbd.getLicenciasPorIDTitular(unTitular.getIdTitular());
+        if(unTitular!=null){
+            unTitular.setLicencias(licencias);
+        }
         return unTitular;
     }
     
@@ -87,5 +92,25 @@ public class GestorDeTitulares {
         
       return datosCorrectos;  
     }
+
+    private boolean validarLicenciaAEmitir(List<Licencia> licencias, char claseLicencia) {
+        boolean retorno = true;        
+        for (Licencia licencia : licencias) {
+            if(licencia.getClaseLicencia()==claseLicencia){
+                retorno=false;
+            }
+        }
+        return retorno;
+    }
     
+    public void emitirLicencia(Titular unTitular, char claseLicencia) {
+        GestorDeLicencias gdl = new GestorDeLicencias();
+        LocalDate fechaVencimientoLicencia = 
+                gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
+        if(validarLicenciaAEmitir(unTitular.getLicencias(),claseLicencia)){
+            Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
+            unaLicencia.setTitular(unTitular);
+            gbd.guardarLicencia(unaLicencia);
+        }
+    }
 }

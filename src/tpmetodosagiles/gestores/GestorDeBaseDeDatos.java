@@ -73,6 +73,9 @@ public class GestorDeBaseDeDatos {
         if (!result.isEmpty()) {
             return result.get(0);
         }
+        else{
+            System.out.println("No se encontró el titular");
+        }
         return null;
     }
     
@@ -90,17 +93,20 @@ public class GestorDeBaseDeDatos {
             System.out.println("Lista vacia");
         }
         return unaLicencia;
+    }
+    
+    public List<Licencia> getLicenciasPorIDTitular(int idTitular) {
+        session.beginTransaction();
         
-        /*Licencia unTitular = new Titular();
-        List<Titular> result = session.createSQLQuery("SELECT * FROM titular t "
-            + "WHERE t.numero_documento = " + numDocumento
-            + " AND t.tipo_de_documento = '" + tipoDocumento + "'").addEntity(Titular.class).list();
-        if (!result.isEmpty()) {
-            unTitular = result.get(0);
-        }else{
+        List<Licencia> result = session.createSQLQuery("SELECT * FROM licencia l "
+            + "WHERE l.id_titular = " + idTitular).addEntity(Licencia.class).list();
+        if (!result.isEmpty()){
+            return result;
+        }
+        else{
             System.out.println("Lista vacia");
         }
-        return unTitular;*/
+        return null;
     }
     
     
