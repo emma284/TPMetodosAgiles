@@ -7,6 +7,7 @@ package tpmetodosagiles.gestores;
 
 import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
@@ -93,13 +94,89 @@ public class GestorDeTitulares {
       return datosCorrectos;  
     }
 
-    private boolean validarLicenciaAEmitir(List<Licencia> licencias, char claseLicencia) {
-        boolean retorno = true;        
-        for (Licencia licencia : licencias) {
-            if(licencia.getClaseLicencia()==claseLicencia){
-                retorno=false;
+    private boolean validarLicenciaAEmitir(Titular unTitular, char claseLicencia) {
+        boolean retorno;
+        //fecha actual
+        LocalDate fechaHoy = LocalDate.now();
+        boolean poseeLicenciaMismaClase = false;
+        //edad del titular
+        int edadTitular = Period.between(unTitular.getFechaNacimiento(), fechaHoy).getYears();
+        //tiempo desde que obtuvo su primera licencia de clase B
+        int antiguedadClaseB = Period.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy).getYears();
+        //Recorrer listado de licencias que ha tenido el titular
+        for (Licencia licencia : unTitular.getLicencias()) {
+            if(licencia.getClaseLicencia()==claseLicencia ){
+                poseeLicenciaMismaClase=true;
+            } 
+        }
+        switch (claseLicencia){
+            case 'D': 
+            case 'E':
+            case 'F':
+                //Caso de que no haya tenido licencia de clase B desde hace, por lo menos, un año y  es menor de 21 años
+                if(antiguedadClaseB < 1 || edadTitular < 21){
+                    retorno = false;
+                }
+                //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
+                else{
+//                    if(!poseeLicenciaMismaClase){
+//                        retorno = true;
+//                    }
+//                    else{
+                        retorno = (edadTitular < 65);
+                    //}
+                }
+                break;
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'G':
+                //Si ya tiene una licencia vigente en realidad debe renovarla, falta ver si debe hacer esto o tira error
+//                if(!poseeLicenciaMismaClase){
+//                    retorno = validarLicenciaARenovar(unTitular,claseLicencia);
+//                    break;
+//                }
+//                else{
+                    retorno = !poseeLicenciaMismaClase;
+                    break;
+//                }
+            default:
+                retorno = false;
+                break;
+        }
+        
+        return retorno;
+    }
+    
+    public boolean validarLicenciaARenovar(Titular unTitular, char claseLicencia){
+        boolean retorno;
+        //fecha actual
+        LocalDate fechaHoy = LocalDate.now();
+        Licencia licenciaARenovar = getLicenciaARenovar(unTitular.getLicencias(),claseLicencia);
+        
+        if(fechaHoy.isBefore(licenciaARenovar.getFechaVencimiento())){
+            Period periodo = Period.between(licenciaARenovar.getFechaVencimiento(),fechaHoy);
+            switch(periodo.getYears()){
+                case 0:
+                    switch(periodo.getDays()){
+                        case 0:
+                            retorno = periodo.getMonths()<=2;
+                            break;
+                        default:
+                            retorno = periodo.getMonths()<2;
+                            break;
+
+                    }
+                    break;
+                default:
+                    retorno = false;
+                    break;
             }
         }
+        else{
+            retorno = true;
+        }
+        
         return retorno;
     }
     
@@ -107,10 +184,42 @@ public class GestorDeTitulares {
         GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
-        if(validarLicenciaAEmitir(unTitular.getLicencias(),claseLicencia)){
+        if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
             unaLicencia.setTitular(unTitular);
             gbd.guardarLicencia(unaLicencia);
         }
+    }
+    
+    public void renovarLicencia(Titular unTitular, Licencia unaLicenciaARenovar){
+        GestorDeLicencias gdl = new GestorDeLicencias();
+        LocalDate fechaVencimientoLicencia = 
+                gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
+        if(validarLicenciaARenovar(unTitular, unaLicenciaARenovar.getClaseLicencia())){
+            Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
+            unaLicencia.setTitular(unTitular);
+            gbd.guardarLicencia(unaLicencia);
+        }
+    }
+
+    private Licencia getLicenciaARenovar(List<Licencia> licencias, char claseLicencia) {
+        Licencia retorno = new Licencia();
+        LocalDate fechaLicenciaARenovar;
+        int i=0;
+        while(licencias.get(i).getClaseLicencia()!=claseLicencia){
+            i++;
+        }
+        fechaLicenciaARenovar=licencias.get(i).getFechaVencimiento();
+        
+        for(Licencia licencia : licencias){
+            if(licencia.getClaseLicencia()==claseLicencia){
+                if(licencia.getFechaVencimiento().isAfter(fechaLicenciaARenovar)){
+                    fechaLicenciaARenovar = licencia.getFechaVencimiento();
+                    retorno = licencia;
+                }
+            }
+        }
+        
+        return retorno;
     }
 }
