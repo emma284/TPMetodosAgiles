@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Titular {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column (name = "id")
+    @Column (name = "idTitular")
     private Integer idTitular;
     
     @Column (name = "tipo_de_documento")
@@ -68,11 +68,11 @@ public class Titular {
     
     //TODO: Emir-Luciano: Agregar Observaciones 
     
-    @OneToMany(mappedBy = "idLicencia", cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "titular", cascade= CascadeType.ALL)
     private List<Licencia> licencias;
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuarioResponsable;
     
     public Titular(){

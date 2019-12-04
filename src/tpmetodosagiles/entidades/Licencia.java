@@ -6,6 +6,7 @@
 package tpmetodosagiles.entidades;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ import javax.persistence.Table;
 public class Licencia {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column (name="id")
+    @Column (name="idLicencia")
     private int idLicencia;
     
     @Column (name = "fecha_emision")
@@ -42,11 +43,11 @@ public class Licencia {
     private int numeroDeCopia;
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_titular")
+    @JoinColumn(name = "idTitular")
     private Titular titular;
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuarioResponsable;
     
     public Licencia(){
@@ -135,6 +136,15 @@ public class Licencia {
 //    public void setUsuario(Usuario usuario) {
 //        this.usuario = usuario;
 //    }
+
+    public LocalDate getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    @Override
+    public String toString() {
+        return "Licencia{" + "idLicencia=" + idLicencia + ", fechaEmision=" + fechaEmision + ", fechaVencimiento=" + fechaVencimiento + ", claseLicencia=" + claseLicencia + ", numeroDeRenovacion=" + numeroDeRenovacion + ", numeroDeCopia=" + numeroDeCopia + ", titular=" + titular + ", usuarioResponsable=" + usuarioResponsable + '}';
+    }
     
     
 }

@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
@@ -64,11 +65,17 @@ public class FXMLEmitirLicenciaController implements Initializable {
     @FXML
     private ComboBox cbClaseLicencia;
     
+    @FXML
+    private ListView<Licencia> lvLicencias;
+
+    private ObservableList<Licencia> licenciaObservableList;
+    
     private Titular unTitular;
     private Licencia unaLicencia;
     
     public FXMLEmitirLicenciaController(){
         gestorTitular = new GestorDeTitulares();
+        licenciaObservableList = FXCollections.observableArrayList();
     }
     
     
@@ -125,6 +132,13 @@ public class FXMLEmitirLicenciaController implements Initializable {
         
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
+        licenciaObservableList.clear();
+        for(Licencia licencia: unTitular.getLicencias()){
+            licenciaObservableList.add(licencia);
+            System.out.println("Se agrega licencia de clase: "+licencia.getClaseLicencia());
+        }
+        lvLicencias.setItems(licenciaObservableList);
+        lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
     }
     
     
@@ -159,7 +173,8 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void renovarLicenciaOnClick(){
-        gestorTitular.renovarLicencia(unTitular, unTitular.getLicencias().get(0));
+        System.out.println(lvLicencias.getSelectionModel().getSelectedItem().toString());
+        gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem());
         //TODO hay que cambiar el segundo parámetro de renovar licencia por la licencia en específico que se desea renovar
     }
 }

@@ -187,17 +187,19 @@ public class GestorDeTitulares {
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
             unaLicencia.setTitular(unTitular);
+            unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             gbd.guardarLicencia(unaLicencia);
         }
     }
     
-    public void renovarLicencia(Titular unTitular, Licencia unaLicenciaARenovar){
+    public void renovarLicencia(Licencia unaLicenciaARenovar){
         GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
-                gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
-        if(validarLicenciaARenovar(unTitular, unaLicenciaARenovar.getClaseLicencia())){
+                gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
+        if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar.getClaseLicencia())){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
-            unaLicencia.setTitular(unTitular);
+            unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
+            unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             gbd.guardarLicencia(unaLicencia);
         }
     }

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import tpmetodosagiles.entidades.Usuario;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
@@ -37,7 +38,7 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     @FXML
     private void irAEmitirLicencia(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLEmitirLicencia.fxml"));
-        GridPane emitirLicenciaGridPane = (GridPane) fxmlLoader.load();
+        ScrollPane emitirLicenciaGridPane = (ScrollPane) fxmlLoader.load();
         
         try {
             gpAreaDeTrabajo.getChildren().clear();
