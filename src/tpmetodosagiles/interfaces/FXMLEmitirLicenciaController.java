@@ -85,8 +85,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
         cbTipoDocumento.setItems(tiposDocumentos);
         //cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());
         
-        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
-        cbClaseLicencia.setItems(claseLicencia);
+        
     }   
     
     public void setDatosTitular(){
@@ -134,9 +133,17 @@ public class FXMLEmitirLicenciaController implements Initializable {
         cbObservaciones.setItems(observaciones);
         licenciaObservableList.clear();
         for(Licencia licencia: unTitular.getLicencias()){
-            licenciaObservableList.add(licencia);
-            System.out.println("Se agrega licencia de clase: "+licencia.getClaseLicencia());
+            if(licencia.getFechaVencimiento().isAfter(LocalDate.now()) || licencia.getFechaVencimiento().isEqual(LocalDate.now())){
+                licenciaObservableList.add(licencia);
+            }
         }
+        
+        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
+        for(Licencia licencia : licenciaObservableList){
+            claseLicencia.remove(String.valueOf(licencia.getClaseLicencia()));
+        }
+        cbClaseLicencia.setItems(claseLicencia);
+        
         lvLicencias.setItems(licenciaObservableList);
         lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
     }
@@ -166,6 +173,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void emitirLicenciaOnClick(){
+        //TODO Settear fecha de emisión de primera licencia de clase B
         gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
 //        unaLicencia.setClaseLicencia(cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
 //        unaLicencia.setFechaEmision(LocalDate.MIN);
@@ -173,8 +181,6 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void renovarLicenciaOnClick(){
-//        System.out.println(lvLicencias.getSelectionModel().getSelectedItem().toString());
         gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem());
-        //TODO hay que cambiar el segundo parámetro de renovar licencia por la licencia en específico que se desea renovar
     }
 }

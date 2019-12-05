@@ -106,15 +106,15 @@ public class GestorDeTitulares {
         boolean retorno;
         //fecha actual
         LocalDate fechaHoy = LocalDate.now();
-        boolean poseeLicenciaMismaClase = false;
+        boolean poseeLicenciaVigenteMismaClase = false;
         //edad del titular
         int edadTitular = Period.between(unTitular.getFechaNacimiento(), fechaHoy).getYears();
         //tiempo desde que obtuvo su primera licencia de clase B
         int antiguedadClaseB = Period.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy).getYears();
         //Recorrer listado de licencias que ha tenido el titular si no está vacío
         for (Licencia licencia : unTitular.getLicencias()) {
-            if(licencia.getClaseLicencia()==claseLicencia ){
-                poseeLicenciaMismaClase=true;
+            if(licencia.getClaseLicencia()==claseLicencia && licencia.getFechaVencimiento().isAfter(fechaHoy)){
+                poseeLicenciaVigenteMismaClase=true;
             } 
         }
         switch (claseLicencia){
@@ -129,14 +129,13 @@ public class GestorDeTitulares {
                 //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
                 else{
                     retorno = (edadTitular < 65);
-
                 }
                 break;
             case 'A':
             case 'B':
             case 'F':
             case 'G':
-                retorno = !poseeLicenciaMismaClase;
+                retorno = !poseeLicenciaVigenteMismaClase;
                 break;
             default:
                 retorno = false;

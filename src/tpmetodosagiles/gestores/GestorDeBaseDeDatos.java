@@ -38,12 +38,21 @@ public class GestorDeBaseDeDatos {
     
     public boolean guardarLicencia(Licencia unaLicencia){
         try {
-        //session = MySession.get();
-            System.out.println("Titular id: "+unaLicencia.getTitular().getIdTitular().toString());
-        session.beginTransaction();
-        session.save(unaLicencia);
-        session.getTransaction().commit();
-//        session.close();    
+            session.beginTransaction();
+            session.save(unaLicencia);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("------------------------\n" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean modificarLicencia(Licencia unaLicencia){
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(unaLicencia);
+            session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("------------------------\n" + e.getMessage());
             return false;
@@ -54,11 +63,11 @@ public class GestorDeBaseDeDatos {
     
     public boolean guardarTitular(Titular unTitular){
         try {
-            //session = MySession.get();
+           
             session.beginTransaction();
             session.save(unTitular);
             session.getTransaction().commit();
-//          session.close();
+
         } catch (Exception e) {
             System.out.println("------------------------\n" + e.getMessage());
             return false;
