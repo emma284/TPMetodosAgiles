@@ -111,7 +111,7 @@ public class GestorDeBaseDeDatos {
         return null;
     }
     
-    
+    //TODO retornar null en caso de no encontrar el usuario en lugar de unUsuario que solo está inicializado?
     public Usuario getUsuarioPorId(int id) {
         session.beginTransaction();
         Usuario unUsuario = new Usuario();
