@@ -38,9 +38,9 @@ public class GestorDeLicencias {
         else if(edad > 16 && edad < 21){
             //caso entre 17 y 21
             if(idTitular==null)
-                return null;
+                return null ;
             else
-            if(!gbd.titularRenovanteDeLicenciaClaseX(idTitular, claseLicencia)){
+            if(!gbd.titularRenovanteDeLicenciaClaseX(idTitular, claseLicencia)) {
                 //Caso primera vez que obtiene licencia
                 if(Period.between(fechaNacimiento, LocalDate.now().minusYears(edad)).getMonths() > 10){
                 //se encuentra a menos de 2 meses de cumplir años

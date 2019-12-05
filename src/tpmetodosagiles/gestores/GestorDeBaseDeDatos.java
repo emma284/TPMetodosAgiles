@@ -85,7 +85,6 @@ public class GestorDeBaseDeDatos {
      */
     public boolean titularRenovanteDeLicenciaClaseX(int idTitular, char claseLicencia) {
         session.beginTransaction();
-        Licencia unaLicencia = new Licencia();
         
         List<Licencia> result = session.createSQLQuery("SELECT * FROM licencia l "
             + "WHERE l.id_titular = " + idTitular
