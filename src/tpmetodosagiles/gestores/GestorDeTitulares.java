@@ -148,11 +148,11 @@ public class GestorDeTitulares {
         return retorno;
     }
     
-    public boolean validarLicenciaARenovar(Titular unTitular, char claseLicencia){
+    public boolean validarLicenciaARenovar(Titular unTitular, Licencia unaLicencia){
         boolean retorno;
         //fecha actual
         LocalDate fechaHoy = LocalDate.now();
-        Licencia licenciaARenovar = getLicenciaARenovar(unTitular.getLicencias(),claseLicencia);
+        Licencia licenciaARenovar = getLicenciaARenovar(unTitular.getLicencias(),unaLicencia.getClaseLicencia());
         
         if(fechaHoy.isBefore(licenciaARenovar.getFechaVencimiento())){
             Period periodo = Period.between(licenciaARenovar.getFechaVencimiento(),fechaHoy);
@@ -196,7 +196,7 @@ public class GestorDeTitulares {
         GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
-        if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar.getClaseLicencia())){
+        if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
             unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
@@ -205,23 +205,21 @@ public class GestorDeTitulares {
     }
 
     private Licencia getLicenciaARenovar(List<Licencia> licencias, char claseLicencia) {
-        Licencia retorno = new Licencia();
-        LocalDate fechaLicenciaARenovar;
+        
+        LocalDate fechaLicenciaARenovar = null;
         int i=0;
-        while(licencias.get(i).getClaseLicencia()!=claseLicencia){
-            i++;
-        }
-        fechaLicenciaARenovar=licencias.get(i).getFechaVencimiento();
+        int posicionDeLicencia=0;
         
         for(Licencia licencia : licencias){
             if(licencia.getClaseLicencia()==claseLicencia){
-                if(licencia.getFechaVencimiento().isAfter(fechaLicenciaARenovar)){
+                if(fechaLicenciaARenovar == null || licencia.getFechaVencimiento().isAfter(fechaLicenciaARenovar)){
                     fechaLicenciaARenovar = licencia.getFechaVencimiento();
-                    retorno = licencia;
+                    posicionDeLicencia=i;
                 }
             }
+            i++;
         }
         
-        return retorno;
+        return fechaLicenciaARenovar == null ? null : licencias.get(posicionDeLicencia);
     }
 }
