@@ -23,8 +23,7 @@ public class GestorDeTitulares {
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
             Boolean esDonante, char sexo, char claseDeLicencia, String observaciones){
         
-        //TODO Cuál de las dos variables 'gdb' se debe usar???
-        GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+       
         //Verifica si se trata de una licencia de clase B para indicarlo en el atributo de Titular
         LocalDate emisionLicenciaClaseB;
         if(claseDeLicencia == 'B')
@@ -112,43 +111,33 @@ public class GestorDeTitulares {
         int edadTitular = Period.between(unTitular.getFechaNacimiento(), fechaHoy).getYears();
         //tiempo desde que obtuvo su primera licencia de clase B
         int antiguedadClaseB = Period.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy).getYears();
-        //Recorrer listado de licencias que ha tenido el titular
+        //Recorrer listado de licencias que ha tenido el titular si no está vacío
         for (Licencia licencia : unTitular.getLicencias()) {
             if(licencia.getClaseLicencia()==claseLicencia ){
                 poseeLicenciaMismaClase=true;
             } 
         }
         switch (claseLicencia){
+            
+            case 'C':
             case 'D': 
             case 'E':
-            case 'F':
                 //Caso de que no haya tenido licencia de clase B desde hace, por lo menos, un año y  es menor de 21 años
                 if(antiguedadClaseB < 1 || edadTitular < 21){
                     retorno = false;
                 }
                 //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
                 else{
-//                    if(!poseeLicenciaMismaClase){
-//                        retorno = true;
-//                    }
-//                    else{
-                        retorno = (edadTitular < 65);
-                    //}
+                    retorno = (edadTitular < 65);
+
                 }
                 break;
             case 'A':
             case 'B':
-            case 'C':
+            case 'F':
             case 'G':
-                //Si ya tiene una licencia vigente en realidad debe renovarla, falta ver si debe hacer esto o tira error
-//                if(!poseeLicenciaMismaClase){
-//                    retorno = validarLicenciaARenovar(unTitular,claseLicencia);
-//                    break;
-//                }
-//                else{
-                    retorno = !poseeLicenciaMismaClase;
-                    break;
-//                }
+                retorno = !poseeLicenciaMismaClase;
+                break;
             default:
                 retorno = false;
                 break;
@@ -161,10 +150,10 @@ public class GestorDeTitulares {
         boolean retorno;
         //fecha actual
         LocalDate fechaHoy = LocalDate.now();
-        Licencia licenciaARenovar = getLicenciaARenovar(unTitular.getLicencias(),unaLicencia.getClaseLicencia());
-        
-        if(fechaHoy.isBefore(licenciaARenovar.getFechaVencimiento())){
-            Period periodo = Period.between(licenciaARenovar.getFechaVencimiento(),fechaHoy);
+        System.out.println("La licencia que pasó como parámetro vence el " + unaLicencia.getFechaVencimiento().toString());
+        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento())){
+            Period periodo = Period.between(fechaHoy, unaLicencia.getFechaVencimiento());
+            System.out.println(periodo.toString());
             switch(periodo.getYears()){
                 case 0:
                     switch(periodo.getDays()){
@@ -211,24 +200,27 @@ public class GestorDeTitulares {
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             gbd.guardarLicencia(unaLicencia);
         }
+        else{
+            System.out.println("Esta licencia no se puede renovar");
+        }
     }
 
-    private Licencia getLicenciaARenovar(List<Licencia> licencias, char claseLicencia) {
-        
-        LocalDate fechaLicenciaARenovar = null;
-        int i=0;
-        int posicionDeLicencia=0;
-        
-        for(Licencia licencia : licencias){
-            if(licencia.getClaseLicencia()==claseLicencia){
-                if(fechaLicenciaARenovar == null || licencia.getFechaVencimiento().isAfter(fechaLicenciaARenovar)){
-                    fechaLicenciaARenovar = licencia.getFechaVencimiento();
-                    posicionDeLicencia=i;
-                }
-            }
-            i++;
-        }
-        
-        return fechaLicenciaARenovar == null ? null : licencias.get(posicionDeLicencia);
-    }
+//    private Licencia getLicenciaARenovar(List<Licencia> licencias, char claseLicencia) {
+//        
+//        LocalDate fechaLicenciaARenovar = null;
+//        int i=0;
+//        int posicionDeLicencia=0;
+//        
+//        for(Licencia licencia : licencias){
+//            if(licencia.getClaseLicencia()==claseLicencia){
+//                if(fechaLicenciaARenovar == null || licencia.getFechaVencimiento().isAfter(fechaLicenciaARenovar)){
+//                    fechaLicenciaARenovar = licencia.getFechaVencimiento();
+//                    posicionDeLicencia=i;
+//                }
+//            }
+//            i++;
+//        }
+//        
+//        return fechaLicenciaARenovar == null ? null : licencias.get(posicionDeLicencia);
+//    }
 }

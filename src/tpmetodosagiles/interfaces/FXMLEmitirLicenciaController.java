@@ -173,7 +173,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void renovarLicenciaOnClick(){
-        System.out.println(lvLicencias.getSelectionModel().getSelectedItem().toString());
+//        System.out.println(lvLicencias.getSelectionModel().getSelectedItem().toString());
         gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem());
         //TODO hay que cambiar el segundo parámetro de renovar licencia por la licencia en específico que se desea renovar
     }

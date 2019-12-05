@@ -68,28 +68,16 @@ public class Titular {
     
     //TODO: Emir-Luciano: Agregar Observaciones 
     
-    @OneToMany(mappedBy = "idLicencia", cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "titular", cascade= CascadeType.ALL)
     private List<Licencia> licencias;
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuarioResponsable;
     
-    //TODO por qué hay datos por defecto acá???
+    
     public Titular(){
-        this.idTitular = -1;
-        this.tipoDeDocumento = "";
-        this.numeroDocumento = 0;
-        this.apellido = "";
-        this.nombre = "";
-        this.fechaNacimiento = null;
-        this.domicilio = "";
-        this.grupoSanguinio = "";
-        this.esDonante = false;
-        this.sexo = 'M';
-        this.fechaEntradaSistema = null;
-        this.fechaEmisionLicenciaTipoB = null;
-        this.observaciones = "";
+        
     }
     
     public Titular(String tipoDeDocumento, int numeroDocumento, 

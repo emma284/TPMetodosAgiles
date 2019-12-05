@@ -103,13 +103,5 @@ public class GestorDeLicencias {
         }
     }
   
-//TODO función no utilizada?
-    public boolean validarDatosCreacionDeLicencia(Date fechaEmision, Date fechaVencimiento, char claseLicencia, 
-        int numeroDeRenovacion, int numeroDeCopia){
-        boolean datosCorrectos = true;
-        
-       //TODO validar si es posible emitir licencia
-        
-        return datosCorrectos;
-    }
+
 }

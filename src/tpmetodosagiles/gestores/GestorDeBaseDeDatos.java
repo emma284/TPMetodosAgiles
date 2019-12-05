@@ -101,7 +101,7 @@ public class GestorDeBaseDeDatos {
         session.beginTransaction();
         
         List<Licencia> result = session.createSQLQuery("SELECT * FROM licencia l "
-            + "WHERE l.idTitular = " + idTitular).addEntity(Licencia.class).list();
+            + "WHERE l.id_titular = " + idTitular).addEntity(Licencia.class).list();
         if (!result.isEmpty()){
             return result;
         }
@@ -116,7 +116,7 @@ public class GestorDeBaseDeDatos {
         session.beginTransaction();
         Usuario unUsuario = new Usuario();
         List<Usuario> result = session.createSQLQuery("SELECT * FROM usuario u "
-            + "WHERE u.idUsuario = " + id).addEntity(Usuario.class).list();
+            + "WHERE u.id = " + id).addEntity(Usuario.class).list();
         if (!result.isEmpty()) {
             unUsuario = result.get(0);
         }
