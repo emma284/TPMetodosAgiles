@@ -80,7 +80,10 @@ public class GestorDeBaseDeDatos {
         return null;
     }
     
-    public Licencia getLicenciaPorIDTitularYClase(int idTitular, char claseLicencia) {
+    /**
+     *Verifica que el titular ya tenga una licencia registrada de la clase claseLicencia
+     */
+    public boolean titularRenovanteDeLicenciaClaseX(int idTitular, char claseLicencia) {
         session.beginTransaction();
         Licencia unaLicencia = new Licencia();
         
@@ -88,12 +91,11 @@ public class GestorDeBaseDeDatos {
             + "WHERE l.id_titular = " + idTitular
             + " AND l.clase_licencia = '" + claseLicencia + "'").addEntity(Licencia.class).list();
         if (!result.isEmpty()){
-            unaLicencia = result.get(0);
+            return true;
         }
         else{
-            System.out.println("Lista vacia");
+            return false;
         }
-        return unaLicencia;
     }
     
     public List<Licencia> getLicenciasPorIDTitular(int idTitular) {
