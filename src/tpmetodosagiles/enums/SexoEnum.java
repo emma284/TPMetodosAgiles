@@ -10,19 +10,19 @@ package tpmetodosagiles.enums;
  * @author usuario
  */
 public enum SexoEnum {
-    MASCULINO,FEMENINO;
+    M,F;
     
     public static SexoEnum getSexoPorIdentificador(char identificador){
         if( (identificador == 'M') || (identificador == 'm') )
-            return SexoEnum.MASCULINO;
+            return SexoEnum.M;
         else if( (identificador == 'F') || (identificador == 'f') )
-            return SexoEnum.FEMENINO;
+            return SexoEnum.F;
         
         return null;
     }
     
     public char getIdentificador(){
-        if(this == SexoEnum.MASCULINO)
+        if(this == SexoEnum.M)
             return 'M';
         else
             return 'F';
@@ -30,9 +30,9 @@ public enum SexoEnum {
     
     @Override
     public String toString(){
-        if(this == SexoEnum.MASCULINO)
-            return "Masculino";
+        if(this == SexoEnum.M)
+            return "M";
         else
-            return "Femenino";
+            return "F";
     }
 }

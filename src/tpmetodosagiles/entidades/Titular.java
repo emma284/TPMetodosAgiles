@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Titular {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column (name = "idTitular")
+    @Column (name = "id")
     private Integer idTitular;
     
     @Column (name = "tipo_de_documento")
@@ -68,13 +68,14 @@ public class Titular {
     
     //TODO: Emir-Luciano: Agregar Observaciones 
     
-    @OneToMany(mappedBy = "titular", cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "idLicencia", cascade= CascadeType.ALL)
     private List<Licencia> licencias;
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuarioResponsable;
     
+    //TODO por qué hay datos por defecto acá???
     public Titular(){
         this.idTitular = -1;
         this.tipoDeDocumento = "";

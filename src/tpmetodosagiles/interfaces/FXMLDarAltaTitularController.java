@@ -22,8 +22,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javax.swing.filechooser.FileSystemView;
+import tpmetodosagiles.entidades.ContribuyenteDTO;
 import tpmetodosagiles.enums.SexoEnum;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
+import tpmetodosagiles.gestores.GestorDeContribuyente;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeTitulares;
 import tpmetodosagiles.layouts.TextFieldSoloLetras;
@@ -100,6 +102,64 @@ public class FXMLDarAltaTitularController implements Initializable {
     }
     
     @FXML
+    private void buscarEnBDCiudad(ActionEvent event){
+        if(!this.datosDeBusquedaValidos((String) cbTipoDocumento.getValue(), tfNumeroDocumento.getText())){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos incorrectos");
+            mensajeErrores.setHeaderText("Los datos de búsqueda son incorrectos o están incompletos");
+            mensajeErrores.setContentText("Verifique que los datos de 'Tipo de documento' y 'Número de documento' hayan sido ingresado correctamente.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
+            return;
+        }
+        
+        GestorDeContribuyente gc = new GestorDeContribuyente();
+        ContribuyenteDTO contr;
+        contr = gc.getContribuyente((String) cbTipoDocumento.getValue().toString(), tfNumeroDocumento.getText());
+        
+        if(contr == null){
+            //No se encontró al humano en la base de datos de la ciudad, entonces no es contribuyente en la ciudad
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("No se puede registrar al solicitante");
+            mensajeErrores.setHeaderText("Los datos de búsqueda no coinciden con los de un contribuyente de la ciudad.");
+            mensajeErrores.setContentText("Verifique que los datos de 'Tipo de documento' y 'Número de documento' hayan sido ingresado correctamente.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
+            return;
+        }
+        else{
+            this.rellenarDatosTitularConDatosContribuyente(contr);
+            this.deshabilitarBusqueda();
+            this.habilitarEdicionDatosDeTitular();
+        }
+        
+        
+        /*
+        llamar al ADB2 y pedirle el contribuyente
+        verificar si el contribuyente existe
+        si existe => deshabilitar las opciones de busqueda y habilitar los de datos del titular; y rellenar los datos de la pantalla que estén disponibles
+        si no existe => mostrar mensaje
+        
+        */
+    }
+    
+    
+    @FXML
+    private void borrarDatosDePantalla(ActionEvent event){
+        this.borrarDatosTitular();
+        this.deshabilitarEdicionDatosDeTitular();
+        this.habilitarBusqueda();
+        
+        
+        /*
+        borrar datos introducidos (no olvidar imagen)
+        deshabilitar datos de titular introducidos y habilitar datos de busqueda
+        */
+    }
+    
+    @FXML
     private void seleccionarFotografia(ActionEvent event){
         FileChooser.ExtensionFilter filtroImagenes = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.jpeg");
         FileChooser fc = new FileChooser();
@@ -132,11 +192,19 @@ public class FXMLDarAltaTitularController implements Initializable {
         //Intenta crear un nuevo titular
         GestorDeTitulares gestTitular = new GestorDeTitulares();
         try{
-            gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
+            if (gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
                     tfApellidoTitular.getText(), tfNombreTitular.getText(), dpFechaNacimiento.getValue(), domicilio, 
                     cbGrupoSanguinio.getValue().toString(), esDonante, sexo,
                     GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
-                    cbObservaciones.getValue().toString());
+                    cbObservaciones.getValue().toString())){
+                
+                // Se registran el nuevo titular y licencia con exito
+                Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
+                mensajeExito.setTitle("Transacción completada");
+                mensajeExito.setHeaderText("Se ha registrado el titular y la licencia en el sistema");
+                mensajeExito.initModality(Modality.APPLICATION_MODAL);
+                mensajeExito.show();
+            }
             
         }
         catch(NumberFormatException nfe){
@@ -221,4 +289,60 @@ public class FXMLDarAltaTitularController implements Initializable {
         
         return datosCorrectos;
     } 
+    
+    /**
+     * Verifica que los datos de 'Tipo de documento' y 'Número de documento' sean validos (no sean nulos ni vacíos y que el número de documento solo esté compuesto por caracteres numéricos).
+     */
+    private boolean datosDeBusquedaValidos(String tipoDocumento, String numeroDocumento) {
+        if (tipoDocumento == null || numeroDocumento == null){
+            return false;
+        }
+        
+        if(tipoDocumento.isEmpty()){
+            return false;
+        }
+        
+        try{
+            Integer.parseInt(numeroDocumento);
+        }
+        catch(NumberFormatException fne){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    private void rellenarDatosTitularConDatosContribuyente(ContribuyenteDTO contr) {
+        cbSexo.setValue("" + contr.sexo.getIdentificador());
+    }
+
+    private void deshabilitarBusqueda() {
+        cbTipoDocumento.setDisable(true);
+        tfNumeroDocumento.setDisable(true);
+    }
+    
+    private void habilitarBusqueda() {
+        cbTipoDocumento.setDisable(false);
+        tfNumeroDocumento.setDisable(false);
+    }
+    private void habilitarEdicionDatosDeTitular() {
+        
+        cbCalleTitular.setDisable(false);
+        tfNroAltura.setDisable(false);
+        tfPiso.setDisable(false);
+        tfNroInterno.setDisable(false);
+        cbSexo.setDisable(false);
+        cbSexo.setDisable(false);
+    }
+
+    private void deshabilitarEdicionDatosDeTitular() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void borrarDatosTitular() {
+        //TODO No olvidar imagen
+    }
+
+    
 }

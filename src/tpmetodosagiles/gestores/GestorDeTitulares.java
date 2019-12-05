@@ -23,6 +23,7 @@ public class GestorDeTitulares {
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
             Boolean esDonante, char sexo, char claseDeLicencia, String observaciones){
         
+        //TODO Cuál de las dos variables 'gdb' se debe usar???
         GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
         //Verifica si se trata de una licencia de clase B para indicarlo en el atributo de Titular
         LocalDate emisionLicenciaClaseB;
@@ -38,8 +39,16 @@ public class GestorDeTitulares {
         unTitular.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         System.out.println(unTitular.getUsuarioResponsable().getApellido());
         //Verifica si el usuario actual ya está en el sistema
-        if(gbd.getTitularPorDNI(tipoDeDocumento, ""+numeroDocumento) != null)
+        if(gbd.getTitularPorDNI(tipoDeDocumento, ""+numeroDocumento) != null){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("No se pudo registrar el titular");
+            mensajeErrores.setHeaderText("El titular ingresado ya se encuentra registrado en el sistema");
+            mensajeErrores.setContentText("Bajo criterio de búsqueda: tipo y número de documento. \nDiríjase a la ventana 'Emitir licencia' para emitir nuevas licencias a titulares ya registrados."); 
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
             return false;
+        }
         
         //Calcula la fecha de vencimiento de la licencia que se está emitiendo
         GestorDeLicencias gdl = new GestorDeLicencias();
