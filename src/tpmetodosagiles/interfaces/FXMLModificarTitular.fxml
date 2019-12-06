@@ -106,7 +106,7 @@
          <image>
             <Image url="@../recursos/imagenes/imgDeInterface/foto_usuario.png" />
          </image></ImageView>
-      <Button maxWidth="250.0" mnemonicParsing="false" onAction="#modificarTitular" onMouseClicked="#modificarTitular" text="Modificar " GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15" GridPane.valignment="BOTTOM" />
+      <Button maxWidth="250.0" mnemonicParsing="false" onAction="#modificarTitular" text="Modificar " GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15" GridPane.valignment="BOTTOM" />
       <Label prefHeight="17.0" prefWidth="161.0" text="Modifcar Titular" />
       <Button fx:id="btnBuscarTitular" maxWidth="250.0" mnemonicParsing="false" onAction="#buscarTitular" text="Buscar" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       <TextField fx:id="tfNroAltura" alignment="CENTER_RIGHT" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
