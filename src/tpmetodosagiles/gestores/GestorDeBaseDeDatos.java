@@ -78,7 +78,7 @@ public class GestorDeBaseDeDatos {
     }
     
     
-    public List<Object[]> getLicenciasExpiradas(String nombre, String apellido, char clase, LocalDate fechaDesde, LocalDate fechaHasta){
+    public List<Licencia> getLicenciasExpiradas(String nombre, String apellido, String clase, LocalDate fechaDesde, LocalDate fechaHasta){
         
         LocalDate hoy = LocalDate.now();
         
@@ -89,7 +89,7 @@ public class GestorDeBaseDeDatos {
         if(apellido!=null){
            arreglo = arreglo + "AND t.apellido = " + apellido; 
         }
-        if(clase!='Z'){
+        if(clase!=null){
            arreglo = arreglo + "AND l.clase_licencia = " + clase; 
         }
         if((fechaDesde!=null)||(fechaHasta!=null)){
@@ -107,13 +107,13 @@ public class GestorDeBaseDeDatos {
         session.beginTransaction();
 
         SQLQuery query = session.createSQLQuery("SELECT * FROM licencia l JOIN titular t ON l.id_titular=t.id "
-                + "WHERE fechaVencimiento < " + hoy + "" + arreglo + "")
+                + "WHERE fechaVencimiento < now()" + arreglo + "")
                 .addEntity("l",Licencia.class)
 		.addJoin("t","l.titular");
 //                .setParameter("hoy", hoy);
         
         List<Object[]> rows = query.list();
-        
+        List<Licencia> retorno = null;
 //        for (Object[] row : rows) {
 //            Licencia l = (Licencia) row[0]; 
 //            Titular t = (Titular) row[1];
@@ -121,7 +121,7 @@ public class GestorDeBaseDeDatos {
         
 //        session.close()
         
-        return rows;
+        return retorno;
     }
     
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {

@@ -77,18 +77,18 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
         }
     }
     
-//    @FXML
-//    private void irAListarLicenciasExpiradas(ActionEvent event) throws IOException{
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLListarLicenciasExpiradas.fxml"));
-//        GridPane listarLicenciasGridPane = (GridPane) fxmlLoader.load();
-//        
-//        try {
-//            gpAreaDeTrabajo.getChildren().clear();
-//            gpAreaDeTrabajo.getChildren().add(listarLicenciasGridPane);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } 
-//    }
+    @FXML
+    private void irAListarLicenciasExpiradas(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLListarLicenciasExpiradas.fxml"));
+        GridPane listarLicenciasGridPane = (GridPane) fxmlLoader.load();
+        
+        try {
+            gpAreaDeTrabajo.getChildren().clear();
+            gpAreaDeTrabajo.getChildren().add(listarLicenciasGridPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
     
     @FXML
     private void irAOcultarMenu(ActionEvent event) throws IOException{

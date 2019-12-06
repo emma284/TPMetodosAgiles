@@ -75,8 +75,8 @@ public class GestorDeTitulares {
 
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {
         Titular unTitular = gbd.getTitularPorDNI(tipoDocumento, numDocumento);
-        List<Licencia> licencias = gbd.getLicenciasPorIDTitular(unTitular.getIdTitular());
         if(unTitular!=null){
+            List<Licencia> licencias = gbd.getLicenciasPorIDTitular(unTitular.getIdTitular());
             unTitular.setLicencias(licencias);
         }
         return unTitular;

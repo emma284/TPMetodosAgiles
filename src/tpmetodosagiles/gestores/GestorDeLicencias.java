@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
@@ -204,8 +205,8 @@ public class GestorDeLicencias {
         return 0;
     }
     
-    public List<Object[]> buscarLicenciasExpiradas(String nombre,String apellido,char clase,LocalDate fechaDesde,LocalDate fechaHasta){
-        List<Object[]> lista = gbd.getLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
+    public List<Licencia> buscarLicenciasExpiradas(String nombre,String apellido,String clase,LocalDate fechaDesde,LocalDate fechaHasta){
+        List<Licencia> lista = gbd.getLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
         
         return lista;
     }

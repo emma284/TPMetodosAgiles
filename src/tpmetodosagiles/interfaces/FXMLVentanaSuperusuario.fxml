@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLVentanaSuperusuarioController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLVentanaSuperusuarioController">
    <left>
       <VBox fx:id="vbMenu" prefHeight="400.0" prefWidth="150.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnEmitirLicencia" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irAEmitirLicencia" text="Emitir Licencia" />
             <Button fx:id="btnDarAltaTitular" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irADarDeAltaTitular" text="Dar de Alta un Titular" />
             <Button fx:id="btnEditarDatosTitular" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irAEditarDatosDeTitular" text="Editar Datos de Titular" />
+            <Button fx:id="btnListarLicencias" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irAListarLicenciasExpiradas" text="Listar Licencias Expiradas" />
             <Button fx:id="btnOcultar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irAOcultarMenu" text="Ocultar">
                <VBox.margin>
                   <Insets top="25.0" />

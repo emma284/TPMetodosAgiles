@@ -37,8 +37,8 @@ import tpmetodosagiles.gestores.GestorDeTitulares;
 public class FXMLModificarTitularController implements Initializable {
 
      GestorDeTitulares gestorTitular;
-    @FXML
-    private TextField tfTipoDocumento;
+//    @FXML
+//    private TextField tfTipoDocumento;
     @FXML
     private TextField tfNumeroDocumento;
     @FXML
@@ -71,7 +71,10 @@ public class FXMLModificarTitularController implements Initializable {
     private ImageView imgFotoTitular;
     
     private Titular unTitular;
-    
+
+    public FXMLModificarTitularController() {
+        gestorTitular = new GestorDeTitulares();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
