@@ -203,6 +203,11 @@ public class GestorDeTitulares {
             System.out.println("Esta licencia no se puede renovar");
         }
     }
+    
+    public void guardarModificacionTitular(Titular unTitular){
+        gbd.guardarTitular(unTitular);
+    }
+    
 
 //    private Licencia getLicenciaARenovar(List<Licencia> licencias, char claseLicencia) {
 //        

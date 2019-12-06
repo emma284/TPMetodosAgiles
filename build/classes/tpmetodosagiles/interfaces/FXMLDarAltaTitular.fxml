@@ -27,6 +27,7 @@
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
@@ -44,22 +45,35 @@
       <ComboBox fx:id="cbTipoDocumento" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Label text="Nro de Documento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
       <TextFieldSoloNumeros fx:id="tfNumeroDocumento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Label text="Nombres:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-      <TextFieldSoloLetras fx:id="tfNombreTitular" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      <Label text="Apellidos:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-      <TextFieldSoloLetras fx:id="tfApellidoTitular" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label text="Fecha de Nacimiento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-      <DatePicker fx:id="dpFechaNacimiento" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <Label text="Calle:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-      <ComboBox fx:id="cbCalleTitular" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-      <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
+      <GridPane maxWidth="196.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#buscarEnBDCiudad" prefHeight="25.0" prefWidth="96.0" text="Búscar" />
+            <Button mnemonicParsing="false" onAction="#borrarDatosDePantalla" prefHeight="25.0" prefWidth="109.0" text="Borrar todo" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Label text="Nombres:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <TextFieldSoloLetras fx:id="tfNombreTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Label text="Apellidos:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      <TextFieldSoloLetras fx:id="tfApellidoTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Label text="Fecha de Nacimiento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+      <DatePicker fx:id="dpFechaNacimiento" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Label text="Calle:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+      <ComboBox fx:id="cbCalleTitular" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+      <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
          <children>
             <Label text="Nro. (Altura):">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Label>
-            <TextFieldSoloNumeros fx:id="tfNroAltura" alignment="CENTER_RIGHT" prefWidth="60.0">
+            <TextFieldSoloNumeros fx:id="tfNroAltura" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -69,7 +83,7 @@
                   <Insets left="30.0" />
                </HBox.margin>
             </Label>
-            <TextFieldSoloNumeros fx:id="tfNroInterno" alignment="CENTER_RIGHT" prefWidth="60.0">
+            <TextFieldSoloNumeros fx:id="tfNroInterno" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -79,7 +93,7 @@
                   <Insets left="30.0" />
                </HBox.margin>
             </Label>
-            <TextFieldSoloNumeros fx:id="tfPiso" alignment="CENTER_RIGHT" prefWidth="40.0">
+            <TextFieldSoloNumeros fx:id="tfPiso" alignment="CENTER_RIGHT" disable="true" prefWidth="40.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -89,16 +103,16 @@
             <Insets top="-5.0" />
          </GridPane.margin>
       </HBox>
-      <Label text="Grupo Sanguíneo:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-      <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
+      <Label text="Grupo Sanguíneo:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+      <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9">
          <children>
-            <ComboBox fx:id="cbGrupoSanguinio" prefHeight="25.0" prefWidth="70.0" />
+            <ComboBox fx:id="cbGrupoSanguinio" disable="true" prefHeight="25.0" prefWidth="70.0" />
             <Label text="Es Donante:">
                <HBox.margin>
                   <Insets left="36.0" />
                </HBox.margin>
             </Label>
-            <ComboBox fx:id="cbEsDonante" prefHeight="25.0" prefWidth="60.0">
+            <ComboBox fx:id="cbEsDonante" disable="true" prefHeight="25.0" prefWidth="60.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -108,23 +122,23 @@
                   <Insets left="36.0" />
                </HBox.margin>
             </Label>
-            <ComboBox fx:id="cbSexo" prefWidth="100.0">
+            <ComboBox fx:id="cbSexo" disable="true" prefWidth="100.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </ComboBox>
          </children>
       </HBox>
-      <Label text="Observación:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-      <ComboBox fx:id="cbObservaciones" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-      <Label text="Clase de Licencia Solicitada:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-      <ComboBox fx:id="cbClaseLicencia" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+      <Label text="Observación:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+      <ComboBox fx:id="cbObservaciones" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+      <Label text="Clase de Licencia Solicitada:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
+      <ComboBox fx:id="cbClaseLicencia" disable="true" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="2" GridPane.rowIndex="11" />
       <ImageView fx:id="imgFotoTitular" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="4">
          <image>
             <Image url="@../recursos/imagenes/imgDeInterface/foto_usuario.png" />
          </image></ImageView>
-      <Button mnemonicParsing="false" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" onAction="#seleccionarFotografia"  />
-      <Button mnemonicParsing="false" onAction="#darDeAltaTitular" text="Dar de Alta" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" GridPane.valignment="BOTTOM" />
+      <Button disable="true" mnemonicParsing="false" onAction="#seleccionarFotografia" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <Button disable="true" mnemonicParsing="false" onAction="#darDeAltaTitular" text="Dar de Alta" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="13" GridPane.valignment="BOTTOM" />
    </children>
    <opaqueInsets>
       <Insets />

@@ -19,6 +19,7 @@ public abstract class Titular_ {
 	public static volatile SingularAttribute<Titular, Integer> idTitular;
 	public static volatile SingularAttribute<Titular, String> apellido;
 	public static volatile SingularAttribute<Titular, LocalDate> fechaEntradaSistema;
+	public static volatile SingularAttribute<Titular, String> observaciones;
 	public static volatile SingularAttribute<Titular, String> tipoDeDocumento;
 	public static volatile SingularAttribute<Titular, Integer> numeroDocumento;
 	public static volatile SingularAttribute<Titular, Character> sexo;

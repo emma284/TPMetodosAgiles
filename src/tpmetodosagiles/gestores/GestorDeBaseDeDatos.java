@@ -6,11 +6,13 @@
 
 package tpmetodosagiles.gestores;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
@@ -65,7 +67,7 @@ public class GestorDeBaseDeDatos {
         try {
            
             session.beginTransaction();
-            session.save(unTitular);
+            session.saveOrUpdate(unTitular);
             session.getTransaction().commit();
 
         } catch (Exception e) {
@@ -73,6 +75,53 @@ public class GestorDeBaseDeDatos {
             return false;
         }
         return true;
+    }
+    
+    
+    public List<Object[]> getLicenciasExpiradas(String nombre, String apellido, char clase, LocalDate fechaDesde, LocalDate fechaHasta){
+        
+        LocalDate hoy = LocalDate.now();
+        
+        String arreglo = "";
+        if(nombre!=null){
+           arreglo = arreglo + "AND t.nombre = " + nombre; 
+        }
+        if(apellido!=null){
+           arreglo = arreglo + "AND t.apellido = " + apellido; 
+        }
+        if(clase!='Z'){
+           arreglo = arreglo + "AND l.clase_licencia = " + clase; 
+        }
+        if((fechaDesde!=null)||(fechaHasta!=null)){
+            if((fechaDesde!=null)&&(fechaHasta!=null)){
+                arreglo = arreglo + "AND l.fecha_vencimiento BETWEEN " + fechaDesde + "AND" + fechaHasta; 
+            }
+            else if(fechaDesde!=null){
+                arreglo = arreglo + "AND l.fecha_vencimiento > " + fechaDesde; 
+            }
+            else{
+                arreglo = arreglo + "AND l.fecha_vencimiento < " + fechaHasta; 
+            }
+        }
+        
+        session.beginTransaction();
+
+        SQLQuery query = session.createSQLQuery("SELECT * FROM licencia l JOIN titular t ON l.id_titular=t.id "
+                + "WHERE fechaVencimiento < " + hoy + "" + arreglo + "")
+                .addEntity("l",Licencia.class)
+		.addJoin("t","l.titular");
+//                .setParameter("hoy", hoy);
+        
+        List<Object[]> rows = query.list();
+        
+//        for (Object[] row : rows) {
+//            Licencia l = (Licencia) row[0]; 
+//            Titular t = (Titular) row[1];
+//        }
+        
+//        session.close()
+        
+        return rows;
     }
     
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {

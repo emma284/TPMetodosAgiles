@@ -65,8 +65,30 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     
     @FXML
     private void irAEditarDatosDeTitular(ActionEvent event) throws IOException{
-        //TODO: Cambiar a pantalla de 'Editar Datos de Titular'
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLModificarTitular.fxml"));
+        GridPane editarTitularGridPane = (GridPane) fxmlLoader.load();
+        
+        try {
+            gpAreaDeTrabajo.getChildren().clear();
+            gpAreaDeTrabajo.getChildren().add(editarTitularGridPane);
+            //FXMLEmitirLicenciaController controller = fxmlLoader.getController();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+//    @FXML
+//    private void irAListarLicenciasExpiradas(ActionEvent event) throws IOException{
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLListarLicenciasExpiradas.fxml"));
+//        GridPane listarLicenciasGridPane = (GridPane) fxmlLoader.load();
+//        
+//        try {
+//            gpAreaDeTrabajo.getChildren().clear();
+//            gpAreaDeTrabajo.getChildren().add(listarLicenciasGridPane);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } 
+//    }
     
     @FXML
     private void irAOcultarMenu(ActionEvent event) throws IOException{
