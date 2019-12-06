@@ -83,37 +83,43 @@ public class GestorDeBaseDeDatos {
         LocalDate hoy = LocalDate.now();
         
         String arreglo = "";
-        if(nombre!=null){
-           arreglo = arreglo + "AND t.nombre = " + nombre; 
-        }
-        if(apellido!=null){
-           arreglo = arreglo + "AND t.apellido = " + apellido; 
-        }
-        if(clase!=null){
-           arreglo = arreglo + "AND l.clase_licencia = " + clase; 
-        }
-        if((fechaDesde!=null)||(fechaHasta!=null)){
-            if((fechaDesde!=null)&&(fechaHasta!=null)){
-                arreglo = arreglo + "AND l.fecha_vencimiento BETWEEN " + fechaDesde + "AND" + fechaHasta; 
-            }
-            else if(fechaDesde!=null){
-                arreglo = arreglo + "AND l.fecha_vencimiento > " + fechaDesde; 
-            }
-            else{
-                arreglo = arreglo + "AND l.fecha_vencimiento < " + fechaHasta; 
-            }
-        }
+//        if(nombre!=null){
+//           arreglo = arreglo + "AND t.nombre LIKE '" + nombre + "'"; 
+//        }
+//        if(apellido!=null){
+//           arreglo = arreglo + "AND t.apellido LIKE '" + apellido +"'"; 
+//        }
+//        if(clase!=null){
+//           arreglo = arreglo + "AND l.clase_licencia = '" + clase + "'"; 
+//        }
+//        if((fechaDesde!=null)||(fechaHasta!=null)){
+//            if((fechaDesde!=null)&&(fechaHasta!=null)){
+//                arreglo = arreglo + "AND l.fecha_vencimiento BETWEEN " + fechaDesde + "AND" + fechaHasta; 
+//            }
+//            else if(fechaDesde!=null){
+//                arreglo = arreglo + "AND l.fecha_vencimiento > " + fechaDesde; 
+//            }
+//            else{
+//                arreglo = arreglo + "AND l.fecha_vencimiento < " + fechaHasta; 
+//            }
+//        }
         
         session.beginTransaction();
-
-        SQLQuery query = session.createSQLQuery("SELECT * FROM licencia l JOIN titular t ON l.id_titular=t.id "
-                + "WHERE fechaVencimiento < now()" + arreglo + "")
-                .addEntity("l",Licencia.class)
-		.addJoin("t","l.titular");
-//                .setParameter("hoy", hoy);
         
-        List<Object[]> rows = query.list();
-        List<Licencia> retorno = null;
+        List<Licencia> query = session.createSQLQuery("SELECT * FROM licencia l INNER JOIN titular t ON l.id_titular=t.id "
+                + "WHERE fechaVencimiento < NOW()" + arreglo + ";")
+                .addEntity(Licencia.class).list();
+//                .setParameter("hoy", hoy);
+
+//        SQLQuery query = session.createSQLQuery("SELECT * FROM licencia l JOIN titular t ON l.id_titular=t.id "
+//                + "WHERE fechaVencimiento < now()" + arreglo + "")
+//                .addEntity("l",Licencia.class)
+//		.addJoin("t","l.titular");
+////                .setParameter("hoy", hoy);
+        
+
+//        List<Object[]> rows = query.list();
+//        List<Licencia> retorno = null;
 //        for (Object[] row : rows) {
 //            Licencia l = (Licencia) row[0]; 
 //            Titular t = (Titular) row[1];
@@ -121,7 +127,7 @@ public class GestorDeBaseDeDatos {
         
 //        session.close()
         
-        return retorno;
+        return query;
     }
     
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {

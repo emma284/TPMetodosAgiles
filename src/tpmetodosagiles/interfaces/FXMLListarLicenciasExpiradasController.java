@@ -49,7 +49,7 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
     @FXML
     private ListView lvLicencias;
     @FXML
-    private ComboBox cbTipoDocumento;
+    private ComboBox cbTipoLicencia;
 
     private ObservableList<Licencia> licenciaObservableList;    
     private List<Licencia> listaLicencias;
@@ -62,8 +62,8 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
-        cbTipoDocumento.setItems(tiposDocumentos);
+        ObservableList <String> tiposLicencias = FXCollections.observableArrayList(GestorDeDatosDeInterface.getLicencias());
+        cbTipoLicencia.setItems(tiposLicencias);
                 
 
         
@@ -75,7 +75,7 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
         String apellido = tfApellidoTitular.getText().toString();
         LocalDate fechaDesde = dpFechaDesde.getValue();
         LocalDate fechaHasta = dpFechaHasta.getValue();
-        String clase = cbTipoDocumento.getSelectionModel().getSelectedItem().toString();
+        String clase = cbTipoLicencia.getSelectionModel().getSelectedItem().toString();
         listaLicencias = gestorLicencias.buscarLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
         if(listaLicencias == null){
             System.out.println("No se han encontrado Licencias");
