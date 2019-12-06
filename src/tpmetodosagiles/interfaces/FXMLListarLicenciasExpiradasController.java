@@ -63,6 +63,7 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         ObservableList <String> tiposLicencias = FXCollections.observableArrayList(GestorDeDatosDeInterface.getLicencias());
+        System.out.println(tiposLicencias.get(0));
         cbTipoLicencia.setItems(tiposLicencias);
                 
 
@@ -75,7 +76,10 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
         String apellido = tfApellidoTitular.getText().toString();
         LocalDate fechaDesde = dpFechaDesde.getValue();
         LocalDate fechaHasta = dpFechaHasta.getValue();
+        String clase2 = cbTipoLicencia.getValue().toString();
+        System.out.println(clase2);
         String clase = cbTipoLicencia.getSelectionModel().getSelectedItem().toString();
+        
         listaLicencias = gestorLicencias.buscarLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
         if(listaLicencias == null){
             System.out.println("No se han encontrado Licencias");
