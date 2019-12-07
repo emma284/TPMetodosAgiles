@@ -28,6 +28,13 @@ public enum SexoEnum {
             return 'F';
     }
     
+    public String getDescriptor(){
+        if(this == SexoEnum.M)
+            return "Masculino";
+        else
+            return "Femenino";
+    }
+    
     @Override
     public String toString(){
         if(this == SexoEnum.M)

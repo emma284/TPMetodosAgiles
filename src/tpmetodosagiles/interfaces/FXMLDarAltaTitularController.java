@@ -7,7 +7,7 @@ package tpmetodosagiles.interfaces;
 
 import java.io.File;
 import java.net.URL;
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
@@ -68,7 +69,14 @@ public class FXMLDarAltaTitularController implements Initializable {
     private DatePicker dpFechaNacimiento;
     @FXML
     private ImageView imgFotoTitular;
-    
+    @FXML
+    private Button btnBuscarContribuyente;
+    @FXML
+    private Button btnBorrarTodo;
+    @FXML
+    private Button btnSeleccionarFotografia;
+    @FXML
+    private Button btnDarDeAltaTitular;
     
     
     @Override
@@ -247,10 +255,6 @@ public class FXMLDarAltaTitularController implements Initializable {
             errores.append("-El campo 'Fecha de Nacimiento' no puede estár vacío.\n");
             datosCorrectos = false;
         }
-        /*else if (dpFechaNacimiento.getValue().compareTo(LocalDate.now().minusYears(17)) > 0){    //Si el titular tiene menos de 17 años
-            errores.append("-El titular debe tener al menos 17 años.\n");
-            datosCorrectos = false;
-        }*/
         if (cbCalleTitular.getValue() == null){
             errores.append("-El campo 'Calle' no puede estár vacío.\n");
             datosCorrectos = false;
@@ -269,6 +273,10 @@ public class FXMLDarAltaTitularController implements Initializable {
         }
         if (cbSexo.getValue() == null){
             errores.append("-Debe seleccionar el sexo de nacimiento del titular.\n");
+            datosCorrectos = false;
+        }
+        if (cbObservaciones.getValue() == null ){
+            errores.append("-Debe seleccionar una de las opciones de 'Observaciones'.\n");
             datosCorrectos = false;
         }
         if (cbClaseLicencia.getValue() == null){
@@ -314,17 +322,30 @@ public class FXMLDarAltaTitularController implements Initializable {
     
     
     private void rellenarDatosTitularConDatosContribuyente(ContribuyenteDTO contr) {
-        cbSexo.setValue("" + contr.sexo.getIdentificador());
+        tfNombreTitular.setText(contr.nombres);
+        tfApellidoTitular.setText(contr.apellidos);
+        dpFechaNacimiento.setValue(contr.fechaNacimiento);
+        if(contr.calle != null)
+            cbCalleTitular.setValue(contr.calle);
+        if(contr.altura != 0)
+            tfNroAltura.setText("" + contr.altura);
+        cbSexo.setValue(contr.sexo.getDescriptor());
+        if(contr.departamento != null)
+            tfNroInterno.setText(contr.departamento);
+        
+        //TODO Observaciones no puede quedar vacio cuando valide los datos del sistema (en todo caso debe quedar en "Ninguno")
     }
 
     private void deshabilitarBusqueda() {
         cbTipoDocumento.setDisable(true);
         tfNumeroDocumento.setDisable(true);
+        btnBuscarContribuyente.setDisable(true);
     }
     
     private void habilitarBusqueda() {
         cbTipoDocumento.setDisable(false);
         tfNumeroDocumento.setDisable(false);
+        btnBuscarContribuyente.setDisable(false);
     }
     private void habilitarEdicionDatosDeTitular() {
         
@@ -333,14 +354,39 @@ public class FXMLDarAltaTitularController implements Initializable {
         tfPiso.setDisable(false);
         tfNroInterno.setDisable(false);
         cbSexo.setDisable(false);
-        cbSexo.setDisable(false);
+        cbGrupoSanguinio.setDisable(false);
+        cbEsDonante.setDisable(false);
+        cbObservaciones.setDisable(false);
+        cbClaseLicencia.setDisable(false);
+        btnBorrarTodo.setDisable(false);
+        btnSeleccionarFotografia.setDisable(false);
+        btnDarDeAltaTitular.setDisable(false);
     }
 
     private void deshabilitarEdicionDatosDeTitular() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        cbCalleTitular.setDisable(true);
+        tfNroAltura.setDisable(true);
+        tfPiso.setDisable(true);
+        tfNroInterno.setDisable(true);
+        cbSexo.setDisable(true);
+        cbGrupoSanguinio.setDisable(true);
+        cbEsDonante.setDisable(true);
+        cbObservaciones.setDisable(true);
+        cbClaseLicencia.setDisable(true);
+        btnBorrarTodo.setDisable(true);
+        btnSeleccionarFotografia.setDisable(true);
+        btnDarDeAltaTitular.setDisable(true);
     }
 
     private void borrarDatosTitular() {
+        tfNombreTitular.clear();
+        tfApellidoTitular.clear();
+        dpFechaNacimiento.setValue(null);
+        cbCalleTitular.setValue("");
+        tfNroAltura.clear();
+        tfNroInterno.clear();
+        cbSexo.setValue("");
         //TODO No olvidar imagen
     }
 
