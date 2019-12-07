@@ -91,6 +91,19 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     }
     
     @FXML
+    private void irAEditarCostosDeLicencias(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLCostoDeLicencias.fxml"));
+        GridPane listarCostosGridPane = (GridPane) fxmlLoader.load();
+        
+        try {
+            gpAreaDeTrabajo.getChildren().clear();
+            gpAreaDeTrabajo.getChildren().add(listarCostosGridPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+    
+    @FXML
     private void irAOcultarMenu(ActionEvent event) throws IOException{
         if(vbMenu.getPrefWidth() > 45){
             vbMenu.setPrefWidth(45);
