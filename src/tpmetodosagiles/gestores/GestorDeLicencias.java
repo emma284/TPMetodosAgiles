@@ -205,7 +205,7 @@ public class GestorDeLicencias {
         return 0;
     }
     
-    public List<Licencia> buscarLicenciasExpiradas(String nombre,String apellido,String clase,LocalDate fechaDesde,LocalDate fechaHasta){
+    public List<Licencia> buscarLicenciasExpiradas(String nombre,String apellido,char clase,LocalDate fechaDesde,LocalDate fechaHasta){
         List<Licencia> lista = gbd.getLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
         
         return lista;

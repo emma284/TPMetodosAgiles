@@ -63,10 +63,8 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         ObservableList <String> tiposLicencias = FXCollections.observableArrayList(GestorDeDatosDeInterface.getLicencias());
-        System.out.println(tiposLicencias.get(0));
         cbTipoLicencia.setItems(tiposLicencias);
                 
-
         
     }
         
@@ -76,52 +74,28 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
         String apellido = tfApellidoTitular.getText().toString();
         LocalDate fechaDesde = dpFechaDesde.getValue();
         LocalDate fechaHasta = dpFechaHasta.getValue();
-        String clase2 = cbTipoLicencia.getValue().toString();
-        System.out.println(clase2);
-        String clase = cbTipoLicencia.getSelectionModel().getSelectedItem().toString();
+        char clase = (cbTipoLicencia.getValue()==null)? 'Z' : cbTipoLicencia.getSelectionModel().getSelectedItem().toString().charAt(0);
         
         listaLicencias = gestorLicencias.buscarLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
+        
         if(listaLicencias == null){
             System.out.println("No se han encontrado Licencias");
-        }else{
-            //CONTINUAR
+        }
+        else{
             setDatosDeLicenciasEnTabla();
         }
     }
     
     private void setDatosDeLicenciasEnTabla(){
         
-        //QUEDE ACÁ
         licenciaObservableList.clear();
         for(Licencia licencia: listaLicencias){
-            if(licencia.getFechaVencimiento().isAfter(LocalDate.now()) || licencia.getFechaVencimiento().isEqual(LocalDate.now())){
                 licenciaObservableList.add(licencia);
-            }
-        }
-        
-        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
-        for(Licencia licencia : licenciaObservableList){
-            claseLicencia.remove(String.valueOf(licencia.getClaseLicencia()));
         }
         
         lvLicencias.setItems(licenciaObservableList);
         lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
         
     }
-    private boolean datosValidos(){
-        boolean datosCorrectos = true;
-        StringBuffer errores = new StringBuffer("");
 
-        if (!datosCorrectos){
-            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
-            mensajeErrores.setTitle("Datos faltantes/incorrectos");
-            mensajeErrores.setHeaderText("Debe corregir los siguientes puntos antes de proseguir");
-            mensajeErrores.setContentText(errores.toString());
-            
-            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
-            mensajeErrores.show();
-        }
-        
-        return datosCorrectos;
-    } 
 }

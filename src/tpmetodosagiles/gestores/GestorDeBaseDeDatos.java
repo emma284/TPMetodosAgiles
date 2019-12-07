@@ -78,55 +78,48 @@ public class GestorDeBaseDeDatos {
     }
     
     
-    public List<Licencia> getLicenciasExpiradas(String nombre, String apellido, String clase, LocalDate fechaDesde, LocalDate fechaHasta){
+    public List<Licencia> getLicenciasExpiradas(String nombre, String apellido, char clase, LocalDate fechaDesde, LocalDate fechaHasta){
         
         LocalDate hoy = LocalDate.now();
         
+        LocalDate fechaFinal = (fechaHasta!=null && fechaHasta.compareTo(hoy)<=0)? fechaHasta : null;
+        
         String arreglo = "";
-//        if(nombre!=null){
-//           arreglo = arreglo + "AND t.nombre LIKE '" + nombre + "'"; 
-//        }
-//        if(apellido!=null){
-//           arreglo = arreglo + "AND t.apellido LIKE '" + apellido +"'"; 
-//        }
-//        if(clase!=null){
-//           arreglo = arreglo + "AND l.clase_licencia = '" + clase + "'"; 
-//        }
-//        if((fechaDesde!=null)||(fechaHasta!=null)){
-//            if((fechaDesde!=null)&&(fechaHasta!=null)){
-//                arreglo = arreglo + "AND l.fecha_vencimiento BETWEEN " + fechaDesde + "AND" + fechaHasta; 
-//            }
-//            else if(fechaDesde!=null){
-//                arreglo = arreglo + "AND l.fecha_vencimiento > " + fechaDesde; 
-//            }
-//            else{
-//                arreglo = arreglo + "AND l.fecha_vencimiento < " + fechaHasta; 
-//            }
-//        }
+
+        if((fechaDesde!=null)||(fechaFinal!=null)){
+            if((fechaDesde!=null)&&(fechaFinal!=null)){
+                arreglo = arreglo + "fecha_vencimiento BETWEEN " + fechaDesde + " AND " + fechaFinal + " "; 
+            }
+            else{
+                if(fechaDesde!=null){
+                arreglo = arreglo + "fecha_vencimiento BETWEEN " + fechaDesde + " AND now() "; 
+                }
+                else{
+                arreglo = arreglo + "fecha_vencimiento < " + fechaFinal + " "; 
+                }
+            }
+        }
+        else{
+            arreglo = arreglo + "fecha_vencimiento < now() ";
+        }
+        if(!nombre.isEmpty()){
+           arreglo = arreglo + "AND t.nombre LIKE '" + nombre + "%' "; 
+        }
+        if(!apellido.isEmpty()){
+           arreglo = arreglo + "AND t.apellido LIKE '" + apellido +"%' "; 
+        }
+        if(clase!='Z'){
+           arreglo = arreglo + "AND l.clase_licencia = '" + clase + "' "; 
+        }
+        
         
         session.beginTransaction();
         
-        List<Licencia> query = session.createSQLQuery("SELECT * FROM licencia l INNER JOIN titular t ON l.id_titular=t.id "
-                + "WHERE fechaVencimiento < NOW()" + arreglo + ";")
+        List<Licencia> query = session.createSQLQuery("SELECT l.* FROM licencia l JOIN titular t ON l.id_titular=t.id "
+                + "WHERE " + arreglo + ";")
                 .addEntity(Licencia.class).list();
 //                .setParameter("hoy", hoy);
 
-//        SQLQuery query = session.createSQLQuery("SELECT * FROM licencia l JOIN titular t ON l.id_titular=t.id "
-//                + "WHERE fechaVencimiento < now()" + arreglo + "")
-//                .addEntity("l",Licencia.class)
-//		.addJoin("t","l.titular");
-////                .setParameter("hoy", hoy);
-        
-
-//        List<Object[]> rows = query.list();
-//        List<Licencia> retorno = null;
-//        for (Object[] row : rows) {
-//            Licencia l = (Licencia) row[0]; 
-//            Titular t = (Titular) row[1];
-//        }
-        
-//        session.close()
-        
         return query;
     }
     
