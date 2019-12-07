@@ -7,6 +7,7 @@ package tpmetodosagiles.entidades;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -69,7 +70,7 @@ public class Titular {
     //TODO: Emir-Luciano: Agregar Observaciones 
     
     @OneToMany(mappedBy = "titular", cascade= CascadeType.ALL)
-    private List<Licencia> licencias;
+    private List<Licencia> licencias = new ArrayList<Licencia>();
     
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
@@ -198,8 +199,8 @@ public class Titular {
         return licencias;
     }
 
-    public void setLicencias(List<Licencia> licencias) {
-        this.licencias = licencias;
+    public void setLicencias(List<Licencia> licen) {
+        this.licencias = licen;
     }
 
     public Usuario getUsuarioResponsable() {

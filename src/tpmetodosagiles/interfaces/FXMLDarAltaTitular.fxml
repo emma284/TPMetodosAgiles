@@ -54,8 +54,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#buscarEnBDCiudad" prefHeight="25.0" prefWidth="96.0" text="Búscar" />
-            <Button mnemonicParsing="false" onAction="#borrarDatosDePantalla" prefHeight="25.0" prefWidth="109.0" text="Borrar todo" GridPane.columnIndex="1" />
+            <Button fx:id="btnBuscarContribuyente" mnemonicParsing="false" onAction="#buscarEnBDCiudad" prefHeight="25.0" prefWidth="96.0" text="Búscar" />
+            <Button fx:id="btnBorrarTodo" disable="true" mnemonicParsing="false" onAction="#borrarDatosDePantalla" prefHeight="25.0" prefWidth="109.0" text="Borrar todo" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Label text="Nombres:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
@@ -137,8 +137,8 @@
          <image>
             <Image url="@../recursos/imagenes/imgDeInterface/foto_usuario.png" />
          </image></ImageView>
-      <Button disable="true" mnemonicParsing="false" onAction="#seleccionarFotografia" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-      <Button disable="true" mnemonicParsing="false" onAction="#darDeAltaTitular" text="Dar de Alta" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="13" GridPane.valignment="BOTTOM" />
+      <Button fx:id="btnSeleccionarFotografia" disable="true" mnemonicParsing="false" onAction="#seleccionarFotografia" text="Seleccionar Fotografía" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <Button fx:id="btnDarDeAltaTitular" disable="true" mnemonicParsing="false" onAction="#darDeAltaTitular" text="Dar de Alta" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="13" GridPane.valignment="BOTTOM" />
    </children>
    <opaqueInsets>
       <Insets />
