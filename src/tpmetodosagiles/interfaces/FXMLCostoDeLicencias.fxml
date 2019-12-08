@@ -45,7 +45,7 @@
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TextField fx:id="tfCostosAdministrativos" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <TextField fx:id="tfA1Anios" GridPane.columnIndex="4" GridPane.rowIndex="3" />
       <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="16">
          <GridPane.margin>
             <Insets top="-5.0" />
@@ -53,35 +53,47 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="15" />
       <Label prefHeight="17.0" prefWidth="161.0" text="Editar Costos de Licencia" GridPane.columnSpan="2" />
-      <Button fx:id="btModificar" maxWidth="250.0" mnemonicParsing="false" onAction="#modificarTabla" text="Modificar" GridPane.columnIndex="3" GridPane.rowIndex="18" />
-      <Label text="Costos por gastos administrativos: $" GridPane.columnSpan="2" GridPane.rowIndex="18" />
-      <TextField fx:id="tfCostosAdministrativos1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-      <TextField fx:id="tfCostosAdministrativos2" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-      <TextField fx:id="tfCostosAdministrativos11" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-      <TextField fx:id="tfCostosAdministrativos111" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-      <TextField fx:id="tfCostosAdministrativos1111" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-      <TextField fx:id="tfCostosAdministrativos11111" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-      <TextField fx:id="tfCostosAdministrativos3" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <TextField fx:id="tfCostosAdministrativos31" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <TextField fx:id="tfCostosAdministrativos311" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <TextField fx:id="tfCostosAdministrativos3111" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <TextField fx:id="tfCostosAdministrativos31111" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-      <TextField fx:id="tfCostosAdministrativos311111" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-      <TextField fx:id="tfCostosAdministrativos3111111" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-      <TextField fx:id="tfCostosAdministrativos32" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Button fx:id="btModificar" maxWidth="250.0" mnemonicParsing="false" onAction="#modificarTabla" text="Modificar" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+      <Label prefHeight="17.0" prefWidth="203.0" text="Costos por gastos administrativos: $" GridPane.columnSpan="2" GridPane.rowIndex="12" />
+      <TextField fx:id="tfC1Anios" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+      <TextField fx:id="tfB1Anios" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+      <TextField fx:id="tfD1Anios" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+      <TextField fx:id="tfE1Anios" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <TextField fx:id="tfF1Anios" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <TextField fx:id="tfG1Anios" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+      <TextField fx:id="tfA3Anios" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <TextField fx:id="tfB3Anios" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <TextField fx:id="tfC3Anios" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <TextField fx:id="tfD3Anios" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <TextField fx:id="tfE3Anios" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+      <TextField fx:id="tfF3Anios" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <TextField fx:id="tfG3Anios" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <TextField fx:id="tfA4Anios" GridPane.columnIndex="2" GridPane.rowIndex="3" />
       <TextField fx:id="tfA5Anios" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="tfCostosAdministrativos3211" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <TextField fx:id="tfB4Anios" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <TextField fx:id="tfB5Anios" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="tfCostosAdministrativos32121" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <TextField fx:id="tfC4Anios" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <TextField fx:id="tfC5Anios" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField fx:id="tfCostosAdministrativos3212111" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <TextField fx:id="tfCostosAdministrativos32121111" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-      <TextField fx:id="tfCostosAdministrativos32121112" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-      <TextField fx:id="tfCostosAdministrativos321211121" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-      <TextField fx:id="tfCostosAdministrativos3212111211" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-      <TextField fx:id="tfCostosAdministrativos32121112111" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <TextField fx:id="tfCostosAdministrativos321211121111" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <TextField fx:id="tfCostosAdministrativos3212111211111" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="tfD5Anios" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="tfD4Anios" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <TextField fx:id="tfG4Anios" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <TextField fx:id="tfF4Anios" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <TextField fx:id="tfE4Anios" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+      <TextField fx:id="tfF5Anios" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="tfE5Anios" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="tfG5Anios" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia A" GridPane.rowIndex="3" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia B" GridPane.rowIndex="4" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia C" GridPane.rowIndex="5" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia D" GridPane.rowIndex="6" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia E" GridPane.rowIndex="7" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia F" GridPane.rowIndex="8" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="Licencia G" GridPane.rowIndex="9" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="5 Años" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="1 Año" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="4 Años" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Label minWidth="40.0" prefHeight="17.0" prefWidth="126.0" text="3 Años" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <TextField fx:id="tfCostosAdministrativos" GridPane.columnIndex="2" GridPane.rowIndex="12" />
    </children>
    <opaqueInsets>
       <Insets />

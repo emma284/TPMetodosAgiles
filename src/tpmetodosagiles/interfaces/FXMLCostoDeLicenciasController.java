@@ -15,19 +15,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
-import tpmetodosagiles.entidades.Licencia;
-import tpmetodosagiles.entidades.Titular;
-import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeLicencias;
-import tpmetodosagiles.gestores.GestorDeTitulares;
 //import tpmetodosagiles.layouts.TextFieldSoloLetras;
 
 /**
@@ -97,8 +88,8 @@ public class FXMLCostoDeLicenciasController implements Initializable {
     @FXML
     private TextField tfG1Anios;
 
-    private List<List<Integer>> listaDeCostos;
-    private Integer costoAdministrativo;
+    private List<List<Double>> listaDeCostos;
+    private Double costoAdministrativo;
     
     public FXMLCostoDeLicenciasController(){
         gestorLicencias = new GestorDeLicencias();
@@ -118,52 +109,52 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         if (!this.validarDatos())
             return;
         
-        List<Integer> valoresLicenciaA = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaB = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaC = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaD = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaE = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaF = new ArrayList<Integer>();
-        List<Integer> valoresLicenciaG = new ArrayList<Integer>();
+        List<Double> valoresLicenciaA = new ArrayList<Double>();
+        List<Double> valoresLicenciaB = new ArrayList<Double>();
+        List<Double> valoresLicenciaC = new ArrayList<Double>();
+        List<Double> valoresLicenciaD = new ArrayList<Double>();
+        List<Double> valoresLicenciaE = new ArrayList<Double>();
+        List<Double> valoresLicenciaF = new ArrayList<Double>();
+        List<Double> valoresLicenciaG = new ArrayList<Double>();
         
-        valoresLicenciaA.add(Integer.parseInt(tfA5Anios.getText()));
-        valoresLicenciaA.add(Integer.parseInt(tfA4Anios.getText()));
-        valoresLicenciaA.add(Integer.parseInt(tfA3Anios.getText()));
-        valoresLicenciaA.add(Integer.parseInt(tfA1Anios.getText()));
+        valoresLicenciaA.add(Double.parseDouble(tfA5Anios.getText()));
+        valoresLicenciaA.add(Double.parseDouble(tfA4Anios.getText()));
+        valoresLicenciaA.add(Double.parseDouble(tfA3Anios.getText()));
+        valoresLicenciaA.add(Double.parseDouble(tfA1Anios.getText()));
         
-        valoresLicenciaB.add(Integer.parseInt(tfB5Anios.getText()));
-        valoresLicenciaB.add(Integer.parseInt(tfB4Anios.getText()));
-        valoresLicenciaB.add(Integer.parseInt(tfB3Anios.getText()));
-        valoresLicenciaB.add(Integer.parseInt(tfB1Anios.getText()));
+        valoresLicenciaB.add(Double.parseDouble(tfB5Anios.getText()));
+        valoresLicenciaB.add(Double.parseDouble(tfB4Anios.getText()));
+        valoresLicenciaB.add(Double.parseDouble(tfB3Anios.getText()));
+        valoresLicenciaB.add(Double.parseDouble(tfB1Anios.getText()));
         
-        valoresLicenciaC.add(Integer.parseInt(tfC5Anios.getText()));
-        valoresLicenciaC.add(Integer.parseInt(tfC4Anios.getText()));
-        valoresLicenciaC.add(Integer.parseInt(tfC3Anios.getText()));
-        valoresLicenciaC.add(Integer.parseInt(tfC1Anios.getText()));
+        valoresLicenciaC.add(Double.parseDouble(tfC5Anios.getText()));
+        valoresLicenciaC.add(Double.parseDouble(tfC4Anios.getText()));
+        valoresLicenciaC.add(Double.parseDouble(tfC3Anios.getText()));
+        valoresLicenciaC.add(Double.parseDouble(tfC1Anios.getText()));
         
-        valoresLicenciaD.add(Integer.parseInt(tfD5Anios.getText()));
-        valoresLicenciaD.add(Integer.parseInt(tfD4Anios.getText()));
-        valoresLicenciaD.add(Integer.parseInt(tfD3Anios.getText()));
-        valoresLicenciaD.add(Integer.parseInt(tfD1Anios.getText()));
+        valoresLicenciaD.add(Double.parseDouble(tfD5Anios.getText()));
+        valoresLicenciaD.add(Double.parseDouble(tfD4Anios.getText()));
+        valoresLicenciaD.add(Double.parseDouble(tfD3Anios.getText()));
+        valoresLicenciaD.add(Double.parseDouble(tfD1Anios.getText()));
         
-        valoresLicenciaE.add(Integer.parseInt(tfE5Anios.getText()));
-        valoresLicenciaE.add(Integer.parseInt(tfE4Anios.getText()));
-        valoresLicenciaE.add(Integer.parseInt(tfE3Anios.getText()));
-        valoresLicenciaE.add(Integer.parseInt(tfE1Anios.getText()));
+        valoresLicenciaE.add(Double.parseDouble(tfE5Anios.getText()));
+        valoresLicenciaE.add(Double.parseDouble(tfE4Anios.getText()));
+        valoresLicenciaE.add(Double.parseDouble(tfE3Anios.getText()));
+        valoresLicenciaE.add(Double.parseDouble(tfE1Anios.getText()));
         
-        valoresLicenciaF.add(Integer.parseInt(tfF5Anios.getText()));
-        valoresLicenciaF.add(Integer.parseInt(tfF4Anios.getText()));
-        valoresLicenciaF.add(Integer.parseInt(tfF3Anios.getText()));
-        valoresLicenciaF.add(Integer.parseInt(tfF1Anios.getText()));
+        valoresLicenciaF.add(Double.parseDouble(tfF5Anios.getText()));
+        valoresLicenciaF.add(Double.parseDouble(tfF4Anios.getText()));
+        valoresLicenciaF.add(Double.parseDouble(tfF3Anios.getText()));
+        valoresLicenciaF.add(Double.parseDouble(tfF1Anios.getText()));
         
-        valoresLicenciaG.add(Integer.parseInt(tfG5Anios.getText()));
-        valoresLicenciaG.add(Integer.parseInt(tfG4Anios.getText()));
-        valoresLicenciaG.add(Integer.parseInt(tfG3Anios.getText()));
-        valoresLicenciaG.add(Integer.parseInt(tfG1Anios.getText()));
+        valoresLicenciaG.add(Double.parseDouble(tfG5Anios.getText()));
+        valoresLicenciaG.add(Double.parseDouble(tfG4Anios.getText()));
+        valoresLicenciaG.add(Double.parseDouble(tfG3Anios.getText()));
+        valoresLicenciaG.add(Double.parseDouble(tfG1Anios.getText()));
         
-        ArrayList<List<Integer>> valoresLicencia = new ArrayList<List<Integer>>();
+        ArrayList<List<Double>> valoresLicencia = new ArrayList<List<Double>>();
         gestorLicencias.guardarValoresLicencia(valoresLicencia);
-        gestorLicencias.guardarCostoAdministrativo(Integer.parseInt(tfG1Anios.getText()));
+        gestorLicencias.guardarCostoAdministrativo(Double.parseDouble(tfG1Anios.getText()));
         
     }
     
@@ -171,41 +162,47 @@ public class FXMLCostoDeLicenciasController implements Initializable {
     public void cargarTabla(){
         
         listaDeCostos = gestorLicencias.obtenerCostos();
+
+//        String s=String.valueOf(nro); 
         costoAdministrativo = gestorLicencias.obtenerCostoAdministrativo();
         tfCostosAdministrativos.setText(costoAdministrativo.toString());
         
+//        tfA5Anios.setText(s);
         tfA5Anios.setText(listaDeCostos.get(0).get(0).toString());
-        tfB5Anios.setText(listaDeCostos.get(0).get(1).toString());
-        tfC5Anios.setText(listaDeCostos.get(0).get(2).toString());
-        tfD5Anios.setText(listaDeCostos.get(0).get(3).toString());
-        tfE5Anios.setText(listaDeCostos.get(0).get(4).toString());
-        tfF5Anios.setText(listaDeCostos.get(0).get(5).toString());
-        tfG5Anios.setText(listaDeCostos.get(0).get(6).toString());
+        tfA4Anios.setText(listaDeCostos.get(0).get(1).toString());
+        tfA3Anios.setText(listaDeCostos.get(0).get(2).toString());
+        tfA1Anios.setText(listaDeCostos.get(0).get(3).toString());
         
-        tfA4Anios.setText(listaDeCostos.get(1).get(0).toString());
+        tfB5Anios.setText(listaDeCostos.get(1).get(0).toString());
         tfB4Anios.setText(listaDeCostos.get(1).get(1).toString());
-        tfC4Anios.setText(listaDeCostos.get(1).get(2).toString());
-        tfD4Anios.setText(listaDeCostos.get(1).get(3).toString());
-        tfE4Anios.setText(listaDeCostos.get(1).get(4).toString());
-        tfF4Anios.setText(listaDeCostos.get(1).get(5).toString());
-        tfG4Anios.setText(listaDeCostos.get(1).get(6).toString());
+        tfB3Anios.setText(listaDeCostos.get(1).get(2).toString());
+        tfB1Anios.setText(listaDeCostos.get(1).get(3).toString());
         
-        tfA3Anios.setText(listaDeCostos.get(2).get(0).toString());
-        tfB3Anios.setText(listaDeCostos.get(2).get(1).toString());
+        tfC5Anios.setText(listaDeCostos.get(2).get(0).toString());
+        tfC4Anios.setText(listaDeCostos.get(2).get(1).toString());
         tfC3Anios.setText(listaDeCostos.get(2).get(2).toString());
-        tfD3Anios.setText(listaDeCostos.get(2).get(3).toString());
-        tfE3Anios.setText(listaDeCostos.get(2).get(4).toString());
-        tfF3Anios.setText(listaDeCostos.get(2).get(5).toString());
-        tfG3Anios.setText(listaDeCostos.get(2).get(6).toString());
+        tfC1Anios.setText(listaDeCostos.get(2).get(3).toString());
         
-        tfA1Anios.setText(listaDeCostos.get(3).get(0).toString());
-        tfB1Anios.setText(listaDeCostos.get(3).get(1).toString());
-        tfC1Anios.setText(listaDeCostos.get(3).get(2).toString());
+        tfD5Anios.setText(listaDeCostos.get(3).get(0).toString());
+        tfD4Anios.setText(listaDeCostos.get(3).get(1).toString());
+        tfD3Anios.setText(listaDeCostos.get(3).get(2).toString());
         tfD1Anios.setText(listaDeCostos.get(3).get(3).toString());
-        tfE1Anios.setText(listaDeCostos.get(3).get(4).toString());
-        tfF1Anios.setText(listaDeCostos.get(3).get(5).toString());
-        tfG1Anios.setText(listaDeCostos.get(3).get(6).toString());
-
+        
+        tfE5Anios.setText(listaDeCostos.get(4).get(0).toString());
+        tfE4Anios.setText(listaDeCostos.get(4).get(1).toString());
+        tfE3Anios.setText(listaDeCostos.get(4).get(2).toString());
+        tfE1Anios.setText(listaDeCostos.get(4).get(3).toString());
+        
+        tfF5Anios.setText(listaDeCostos.get(5).get(0).toString());
+        tfF4Anios.setText(listaDeCostos.get(5).get(1).toString());
+        tfF3Anios.setText(listaDeCostos.get(5).get(2).toString());
+        tfF1Anios.setText(listaDeCostos.get(5).get(3).toString());
+        
+        tfG5Anios.setText(listaDeCostos.get(6).get(0).toString());
+        tfG4Anios.setText(listaDeCostos.get(6).get(1).toString());
+        tfG3Anios.setText(listaDeCostos.get(6).get(2).toString());
+        tfG1Anios.setText(listaDeCostos.get(6).get(3).toString());
+ 
     }
     
     private Boolean validarDatos(){
@@ -248,37 +245,37 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         if (tfG1Anios.getText().isEmpty()) datosCorrectos = false;
 
         try{
-            Integer.parseInt(tfA5Anios.getText());
-            Integer.parseInt(tfB5Anios.getText());
-            Integer.parseInt(tfC5Anios.getText());
-            Integer.parseInt(tfD5Anios.getText());
-            Integer.parseInt(tfE5Anios.getText());
-            Integer.parseInt(tfF5Anios.getText());
-            Integer.parseInt(tfG5Anios.getText());
+            Double.parseDouble(tfA5Anios.getText());
+            Double.parseDouble(tfB5Anios.getText());
+            Double.parseDouble(tfC5Anios.getText());
+            Double.parseDouble(tfD5Anios.getText());
+            Double.parseDouble(tfE5Anios.getText());
+            Double.parseDouble(tfF5Anios.getText());
+            Double.parseDouble(tfG5Anios.getText());
             
-            Integer.parseInt(tfA4Anios.getText());
-            Integer.parseInt(tfB4Anios.getText());
-            Integer.parseInt(tfC4Anios.getText());
-            Integer.parseInt(tfD4Anios.getText());
-            Integer.parseInt(tfE4Anios.getText());
-            Integer.parseInt(tfF4Anios.getText());
-            Integer.parseInt(tfG4Anios.getText());
+            Double.parseDouble(tfA4Anios.getText());
+            Double.parseDouble(tfB4Anios.getText());
+            Double.parseDouble(tfC4Anios.getText());
+            Double.parseDouble(tfD4Anios.getText());
+            Double.parseDouble(tfE4Anios.getText());
+            Double.parseDouble(tfF4Anios.getText());
+            Double.parseDouble(tfG4Anios.getText());
             
-            Integer.parseInt(tfA3Anios.getText());
-            Integer.parseInt(tfB3Anios.getText());
-            Integer.parseInt(tfC3Anios.getText());
-            Integer.parseInt(tfD3Anios.getText());
-            Integer.parseInt(tfE3Anios.getText());
-            Integer.parseInt(tfF3Anios.getText());
-            Integer.parseInt(tfG3Anios.getText());
+            Double.parseDouble(tfA3Anios.getText());
+            Double.parseDouble(tfB3Anios.getText());
+            Double.parseDouble(tfC3Anios.getText());
+            Double.parseDouble(tfD3Anios.getText());
+            Double.parseDouble(tfE3Anios.getText());
+            Double.parseDouble(tfF3Anios.getText());
+            Double.parseDouble(tfG3Anios.getText());
            
-            Integer.parseInt(tfA1Anios.getText());
-            Integer.parseInt(tfB1Anios.getText());
-            Integer.parseInt(tfC1Anios.getText());
-            Integer.parseInt(tfD1Anios.getText());
-            Integer.parseInt(tfE1Anios.getText());
-            Integer.parseInt(tfF1Anios.getText());
-            Integer.parseInt(tfG1Anios.getText());
+            Double.parseDouble(tfA1Anios.getText());
+            Double.parseDouble(tfB1Anios.getText());
+            Double.parseDouble(tfC1Anios.getText());
+            Double.parseDouble(tfD1Anios.getText());
+            Double.parseDouble(tfE1Anios.getText());
+            Double.parseDouble(tfF1Anios.getText());
+            Double.parseDouble(tfG1Anios.getText());
             
         }
         catch(NumberFormatException fne){
