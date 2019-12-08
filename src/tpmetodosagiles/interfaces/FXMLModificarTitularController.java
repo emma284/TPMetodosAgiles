@@ -5,7 +5,6 @@
  */
 package tpmetodosagiles.interfaces;
 
-import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -18,11 +17,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javax.swing.filechooser.FileSystemView;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.enums.SexoEnum;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
@@ -102,8 +98,8 @@ public class FXMLModificarTitularController implements Initializable {
     @FXML
     private void modificarTitular(ActionEvent event){
         
-//        if(!this.datosValidos())
-//            return;
+        if(!this.datosValidos())
+            return;
         
         boolean esDonante = GestorDeDatosDeInterface.esDonanteToBoolean(cbEsDonante.getValue().toString());
         String domicilio = GestorDeDatosDeInterface.domicilioFormateado(cbCalleTitular.getValue().toString(), tfNroAltura.getText(), tfNroInterno.getText(), tfPiso.getText() );
@@ -118,7 +114,17 @@ public class FXMLModificarTitularController implements Initializable {
         unTitular.setSexo(sexo);
         unTitular.setObservaciones(observaciones);
         
-        gestorTitular.guardarModificacionTitular(unTitular);
+        gestorTitular.guardarModificacionTitular(unTitular); 
+    
+       
+        Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+        mensajeErrores.setTitle("Modificación Exitosa");
+        mensajeErrores.setHeaderText("Se han guardado correctamente las modificaciones al Titular");
+        mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+        mensajeErrores.show();
+        return;
+        
+        
 
     }
         
@@ -126,10 +132,25 @@ public class FXMLModificarTitularController implements Initializable {
     
     public void buscarTitular(){
         
+        if(!datosDeBusquedaValidos()){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos de búsqueda faltantes/incorrectos");
+            mensajeErrores.setHeaderText("Debe ingresar los campos correctamente para hallar un Titular");
+            
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            return;
+        }
+        
         unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
         if(unTitular == null){
-            System.out.println("Usuario no encontrado");
-        }else{
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("No hay Titulat");
+            mensajeErrores.setHeaderText("No se ha encontrado un titular para los campos de búsqueda ingresados");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }
+        else{
             setDatosTitular();
         }
     }
@@ -175,8 +196,6 @@ public class FXMLModificarTitularController implements Initializable {
         ObservableList <String> calles = FXCollections.observableArrayList( GestorDeDatosDeInterface.getCalles() );
         cbCalleTitular.setItems(calles);
         
-//        ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
-//        cbObservaciones.setItems(observaciones);
     }
 
     @FXML
@@ -191,66 +210,7 @@ public class FXMLModificarTitularController implements Initializable {
         deshabilitar datos de titular introducidos y habilitar datos de busqueda
         */
     }
-    
-    @FXML
-    private void seleccionarFotografia(ActionEvent event){
-        FileChooser.ExtensionFilter filtroImagenes = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.jpeg");
-        FileChooser fc = new FileChooser();
-        fc.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
-        fc.getExtensionFilters().add(filtroImagenes);
-        File file = fc.showOpenDialog(GestorDeConfiguracion.getVentanaActual());
-        
-        if(file == null)
-            return;
-        
-        Image foto = new Image(file.toURI().toString());
-        imgFotoTitular.setImage(foto);
-    }
-    
-    
-    @FXML
-    private void darDeAltaTitular(ActionEvent event){
-        //Verifica que todos los datos obligatorios hayan sido cargados a la interface (que no esté vacía la opción)
-        if (!this.datosValidos())
-            return;
-        
-        //Obtiene el valor booleano correspondiente al elemento elegido en el ComboBox cbEsDonante
-        boolean esDonante = GestorDeDatosDeInterface.esDonanteToBoolean(cbEsDonante.getValue().toString());
-        //Obtiene el domicilio formateado
-        String domicilio = GestorDeDatosDeInterface.domicilioFormateado(cbCalleTitular.getValue().toString(), tfNroAltura.getText(), tfNroInterno.getText(), tfPiso.getText() );
-        //Obtiene el valor char de sexo
-        char sexo = GestorDeDatosDeInterface.sexoToChar(cbSexo.getValue().toString());
-       
-        
-        //Intenta crear un nuevo titular
-        GestorDeTitulares gestTitular = new GestorDeTitulares();
-        try{
-            if (gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
-                    tfApellidoTitular.getText(), tfNombreTitular.getText(), dpFechaNacimiento.getValue(), domicilio, 
-                    cbGrupoSanguinio.getValue().toString(), esDonante, sexo,
-                    GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
-                    cbObservaciones.getValue().toString())){
-                
-                // Se registran el nuevo titular y licencia con exito
-                Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
-                mensajeExito.setTitle("Transacción completada");
-                mensajeExito.setHeaderText("Se ha registrado el titular y la licencia en el sistema");
-                mensajeExito.initModality(Modality.APPLICATION_MODAL);
-                mensajeExito.show();
-            }
-            
-        }
-        catch(NumberFormatException nfe){
-            //Ocurre si el número de documento no se puede parsear como tal
-            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
-            mensajeErrores.setTitle("Datos incorrectos");
-            mensajeErrores.setHeaderText("Debe corregir los siguientes puntos antes de proseguir");
-            mensajeErrores.setContentText("El número de documento solo puede contener caracteres numéricos.");
-            
-            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
-            mensajeErrores.show();
-        }
-    }
+
     
     /**
      * Valida que se hallan cargado todos los datos de interface obligatorios.
@@ -261,14 +221,7 @@ public class FXMLModificarTitularController implements Initializable {
         boolean datosCorrectos = true;
         StringBuffer errores = new StringBuffer("");
         
-        if (cbTipoDocumento.getValue() == null){
-            errores.append("-Debe seleccionar el tipo de documento de identificación nacional del titular.\n");
-            datosCorrectos = false;
-        }
-        if (tfNumeroDocumento.getText().length() < 7){
-            errores.append("-El campo 'Nro de Documento' debe contener al menos 7 caracteres.\n");
-            datosCorrectos = false;
-        }
+        
         if (cbCalleTitular.getValue() == null){
             errores.append("-El campo 'Calle' no puede estár vacío.\n");
             datosCorrectos = false;
@@ -289,6 +242,14 @@ public class FXMLModificarTitularController implements Initializable {
             errores.append("-Debe seleccionar el sexo de nacimiento del titular.\n");
             datosCorrectos = false;
         }
+        try{
+            Integer.parseInt(tfNroAltura.getText());
+        }
+        catch(NumberFormatException fne){
+            errores.append("-La altura debe ser un número.\n");
+            datosCorrectos = false;
+        }
+        
         if (!datosCorrectos){
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("Datos faltantes/incorrectos");
@@ -305,7 +266,11 @@ public class FXMLModificarTitularController implements Initializable {
     /**
      * Verifica que los datos de 'Tipo de documento' y 'Número de documento' sean validos (no sean nulos ni vacíos y que el número de documento solo esté compuesto por caracteres numéricos).
      */
-    private boolean datosDeBusquedaValidos(String tipoDocumento, String numeroDocumento) {
+    private boolean datosDeBusquedaValidos() {
+        
+        String tipoDocumento = (cbTipoDocumento.getValue()==null)? null : cbTipoDocumento.getSelectionModel().getSelectedItem().toString();
+        String numeroDocumento = tfNumeroDocumento.getText();
+        
         if (tipoDocumento == null || numeroDocumento == null){
             return false;
         }

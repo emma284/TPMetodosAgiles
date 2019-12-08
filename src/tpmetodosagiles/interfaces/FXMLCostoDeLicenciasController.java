@@ -164,6 +164,14 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         gestorLicencias.guardarValoresLicencia(valoresLicencia);
         gestorLicencias.guardarCostoAdministrativo(Double.parseDouble(tfCostosAdministrativos.getText()));
         
+               
+        Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+        mensajeErrores.setTitle("Modificación Exitosa");
+        mensajeErrores.setHeaderText("Se han guardado correctamente las modificaciones a los costos");
+        mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+        mensajeErrores.show();
+        return;
+        
     }
     
     @FXML
@@ -250,6 +258,8 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         if (tfG1Anios.getText().isEmpty()) datosCorrectos = false;
 
         try{
+            Double.parseDouble(tfCostosAdministrativos.getText());
+            
             Double.parseDouble(tfA5Anios.getText());
             Double.parseDouble(tfB5Anios.getText());
             Double.parseDouble(tfC5Anios.getText());
