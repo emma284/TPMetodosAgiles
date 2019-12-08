@@ -9,6 +9,8 @@ import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import static java.time.temporal.ChronoUnit.MONTHS;
+import static java.time.temporal.ChronoUnit.YEARS;
 import java.util.Calendar;
 import java.util.List;
 import javafx.scene.control.Alert;
@@ -109,9 +111,9 @@ public class GestorDeTitulares {
         LocalDate fechaHoy = LocalDate.now();
         boolean poseeLicenciaVigenteMismaClase = false;
         //edad del titular
-        int edadTitular = Period.between(unTitular.getFechaNacimiento(), fechaHoy).getYears();
+        int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
         //tiempo desde que obtuvo su primera licencia de clase B
-        int antiguedadClaseB = Period.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy).getYears();
+        int antiguedadClaseB = (int)YEARS.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy);
         //Recorrer listado de licencias que ha tenido el titular si no está vacío
         for (Licencia licencia : unTitular.getLicencias()) {
             if(licencia.getClaseLicencia()==claseLicencia && licencia.getFechaVencimiento().isAfter(fechaHoy)){
@@ -124,12 +126,12 @@ public class GestorDeTitulares {
             case 'D': 
             case 'E':
                 //Caso de que no haya tenido licencia de clase B desde hace, por lo menos, un año y  es menor de 21 años
-                if(antiguedadClaseB < 1 || edadTitular < 21){
+                if(antiguedadClaseB < 1 || edad < 21){
                     retorno = false;
                 }
                 //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
                 else{
-                    retorno = (edadTitular < 65);
+                    retorno = (edad < 65);
                 }
                 break;
             case 'A':
@@ -148,33 +150,15 @@ public class GestorDeTitulares {
     
     public boolean validarLicenciaARenovar(Titular unTitular, Licencia unaLicencia){
         boolean retorno;
-        //fecha actual
         LocalDate fechaHoy = LocalDate.now();
-        System.out.println("La licencia que pasó como parámetro vence el " + unaLicencia.getFechaVencimiento().toString());
-        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento())){
-            Period periodo = Period.between(fechaHoy, unaLicencia.getFechaVencimiento());
-            System.out.println(periodo.toString());
-            switch(periodo.getYears()){
-                case 0:
-                    switch(periodo.getDays()){
-                        case 0:
-                            retorno = periodo.getMonths()<=2;
-                            break;
-                        default:
-                            retorno = periodo.getMonths()<2;
-                            break;
-
-                    }
-                    break;
-                default:
-                    retorno = false;
-                    break;
-            }
+        LocalDate fechaNacimiento = unTitular.getFechaNacimiento();
+        int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
+        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento()) && YEARS.between(fechaHoy, unaLicencia.getFechaVencimiento())<1){
+            retorno = MONTHS.between(fechaNacimiento,fechaHoy.minusYears(edad)) >= 10;
         }
         else{
             retorno = true;
         }
-        
         return retorno;
     }
     
