@@ -151,103 +151,22 @@ public class GestorDeLicencias {
     }
   
      
-    public Integer calcularCostoDeLicencia(Licencia licencia, Titular titular, Boolean renueva){
+    public Double calcularCostoDeLicencia(Licencia licencia){
         
-        int costo = 8;
+        Double costo = 0.0;
+        long aniosVigencia = 0;
         char clase = licencia.getClaseLicencia();
-        LocalDate fechaNacimiento = titular.getFechaNacimiento();
+        LocalDate fechaNacimiento = licencia.getTitular().getFechaNacimiento();
+        long edad = YEARS.between(fechaNacimiento,licencia.getFechaEmision());
         
-        /*para licencia tipo D y F
-        5 años: 60
-        4 años: 50
-        3 años: 45
-        1 año: 40 
-        */
-        Period periodo = Period.between(fechaNacimiento, LocalDate.now());
-        int edad = periodo.getYears();
-        
-        if((edad>16 && edad<21 && (!renueva))||(edad >= 70)){
-            switch(clase){
-                case 'A':
-                case 'B':
-                case 'G':
-                    costo += 20;
-                    break;
-                case 'C':
-                    costo += 23;
-                    break;
-                case 'D':
-                case 'F':
-                    costo += 40;
-                    break;
-                case 'E':
-                    costo += 29;
-                    break;
-            }
-            return costo;
+        if(MONTHS.between(fechaNacimiento,licencia.getFechaEmision().minusYears(edad)) >= 10){
+            aniosVigencia = YEARS.between(licencia.getFechaEmision(), licencia.getFechaVencimiento());
+        }else{
+            aniosVigencia = YEARS.between(licencia.getFechaEmision(), licencia.getFechaVencimiento())+1;
         }
-        if((edad>16 && edad<21)||(edad>=60 && edad<70)){
-            switch(clase){
-                case 'A': 
-                case 'B':
-                case 'G':
-                    costo += 25;
-                    break;
-                case 'C':
-                    costo += 30;
-                    break;
-                case 'D':
-                case 'F':
-                    costo += 45;
-                    break;
-                case 'E':
-                    costo += 39;
-                    break;
-            }
-            return costo;
-        }
-        if(edad>=21 && edad<46){
-            switch(clase){
-                case 'A': 
-                case 'B':
-                case 'G':
-                    costo += 40;
-                    break;
-                case 'C':
-                    costo += 47;
-                    break;
-                case 'D':
-                case 'F': 
-                    costo += 60;
-                    break;
-                case 'E':
-                    costo += 59;
-                    break;
-            }
-            return costo;
-        }
-        if(edad>=46 && edad<60){
-            switch(clase){
-                case 'A': 
-                case 'B':
-                case 'G':
-                    costo += 30;
-                    break;
-                case 'C':
-                    costo += 35;
-                    break;
-                case 'D':
-                case 'F':    
-                    costo += 60;
-                    break;
-                case 'E':
-                    costo += 44;
-                    break;
-            }
-            return costo;
-        }
-        
-        return 0;
+        System.out.println("Años de vigencia: "+aniosVigencia);
+        costo = gbd.getCostoLicencia(licencia.getClaseLicencia(), (int)aniosVigencia);
+      return costo;
     }
     
     public List<Licencia> buscarLicenciasExpiradas(String nombre,String apellido,char clase,LocalDate fechaDesde,LocalDate fechaHasta){
