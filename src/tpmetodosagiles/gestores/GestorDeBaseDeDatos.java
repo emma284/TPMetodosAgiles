@@ -7,6 +7,7 @@
 package tpmetodosagiles.gestores;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -178,6 +179,36 @@ public class GestorDeBaseDeDatos {
             unUsuario = result.get(0);
         }
         return unUsuario;
+    }
+    
+    public List<List<Integer>> obtenerCostos(){
+//        List<List<Integer>> lista = new ArrayList<List<Integer>>();
+        
+        session.beginTransaction();
+        List<List<Integer>> lista = session.createSQLQuery("SELECT * FROM costo_licencias ").list();
+        
+        if (lista.isEmpty()) {
+            System.out.println("Fallo de conexión");
+        }
+        System.out.println("nro[0,0]: " + lista.get(0).get(0));
+        return lista;
+    }
+    
+    public Integer obtenerCostoAdministrativo(){
+        
+        Integer retorno = 0;
+        return retorno;
+    }
+    
+    public void guardarValoresLicencia(ArrayList<List<Integer>> costos){
+        
+        
+        
+    }
+    
+    public void guardarCostoAdministrativo(Integer costoAdm){
+        
+        
     }
 }
 

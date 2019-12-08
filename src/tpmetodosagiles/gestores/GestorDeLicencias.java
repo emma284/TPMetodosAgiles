@@ -7,6 +7,7 @@ package tpmetodosagiles.gestores;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -210,6 +211,28 @@ public class GestorDeLicencias {
         
         return lista;
     }
+    
+    public List<List<Integer>> obtenerCostos(){
+        List<List<Integer>> lista = gbd.obtenerCostos();
+        
+        return lista;
+    }
 
-
+    public Integer obtenerCostoAdministrativo(){
+        Integer retorno = gbd.obtenerCostoAdministrativo();
+        
+        return retorno;
+    }
+    
+    public void guardarValoresLicencia(ArrayList<List<Integer>> costos){
+        
+        gbd.guardarValoresLicencia(costos);
+        
+    }
+    
+    public void guardarCostoAdministrativo(Integer costoAdm){
+        
+        gbd.guardarCostoAdministrativo(costoAdm);
+        
+    }
 }

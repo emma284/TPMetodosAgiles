@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS costoLicencias (
+CREATE TABLE IF NOT EXISTS costo_licencias (
     id_costo INT AUTO_INCREMENT PRIMARY KEY,
     clase ENUM ('A', 'B', 'C', 'D', 'E' , 'F', 'G') NOT NULL,
     vigencia5anios DOUBLE NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS costoLicencias (
     vigencia1anio DOUBLE NOT NULL
 );
 
-INSERT INTO costoLicencias (clase,vigencia5anios,vigencia4anios,vigencia3anios,vigencia1anio) VALUES 
+INSERT INTO costo_licencias (clase,vigencia5anios,vigencia4anios,vigencia3anios,vigencia1anio) VALUES 
 ('A', 40, 30, 25, 20),
 ('B', 40, 30, 25, 20),
 ('D', 50, 40, 35, 25),
@@ -20,6 +20,6 @@ CREATE TABLE IF NOT EXISTS gastosGenerales (
     id_gasto INT AUTO_INCREMENT PRIMARY KEY,
     tipo_gasto VARCHAR(100) NOT NULL,
     valor DOUBLE NOT NULL
-)
+);
 
 INSERT INTO gastosGenerales (tipo_gasto, valor) VALUES ("administrativo", 8);

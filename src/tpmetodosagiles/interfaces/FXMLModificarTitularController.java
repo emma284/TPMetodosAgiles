@@ -102,7 +102,6 @@ public class FXMLModificarTitularController implements Initializable {
     @FXML
     private void modificarTitular(ActionEvent event){
         
-        //Verifica que todos los datos obligatorios hayan sido cargados a la interface (que no esté vacía la opción)
 //        if(!this.datosValidos())
 //            return;
         
@@ -120,21 +119,7 @@ public class FXMLModificarTitularController implements Initializable {
         unTitular.setObservaciones(observaciones);
         
         gestorTitular.guardarModificacionTitular(unTitular);
-        System.out.println("Llega?");
-//        try{
-//
-//            
-//        }
-//        catch(NumberFormatException nfe){
-//            //Ocurre si el número de documento no se puede parsear como tal
-//            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
-//            mensajeErrores.setTitle("Datos incorrectos");
-//            mensajeErrores.setHeaderText("Debe corregir los siguientes puntos antes de proseguir");
-//            mensajeErrores.setContentText("El número de documento solo puede contener caracteres numéricos.");
-//            
-//            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
-//            mensajeErrores.show();
-//        }
+
     }
         
     
