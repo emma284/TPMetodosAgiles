@@ -9,6 +9,8 @@ import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import static java.time.temporal.ChronoUnit.MONTHS;
+import static java.time.temporal.ChronoUnit.YEARS;
 import java.util.Calendar;
 import java.util.List;
 import javafx.scene.control.Alert;
@@ -16,8 +18,14 @@ import javafx.stage.Modality;
 import tpmetodosagiles.entidades.Licencia;
 
 public class GestorDeTitulares {
-            
-    private GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+    private GestorDeBaseDeDatos gbd;
+    private GestorDeLicencias gdl;
+    
+    public GestorDeTitulares() {
+        gbd = new GestorDeBaseDeDatos();
+        gdl = new GestorDeLicencias();
+    }
+    
     
     public boolean emitirTitularYLicencia(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
@@ -50,7 +58,6 @@ public class GestorDeTitulares {
         }
         
         //Calcula la fecha de vencimiento de la licencia que se está emitiendo
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseDeLicencia);
         
@@ -109,9 +116,9 @@ public class GestorDeTitulares {
         LocalDate fechaHoy = LocalDate.now();
         boolean poseeLicenciaVigenteMismaClase = false;
         //edad del titular
-        int edadTitular = Period.between(unTitular.getFechaNacimiento(), fechaHoy).getYears();
+        int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
         //tiempo desde que obtuvo su primera licencia de clase B
-        int antiguedadClaseB = Period.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy).getYears();
+        int antiguedadClaseB = (int)YEARS.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy);
         //Recorrer listado de licencias que ha tenido el titular si no está vacío
         for (Licencia licencia : unTitular.getLicencias()) {
             if(licencia.getClaseLicencia()==claseLicencia && licencia.getFechaVencimiento().isAfter(fechaHoy)){
@@ -124,12 +131,12 @@ public class GestorDeTitulares {
             case 'D': 
             case 'E':
                 //Caso de que no haya tenido licencia de clase B desde hace, por lo menos, un año y  es menor de 21 años
-                if(antiguedadClaseB < 1 || edadTitular < 21){
+                if(antiguedadClaseB < 1 || edad < 21){
                     retorno = false;
                 }
                 //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
                 else{
-                    retorno = (edadTitular < 65);
+                    retorno = (edad < 65);
                 }
                 break;
             case 'A':
@@ -148,60 +155,58 @@ public class GestorDeTitulares {
     
     public boolean validarLicenciaARenovar(Titular unTitular, Licencia unaLicencia){
         boolean retorno;
-        //fecha actual
         LocalDate fechaHoy = LocalDate.now();
-        System.out.println("La licencia que pasó como parámetro vence el " + unaLicencia.getFechaVencimiento().toString());
-        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento())){
-            Period periodo = Period.between(fechaHoy, unaLicencia.getFechaVencimiento());
-            System.out.println(periodo.toString());
-            switch(periodo.getYears()){
-                case 0:
-                    switch(periodo.getDays()){
-                        case 0:
-                            retorno = periodo.getMonths()<=2;
-                            break;
-                        default:
-                            retorno = periodo.getMonths()<2;
-                            break;
-
-                    }
-                    break;
-                default:
-                    retorno = false;
-                    break;
-            }
+        LocalDate fechaNacimiento = unTitular.getFechaNacimiento();
+        int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
+        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento()) && YEARS.between(fechaHoy, unaLicencia.getFechaVencimiento())<1){
+            retorno = MONTHS.between(fechaNacimiento,fechaHoy.minusYears(edad)) >= 10;
         }
         else{
             retorno = true;
         }
-        
         return retorno;
     }
     
+    private void printCostoLicencia(Licencia unaLicencia){
+        double costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
+        double costoTotal = costoLicencia;
+        List<Object[]> gastos = gbd.getGastosGenerales();
+        String gastosTotales = "Costo de licencia:\t$"+costoLicencia;
+        for(Object[] gasto : gastos){
+            gastosTotales+= "\n"+gasto[0].toString()+":\t$"+gasto[1].toString();
+            costoTotal += Double.parseDouble(gasto[1].toString());
+        }
+        gastosTotales += "\n\nCosto Total:\t$"+costoTotal;
+        Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
+        mensajeExito.setTitle("Transacción completada");
+        mensajeExito.setHeaderText("Se ha registrado la licencia en el sistema.\n"+gastosTotales);
+        mensajeExito.initModality(Modality.APPLICATION_MODAL);
+        mensajeExito.show();
+    }
+    
     public void emitirLicencia(Titular unTitular, char claseLicencia) {
-        double costoLicencia = 0;
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-            gbd.guardarLicencia(unaLicencia);
-            costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
-            System.out.println("Costo de licencia: "+costoLicencia);
+            if(gbd.guardarLicencia(unaLicencia)){
+                printCostoLicencia(unaLicencia);
+            }
         }
     }
     
     public void renovarLicencia(Licencia unaLicenciaARenovar){
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
         if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
             unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-            gbd.guardarLicencia(unaLicencia);
+            if(gbd.guardarLicencia(unaLicencia)){
+                printCostoLicencia(unaLicencia);
+            }
         }
         else{
             System.out.println("Esta licencia no se puede renovar");

@@ -6,5 +6,5 @@ INSERT INTO titular (id,apellido,domicilio,es_donante,fecha_emision_licencia_tip
     (2, 'Argento', '25 de Mayo%32050% % ', false, DATE('1995/7/23'), DATE('2019/11/13'), DATE('1962/5/13'), 'A+', 'Pepe',12565646,'Ninguna','M','DNI',1);
 
 INSERT INTO licencia (id,clase_licencia,fecha_emision,fecha_vencimiento,numero_copia,numero_renovacion,id_titular,id_usuario) VALUES
-    (1,'A',DATE('2015/11/10'),DATE('2020/11/10'),1,1,1,1),
+    (1,'A',DATE('2015/11/10'),DATE('2020/1/10'),1,1,1,1),
     (2,'B',DATE('2014/11/10'),DATE('2019/11/10'),1,1,1,1);
