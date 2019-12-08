@@ -182,32 +182,46 @@ public class GestorDeBaseDeDatos {
         return unUsuario;
     }
     
-    public List<List<Integer>> obtenerCostos(){
-//        List<List<Integer>> lista = new ArrayList<List<Integer>>();
+    public List<List<Double>> obtenerCostos(){
+        
+        List<List<Double>> lista = new ArrayList<List<Double>>();
         
         session.beginTransaction();
-        List<List<Integer>> lista = session.createSQLQuery("SELECT * FROM costo_licencias ").list();
+        SQLQuery query = session.createSQLQuery("SELECT vigencia5anios,vigencia4anios,vigencia3anios,vigencia1anio FROM costo_licencias ");
         
-        if (lista.isEmpty()) {
-            System.out.println("Fallo de conexión");
+        List<Object[]> rows = query.list();
+        for(Object[] row : rows){
+            List<Double> a = new ArrayList<Double>();
+            a.add(Double.parseDouble(row[0].toString()));
+            a.add(Double.parseDouble(row[1].toString()));
+            a.add(Double.parseDouble(row[2].toString()));
+            a.add(Double.parseDouble(row[3].toString()));
+            lista.add(a);
         }
-        System.out.println("nro[0,0]: " + lista.get(0).get(0));
+
+        
+//        List<Integer> listaA = (List<Integer>)unaQuery.list().get(0);
+
+
         return lista;
     }
     
-    public Integer obtenerCostoAdministrativo(){
+    public Double obtenerCostoAdministrativo(){
         
-        Integer retorno = 0;
+        session.beginTransaction();
+        SQLQuery unaQuery = session.createSQLQuery("SELECT valor FROM gastos_generales ");
+        
+        Double retorno = Double.parseDouble(unaQuery.list().get(0).toString());
         return retorno;
     }
     
-    public void guardarValoresLicencia(ArrayList<List<Integer>> costos){
+    public void guardarValoresLicencia(ArrayList<List<Double>> costos){
         
         
         
     }
     
-    public void guardarCostoAdministrativo(Integer costoAdm){
+    public void guardarCostoAdministrativo(Double costoAdm){
         
         
     }

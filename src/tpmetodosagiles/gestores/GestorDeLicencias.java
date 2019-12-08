@@ -175,25 +175,26 @@ public class GestorDeLicencias {
         return lista;
     }
     
-    public List<List<Integer>> obtenerCostos(){
-        List<List<Integer>> lista = gbd.obtenerCostos();
+    public List<List<Double>> obtenerCostos(){
+        List<List<Double>> lista = gbd.obtenerCostos();
+//        double lista = gbd.obtenerCostos();
         
         return lista;
     }
 
-    public Integer obtenerCostoAdministrativo(){
-        Integer retorno = gbd.obtenerCostoAdministrativo();
+    public Double obtenerCostoAdministrativo(){
+        Double retorno = gbd.obtenerCostoAdministrativo();
         
         return retorno;
     }
     
-    public void guardarValoresLicencia(ArrayList<List<Integer>> costos){
+    public void guardarValoresLicencia(ArrayList<List<Double>> costos){
         
         gbd.guardarValoresLicencia(costos);
         
     }
     
-    public void guardarCostoAdministrativo(Integer costoAdm){
+    public void guardarCostoAdministrativo(Double costoAdm){
         
         gbd.guardarCostoAdministrativo(costoAdm);
         

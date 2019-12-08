@@ -16,10 +16,10 @@ INSERT INTO costo_licencias (clase,vigencia5anios,vigencia4anios,vigencia3anios,
 ('F', 46, 34, 22, 20),
 ('G', 40, 30, 25, 20);
 
-CREATE TABLE IF NOT EXISTS gastosGenerales (
+CREATE TABLE IF NOT EXISTS gastos_generales (
     id_gasto INT AUTO_INCREMENT PRIMARY KEY,
     tipo_gasto VARCHAR(100) NOT NULL,
     valor DOUBLE NOT NULL
 );
 
-INSERT INTO gastosGenerales (tipo_gasto, valor) VALUES ("administrativo", 8);
+INSERT INTO gastosGenerales (tipo_gasto, valor) VALUES ("Administrativo", 8);
