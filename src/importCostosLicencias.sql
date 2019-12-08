@@ -22,4 +22,4 @@ CREATE TABLE IF NOT EXISTS gastos_generales (
     valor DOUBLE NOT NULL
 );
 
-INSERT INTO gastosGenerales (tipo_gasto, valor) VALUES ("Administrativo", 8);
+INSERT INTO gastos_generales (tipo_gasto, valor) VALUES ("Administrativo", 8);

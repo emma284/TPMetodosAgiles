@@ -243,5 +243,10 @@ public class GestorDeBaseDeDatos {
         //System.out.println("Valor del costo: "+costo);
         return costo;
     }
-
+    public List<Object[]> getGastosGenerales (){
+        session.beginTransaction();
+        SQLQuery unaQuery = session.createSQLQuery("SELECT tipo_gasto, valor FROM gastos_generales;");
+        
+        return unaQuery.list();
+    }
 }

@@ -164,7 +164,6 @@ public class GestorDeLicencias {
         }else{
             aniosVigencia = YEARS.between(licencia.getFechaEmision(), licencia.getFechaVencimiento())+1;
         }
-        System.out.println("Años de vigencia: "+aniosVigencia);
         costo = gbd.getCostoLicencia(licencia.getClaseLicencia(), (int)aniosVigencia);
       return costo;
     }

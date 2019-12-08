@@ -18,8 +18,14 @@ import javafx.stage.Modality;
 import tpmetodosagiles.entidades.Licencia;
 
 public class GestorDeTitulares {
-            
-    private GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();
+    private GestorDeBaseDeDatos gbd;
+    private GestorDeLicencias gdl;
+    
+    public GestorDeTitulares() {
+        gbd = new GestorDeBaseDeDatos();
+        gdl = new GestorDeLicencias();
+    }
+    
     
     public boolean emitirTitularYLicencia(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
@@ -52,7 +58,6 @@ public class GestorDeTitulares {
         }
         
         //Calcula la fecha de vencimiento de la licencia que se está emitiendo
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseDeLicencia);
         
@@ -162,30 +167,46 @@ public class GestorDeTitulares {
         return retorno;
     }
     
+    private void printCostoLicencia(Licencia unaLicencia){
+        double costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
+        double costoTotal = costoLicencia;
+        List<Object[]> gastos = gbd.getGastosGenerales();
+        String gastosTotales = "Costo de licencia:\t$"+costoLicencia;
+        for(Object[] gasto : gastos){
+            gastosTotales+= "\n"+gasto[0].toString()+":\t$"+gasto[1].toString();
+            costoTotal += Double.parseDouble(gasto[1].toString());
+        }
+        gastosTotales += "\n\nCosto Total:\t$"+costoTotal;
+        Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
+        mensajeExito.setTitle("Transacción completada");
+        mensajeExito.setHeaderText("Se ha registrado la licencia en el sistema.\n"+gastosTotales);
+        mensajeExito.initModality(Modality.APPLICATION_MODAL);
+        mensajeExito.show();
+    }
+    
     public void emitirLicencia(Titular unTitular, char claseLicencia) {
-        double costoLicencia = 0;
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-            gbd.guardarLicencia(unaLicencia);
-            costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
-            System.out.println("Costo de licencia: "+costoLicencia);
+            if(gbd.guardarLicencia(unaLicencia)){
+                printCostoLicencia(unaLicencia);
+            }
         }
     }
     
     public void renovarLicencia(Licencia unaLicenciaARenovar){
-        GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
         if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
             unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-            gbd.guardarLicencia(unaLicencia);
+            if(gbd.guardarLicencia(unaLicencia)){
+                printCostoLicencia(unaLicencia);
+            }
         }
         else{
             System.out.println("Esta licencia no se puede renovar");
