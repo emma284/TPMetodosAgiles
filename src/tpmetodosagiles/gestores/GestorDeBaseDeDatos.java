@@ -190,7 +190,7 @@ public class GestorDeBaseDeDatos {
         if (lista.isEmpty()) {
             System.out.println("Fallo de conexión");
         }
-        System.out.println("nro[0,0]: " + lista.get(0).get(0));
+//        System.out.println("nro[0,0]: " + lista.get(0).get(0));
         return lista;
     }
     
