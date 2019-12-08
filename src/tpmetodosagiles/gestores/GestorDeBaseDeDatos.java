@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import tpmetodosagiles.entidades.Licencia;
@@ -210,64 +211,23 @@ public class GestorDeBaseDeDatos {
         
         
     }
-}
-
-
-/*
-package tpmetodosagiles.gestores;
-
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import tpmetodosagiles.entidades.Licencia;
-import tpmetodosagiles.entidades.Titular;
-
-
-public class GestorDeBaseDeDatos {
-    private EntityManagerFactory emf;			
-    private EntityManager em;
-    
-    public GestorDeBaseDeDatos() {
-	emf = Persistence.createEntityManagerFactory("persistencia");
-	em = emf.createEntityManager();
-    }
-    
-    public boolean guardarLicencia(Licencia unaLicencia){
-        try{
-            em.getTransaction().begin();
-            em.persist(unaLicencia);
-            em.getTransaction().commit();
-        }
-        catch(Exception e){
-            System.out.println("------------------------\n" + e.getMessage());
-            return false;
+    public double getCostoLicencia(char claseLicencia, int aniosVigencia){
+        double costo = 0;
+        String columnaAniosVigencia = "";
+        Query unaQuery;
+        session.beginTransaction();
+        switch (aniosVigencia){
+            case 5: columnaAniosVigencia = "vigencia5anios"; break;
+            case 4: columnaAniosVigencia = "vigencia4anios"; break;
+            case 3: columnaAniosVigencia = "vigencia3anios"; break;
+            case 1: columnaAniosVigencia = "vigencia1anios"; break;
         }
         
-        return true;
-    }
-    
-    public boolean guardarTitular(Titular unTitular){
-        try{
-            em.getTransaction().begin();
-            em.persist(unTitular);
-            em.getTransaction().commit();
-        }
-        catch(Exception e){
-            System.out.println("------------------------\n" + e.getMessage());
-            return false;
-        }
-        
-        return true;
+        unaQuery = session.createSQLQuery("SELECT "+columnaAniosVigencia+
+                " FROM costo_licencias WHERE clase = '"+claseLicencia+"';");
+        costo = (double) unaQuery.list().get(0);
+        //System.out.println("Valor del costo: "+costo);
+        return costo;
     }
 
-    public Titular getTitularPorDNI(String numDocumento) {
-       Titular unTitular = new Titular();
-       List<Titular> result = em.createQuery("SELECT t FROM titular t WHERE t.numero_documento = " + numDocumento + ";").getResultList();
-       if(!result.isEmpty()){
-           unTitular = result.get(0);
-       }
-       return unTitular;
-    }
 }
-*/

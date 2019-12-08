@@ -179,6 +179,7 @@ public class GestorDeTitulares {
     }
     
     public void emitirLicencia(Titular unTitular, char claseLicencia) {
+        double costoLicencia = 0;
         GestorDeLicencias gdl = new GestorDeLicencias();
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
@@ -187,6 +188,8 @@ public class GestorDeTitulares {
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             gbd.guardarLicencia(unaLicencia);
+            costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
+            System.out.println("Costo de licencia: "+costoLicencia);
         }
     }
     
