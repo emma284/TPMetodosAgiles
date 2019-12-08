@@ -215,15 +215,30 @@ public class GestorDeBaseDeDatos {
         return retorno;
     }
     
-    public void guardarValoresLicencia(ArrayList<List<Double>> costos){
+    public void guardarValoresLicencia(List<Double> costos, char tipoLicencia){
         
-        
+        session.beginTransaction();
+        String query = "UPDATE costo_licencias SET "
+                + "vigencia5anios="+ costos.get(0) +", "
+                + "vigencia4anios="+ costos.get(1) +", "
+                + "vigencia3anios="+ costos.get(2) +", "
+                + "vigencia1anio="+ costos.get(3)
+                + " WHERE  clase = '"+ tipoLicencia + "';";
+        SQLQuery sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
         
     }
     
     public void guardarCostoAdministrativo(Double costoAdm){
         
-        
+        session.beginTransaction();
+        String query = "UPDATE gastos_generales SET "
+                + "valor="+ costoAdm +""
+                + " WHERE  tipo_gasto= 'Administrativo';";
+        SQLQuery sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        session.getTransaction().commit();
+//        UPDATE `gastos_generales` SET `id_gasto`=[value-1],`tipo_gasto`=[value-2],`valor`=[value-3] WHERE 1
     }
     public double getCostoLicencia(char claseLicencia, int aniosVigencia){
         double costo = 0;

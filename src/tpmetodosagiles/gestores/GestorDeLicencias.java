@@ -190,7 +190,12 @@ public class GestorDeLicencias {
     
     public void guardarValoresLicencia(ArrayList<List<Double>> costos){
         
-        gbd.guardarValoresLicencia(costos);
+        String tipos = "ABCDEFG";
+        int i = 0;
+        for(List<Double> costosLicencia : costos){
+            gbd.guardarValoresLicencia(costosLicencia,tipos.charAt(i));
+            i++;
+        }
         
     }
     

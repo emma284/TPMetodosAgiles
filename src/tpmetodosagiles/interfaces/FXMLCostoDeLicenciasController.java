@@ -153,8 +153,16 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         valoresLicenciaG.add(Double.parseDouble(tfG1Anios.getText()));
         
         ArrayList<List<Double>> valoresLicencia = new ArrayList<List<Double>>();
+        valoresLicencia.add(valoresLicenciaA);
+        valoresLicencia.add(valoresLicenciaB);
+        valoresLicencia.add(valoresLicenciaC);
+        valoresLicencia.add(valoresLicenciaD);
+        valoresLicencia.add(valoresLicenciaE);
+        valoresLicencia.add(valoresLicenciaF);
+        valoresLicencia.add(valoresLicenciaG);
+        
         gestorLicencias.guardarValoresLicencia(valoresLicencia);
-        gestorLicencias.guardarCostoAdministrativo(Double.parseDouble(tfG1Anios.getText()));
+        gestorLicencias.guardarCostoAdministrativo(Double.parseDouble(tfCostosAdministrativos.getText()));
         
     }
     
@@ -162,12 +170,9 @@ public class FXMLCostoDeLicenciasController implements Initializable {
     public void cargarTabla(){
         
         listaDeCostos = gestorLicencias.obtenerCostos();
-
-//        String s=String.valueOf(nro); 
         costoAdministrativo = gestorLicencias.obtenerCostoAdministrativo();
         tfCostosAdministrativos.setText(costoAdministrativo.toString());
         
-//        tfA5Anios.setText(s);
         tfA5Anios.setText(listaDeCostos.get(0).get(0).toString());
         tfA4Anios.setText(listaDeCostos.get(0).get(1).toString());
         tfA3Anios.setText(listaDeCostos.get(0).get(2).toString());
@@ -284,6 +289,7 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         if (!datosCorrectos){
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("Datos faltantes/incorrectos");
+            mensajeErrores.setHeaderText("No puede dejar campos vacios o ingresar datos no numéricos");
             mensajeErrores.initModality(Modality.APPLICATION_MODAL);
             mensajeErrores.show();
         }
