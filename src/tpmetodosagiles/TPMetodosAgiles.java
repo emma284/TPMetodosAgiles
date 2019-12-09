@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import tpmetodosagiles.entidades.Usuario;
 import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
+import tpmetodosagiles.gestores.util.MySession;
+import tpmetodosagiles.gestores.util.MySessionDBCiudad;
 import tpmetodosagiles.interfaces.FXMLVentanaSuperusuarioController;
 
 
@@ -26,6 +28,7 @@ public class TPMetodosAgiles extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setOnHidden(event -> {MySession.close(); MySessionDBCiudad.close();});
         stage.show();
         
         GestorDeBaseDeDatos gbd = new GestorDeBaseDeDatos();

@@ -7,7 +7,6 @@ package tpmetodosagiles.interfaces;
 
 import java.io.File;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javax.swing.filechooser.FileSystemView;
 import tpmetodosagiles.entidades.ContribuyenteDTO;
-import tpmetodosagiles.enums.SexoEnum;
+import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeContribuyente;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
@@ -79,6 +78,8 @@ public class FXMLDarAltaTitularController implements Initializable {
     private Button btnDarDeAltaTitular;
     
     
+    private String rutaDeFotoDeTitular;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -107,6 +108,8 @@ public class FXMLDarAltaTitularController implements Initializable {
         tfNroAltura.setLongitudMaxima(6);
         tfNroInterno.setLongitudMaxima(5);
         tfPiso.setLongitudMaxima(2);
+        
+        rutaDeFotoDeTitular = GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto();
     }
     
     @FXML
@@ -147,7 +150,7 @@ public class FXMLDarAltaTitularController implements Initializable {
         /*
         llamar al ADB2 y pedirle el contribuyente
         verificar si el contribuyente existe
-        si existe => deshabilitar las opciones de busqueda y habilitar los de datos del titular; y rellenar los datos de la pantalla que estén disponibles
+        si existe => deshabilitar las opciones de búsqueda y habilitar los de datos del titular; y rellenar los datos de la pantalla que estén disponibles
         si no existe => mostrar mensaje
         
         */
@@ -162,8 +165,8 @@ public class FXMLDarAltaTitularController implements Initializable {
         
         
         /*
-        borrar datos introducidos (no olvidar imagen)
-        deshabilitar datos de titular introducidos y habilitar datos de busqueda
+        borrar datos introducidos
+        deshabilitar datos de titular introducidos y habilitar datos de búsqueda
         */
     }
     
@@ -180,6 +183,7 @@ public class FXMLDarAltaTitularController implements Initializable {
         
         Image foto = new Image(file.toURI().toString());
         imgFotoTitular.setImage(foto);
+        rutaDeFotoDeTitular = file.getAbsolutePath();
     }
     
     
@@ -204,7 +208,7 @@ public class FXMLDarAltaTitularController implements Initializable {
                     tfApellidoTitular.getText(), tfNombreTitular.getText(), dpFechaNacimiento.getValue(), domicilio, 
                     cbGrupoSanguinio.getValue().toString(), esDonante, sexo,
                     GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
-                    cbObservaciones.getValue().toString())){
+                    cbObservaciones.getValue().toString(), rutaDeFotoDeTitular)){
                 
                 // Se registran el nuevo titular y licencia con exito
                 Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
@@ -283,6 +287,10 @@ public class FXMLDarAltaTitularController implements Initializable {
             errores.append("-Debe seleccionar una de las opciones de 'Clase de Licencia Solicitada'.\n");
             datosCorrectos = false;
         }
+        if (rutaDeFotoDeTitular == GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto()){
+            errores.append("-Debe seleccionar una foto de identificación del titular.\n");
+            datosCorrectos = false;
+        }
         //TODO: Emir-Luciano: verificar que se haya seleccionado una fotografía (que no sea la de 'por defecto')
         
         if (!datosCorrectos){
@@ -332,8 +340,6 @@ public class FXMLDarAltaTitularController implements Initializable {
         cbSexo.setValue(contr.sexo.getDescriptor());
         if(contr.departamento != null)
             tfNroInterno.setText(contr.departamento);
-        
-        //TODO Observaciones no puede quedar vacio cuando valide los datos del sistema (en todo caso debe quedar en "Ninguno")
     }
 
     private void deshabilitarBusqueda() {
@@ -383,11 +389,17 @@ public class FXMLDarAltaTitularController implements Initializable {
         tfNombreTitular.clear();
         tfApellidoTitular.clear();
         dpFechaNacimiento.setValue(null);
-        cbCalleTitular.setValue("");
+        cbCalleTitular.setValue(null);
         tfNroAltura.clear();
         tfNroInterno.clear();
-        cbSexo.setValue("");
-        //TODO No olvidar imagen
+        tfPiso.clear();
+        cbGrupoSanguinio.setValue(null);
+        cbEsDonante.setValue(null);
+        cbSexo.setValue(null);
+        cbObservaciones.setValue(null);
+        cbClaseLicencia.setValue(null);
+        imgFotoTitular.setImage(GestorDeBaseDeDatos.getFotoTitularPorDefecto());
+        rutaDeFotoDeTitular = GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto();
     }
 
     

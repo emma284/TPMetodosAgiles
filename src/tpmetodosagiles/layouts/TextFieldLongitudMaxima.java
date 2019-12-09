@@ -36,8 +36,8 @@ public class TextFieldLongitudMaxima extends TextField{
 
     private boolean validar(String text)
     {
-        //this.getText() retorna el último texto valido del TextField (sin el último valor ingresado, que está en la variable 'text')
-        return (this.getText().length() < this.longitudMaxima);
+        //Tener en cuenta que 'this.getText()' retorna el último texto valido del TextField (sin el último valor ingresado, que está en la variable 'text')
+        return (( this.getText()+text ).length() <= this.longitudMaxima);
     }
     
     public void setLongitudMaxima(int longitud){

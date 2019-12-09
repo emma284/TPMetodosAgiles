@@ -7,11 +7,8 @@ package tpmetodosagiles.gestores;
 
 import tpmetodosagiles.entidades.Titular;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import static java.time.temporal.ChronoUnit.MONTHS;
 import static java.time.temporal.ChronoUnit.YEARS;
-import java.util.Calendar;
 import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
@@ -29,7 +26,7 @@ public class GestorDeTitulares {
     
     public boolean emitirTitularYLicencia(String tipoDeDocumento, int numeroDocumento, 
             String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, char claseDeLicencia, String observaciones){
+            Boolean esDonante, char sexo, char claseDeLicencia, String observaciones, String rutaDeFotoDeTitular){
         
        
         //Verifica si se trata de una licencia de clase B para indicarlo en el atributo de Titular
@@ -39,10 +36,15 @@ public class GestorDeTitulares {
         else
             emisionLicenciaClaseB = null;
         
+        //Guarda la foto seleccionada del titular y verifica si se logró guardar correctamente.
+        String rutaDestinoDeFotoTitular = GestorDeBaseDeDatos.guardarFotoTitular(rutaDeFotoDeTitular, String.valueOf(numeroDocumento));
+        if (rutaDestinoDeFotoTitular == null)
+            return false;
+        
         //Genera el Titular con sus datos
         Titular unTitular = new Titular(tipoDeDocumento, numeroDocumento, apellido, nombre, 
                 fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, LocalDate.now(), 
-                emisionLicenciaClaseB, observaciones);
+                emisionLicenciaClaseB, observaciones, rutaDestinoDeFotoTitular);
         unTitular.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         System.out.println(unTitular.getUsuarioResponsable().getApellido());
         //Verifica si el usuario actual ya está en el sistema

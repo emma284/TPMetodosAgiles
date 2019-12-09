@@ -6,12 +6,15 @@
 
 package tpmetodosagiles.gestores;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -263,5 +266,59 @@ public class GestorDeBaseDeDatos {
         SQLQuery unaQuery = session.createSQLQuery("SELECT tipo_gasto, valor FROM gastos_generales;");
         
         return unaQuery.list();
+    }
+    
+    /**
+     * Guarda un archivo (se pensó originalmente para usarse en imágenes) en una ubicación predefinida del sistema para su posterior uso.
+     * @param rutaImagenDeEntrada - Ruta (relativa o absoluta) del archivo, con extensión de archivo incluida.
+     * @param nombreImagenSalida - El nombre de salida de la imagen, sin la ruta del archivo ni su extensión. Ej: 'archivo', 'imagen'.
+     * @return Retorna la ruta de la foto guardada si se logra guardar el archivo de entrada en la carpeta predefinida del sistema pero con el nuevo nombre indicado. Retorna 'null' en otro caso.
+     */
+    public static String guardarFotoTitular(String rutaImagenDeEntrada, String nombreImagenSalida) {
+        File in = new File(rutaImagenDeEntrada);
+        File out = new File("src\\tpmetodosagiles\\recursos\\fotos_titulares\\" + nombreImagenSalida + '.' + rutaImagenDeEntrada.substring(rutaImagenDeEntrada.lastIndexOf('.')+1));
+        try {
+            Files.copy(in.toPath(), out.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return out.getPath();
+        } catch (IOException ex) {
+            //No se pudo guardar la imagen en el directorio debido a que no se encontró el archivo de entrada o que la ruta de salida es invalida
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Error al guardar foto de titular");
+            mensajeErrores.setHeaderText("No se pudo guardar la foto de titular");
+            mensajeErrores.setContentText("-Ruta de entrada: " + in.getAbsolutePath() + "\n-Ruta de salida: " + out.getAbsolutePath());
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
+            return null;
+        }
+    }
+    
+    public static Image cargarFotoTitular(String rutaImagen){
+        File file = new File(rutaImagen);
+        if(file.exists()){
+            Image foto = new Image(file.toURI().toString());
+            return foto;
+        }
+        else{
+            //No se pudo encontrar el archivo en la ruta especificada => se muestra la foto por defecto
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Error al cargar foto de titular");
+            mensajeErrores.setHeaderText("No se pudo cargar la foto de titular indicada en el registro.");
+            mensajeErrores.setContentText("No se encontró la foto del titular en la ruta: " + file.getAbsolutePath() + "\nSe cargará un icono representativo en su lugar.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
+            return getFotoTitularPorDefecto();
+        }
+    }
+    
+    public static Image getFotoTitularPorDefecto(){
+        File file = new File("src\\tpmetodosagiles\\recursos\\imagenes\\imgDeInterface\\foto_usuario.png");
+        Image foto = new Image(file.toURI().toString());
+        return foto;
+    }
+    
+    public static String getRutaFotoTitularPorDefecto(){
+        return "src\\tpmetodosagiles\\recursos\\imagenes\\imgDeInterface\\foto_usuario.png";
     }
 }

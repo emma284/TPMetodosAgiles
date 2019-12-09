@@ -41,7 +41,8 @@ public class Titular {
     @Column (name = "nombre")
     private String nombre;
     
-    //TODO: Emir-Luciano: fotografia;
+    @Column (name = "foto")
+    private String rutaDeFotoDeTitular;
     
     @Column (name = "fecha_de_nacimiento")
     private LocalDate fechaNacimiento;
@@ -82,8 +83,8 @@ public class Titular {
     }
     
     public Titular(String tipoDeDocumento, int numeroDocumento, 
-            String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, 
-            Boolean esDonante, char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB, String observaciones){
+            String apellido, String nombre, LocalDate fechaNacimiento, String domicilio, String grupoSanguinio, Boolean esDonante,
+            char sexo, LocalDate fechaEntradaSistema, LocalDate fechaEmisionLicenciaTipoB, String observaciones, String rutaFotoTitular){
         
         this.tipoDeDocumento = tipoDeDocumento;
         this.numeroDocumento = numeroDocumento;
@@ -97,6 +98,7 @@ public class Titular {
         this.fechaEntradaSistema = fechaEntradaSistema;
         this.fechaEmisionLicenciaTipoB = fechaEmisionLicenciaTipoB;
         this.observaciones = observaciones;
+        this.rutaDeFotoDeTitular = rutaFotoTitular;
     }
 
     public Integer getIdTitular() {
@@ -217,6 +219,14 @@ public class Titular {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+    
+    public String getRutaDeFotoDeTitular() {
+        return rutaDeFotoDeTitular;
+    }
+
+    public void setRutaDeFotoDeTitular(String rutaDeFotoDeTitular) {
+        this.rutaDeFotoDeTitular = rutaDeFotoDeTitular;
     }
     
     @Override

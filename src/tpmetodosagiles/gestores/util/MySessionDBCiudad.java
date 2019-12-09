@@ -24,4 +24,8 @@ public class MySessionDBCiudad {
         return sessionFactory.openSession();
     }
     
+    public static void close(){
+        if (sessionFactory != null)
+            sessionFactory.close();
+    }
 }
