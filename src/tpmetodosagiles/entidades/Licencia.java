@@ -119,6 +119,13 @@ public class Licencia {
     public void setNumeroDeCopia(int numeroDeCopia) {
         this.numeroDeCopia = numeroDeCopia;
     }
+    
+    /**
+     * Retorna el número de licecia real (no el identificador asignado por la base de datos)
+     */
+    public String getIdLicenciaFisica(){
+        return (this.titular.getNumeroDocumento()+ "-" + this.numeroDeRenovacion + "-" + this.numeroDeCopia);
+    }
 
 //    public Titular getTitular() {
 //        return titular;

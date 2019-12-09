@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS costo_licencias (
     vigencia1anio DOUBLE NOT NULL
 );
 
-INSERT INTO costo_licencias (clase,vigencia5anios,vigencia4anios,vigencia3anios,vigencia1anio) VALUES 
-('A', 40, 30, 25, 20),
-('B', 40, 30, 25, 20),
-('D', 50, 40, 35, 25),
-('C', 47, 35, 30, 23),
-('E', 59, 44, 39, 29),
-('F', 46, 34, 22, 20),
-('G', 40, 30, 25, 20);
+INSERT INTO costo_licencias (id_costo,clase,vigencia5anios,vigencia4anios,vigencia3anios,vigencia1anio) VALUES ON DUPLICATE KEY UPDATE
+(1,'A', 40, 30, 25, 20),
+(2,'B', 40, 30, 25, 20),
+(3,'D', 50, 40, 35, 25),
+(4,'C', 47, 35, 30, 23),
+(5,'E', 59, 44, 39, 29),
+(6,'F', 46, 34, 22, 20),
+(7,'G', 40, 30, 25, 20);
 
 CREATE TABLE IF NOT EXISTS gastos_generales (
     id_gasto INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,4 +22,4 @@ CREATE TABLE IF NOT EXISTS gastos_generales (
     valor DOUBLE NOT NULL
 );
 
-INSERT INTO gastos_generales (tipo_gasto, valor) VALUES ("Administrativo", 8);
+INSERT INTO gastos_generales (id_gasto, tipo_gasto, valor) VALUES ON DUPLICATE KEY UPDATE (1,"Administrativo", 8);

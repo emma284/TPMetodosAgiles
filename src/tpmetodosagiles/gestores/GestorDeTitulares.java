@@ -79,6 +79,7 @@ public class GestorDeTitulares {
         unaLicencia.setTitular(unTitular);
         unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         
+        GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
         return (gbd.guardarTitular(unTitular) && gbd.guardarLicencia(unaLicencia));
     }
 

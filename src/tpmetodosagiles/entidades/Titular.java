@@ -156,6 +156,38 @@ public class Titular {
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
+    
+    public String getCalle() {
+        if (domicilio == null){
+            return "";
+        }
+        String [] atributosDomicilio = domicilio.split("%");
+        return atributosDomicilio[0];
+    }
+
+    public String getAltura() {
+        if (domicilio == null){
+            return null;
+        }
+        String [] atributosDomicilio = domicilio.split("%");
+        return atributosDomicilio[1];
+    }
+
+    public String getnroDepartamento() {
+        if (domicilio == null){
+            return null;
+        }
+        String [] atributosDomicilio = domicilio.split("%");
+        return atributosDomicilio[2];
+    }
+
+    public String getPiso() {
+        if (domicilio == null){
+            return "";
+        }
+        String [] atributosDomicilio = domicilio.split("%");
+        return atributosDomicilio[3];
+    }
 
     public String getGrupoSanguinio() {
         return grupoSanguinio;

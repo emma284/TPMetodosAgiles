@@ -1,0 +1,64 @@
+* {
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+}
+
+@page{
+    margin:0pt;
+}
+
+h3.main{
+	margin: 0px;
+	text-align: center;
+}
+
+hr{
+	margin: 2px 0px;
+}
+
+div.main{
+	border: 2px solid grey;
+	width: 500px;
+        max-height: 310px;
+}
+
+.small {
+	font-size: 14px;
+	font-style: italic;
+	text-align: right;
+	width: 120px;
+}
+
+.dato {
+	font-size: 16px;
+	text-align: left;
+	font-weight: bold;
+	width: 230px;
+}
+
+.atras-small {
+	font-size: 12px;
+}
+
+.atras-dato {
+	font-size: 14px;
+}
+
+div.comprobante {
+	width: 235px;
+	border: 2px solid grey;
+}
+
+h3.comprobante-titulo {
+	font-size: 17px;
+	text-align: left;
+	margin: 5px;
+}
+
+.comprobante-costo {
+	color: dimgray;
+	font-size: 14px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 230px;
+}
