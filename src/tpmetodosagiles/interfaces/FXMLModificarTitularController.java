@@ -5,6 +5,9 @@
  */
 package tpmetodosagiles.interfaces;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -14,11 +17,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javax.swing.filechooser.FileSystemView;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.enums.SexoEnum;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
@@ -65,8 +72,14 @@ public class FXMLModificarTitularController implements Initializable {
     private DatePicker dpFechaNacimiento;
     @FXML
     private ImageView imgFotoTitular;
+    @FXML
+    private Button btnModificar;
+    @FXML
+    private Button btnSeleccionarFotografia;
     
     private Titular unTitular;
+    
+    private String rutaDeFotoDeTitular;
 
     public FXMLModificarTitularController() {
         gestorTitular = new GestorDeTitulares();
@@ -92,6 +105,7 @@ public class FXMLModificarTitularController implements Initializable {
         
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
+        
     }
     
             
@@ -113,6 +127,8 @@ public class FXMLModificarTitularController implements Initializable {
         unTitular.setEsDonante(esDonante);
         unTitular.setSexo(sexo);
         unTitular.setObservaciones(observaciones);
+        if(rutaDeFotoDeTitular.isEmpty())rutaDeFotoDeTitular=null;
+        unTitular.setRutaDeFotoDeTitular(rutaDeFotoDeTitular);
         
         gestorTitular.guardarModificacionTitular(unTitular); 
     
@@ -144,13 +160,18 @@ public class FXMLModificarTitularController implements Initializable {
         
         unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
         if(unTitular == null){
+            
+            borrarDatosTitular();
+            deshabilitarEdicionDatosDeTitular();
+            
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
-            mensajeErrores.setTitle("No hay Titulat");
+            mensajeErrores.setTitle("No hay Titular");
             mensajeErrores.setHeaderText("No se ha encontrado un titular para los campos de búsqueda ingresados");
             mensajeErrores.initModality(Modality.APPLICATION_MODAL);
             mensajeErrores.show();
         }
         else{
+            habilitarEdicionDatosDeTitular();
             setDatosTitular();
         }
     }
@@ -195,6 +216,16 @@ public class FXMLModificarTitularController implements Initializable {
         
         ObservableList <String> calles = FXCollections.observableArrayList( GestorDeDatosDeInterface.getCalles() );
         cbCalleTitular.setItems(calles);
+        
+        try{
+            rutaDeFotoDeTitular = unTitular.getRutaDeFotoDeTitular();
+            File file = new File(rutaDeFotoDeTitular);
+            Image foto = new Image(file.toURI().toString());
+            imgFotoTitular.setImage(foto);
+        }
+        catch(Exception e){
+        }
+        
         
     }
 
@@ -306,14 +337,64 @@ public class FXMLModificarTitularController implements Initializable {
         tfPiso.setDisable(false);
         tfNroInterno.setDisable(false);
         cbSexo.setDisable(false);
-        cbSexo.setDisable(false);
+        cbGrupoSanguinio.setDisable(false);
+        cbEsDonante.setDisable(false);
+        cbObservaciones.setDisable(false);
+        btnSeleccionarFotografia.setDisable(false);
+        btnModificar.setDisable(false);
+        tfNombreTitular.setDisable(false);
+        tfApellidoTitular.setDisable(false);
+        dpFechaNacimiento.setDisable(false);
+        
     }
-
-    private void deshabilitarEdicionDatosDeTitular() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     private void borrarDatosTitular() {
-        //TODO No olvidar imagen
+        
+        tfNombreTitular.clear();
+        tfApellidoTitular.clear();
+        dpFechaNacimiento.setValue(null);
+        cbCalleTitular.setValue(null);
+        tfNroAltura.clear();
+        tfNroInterno.clear();
+        tfPiso.clear();
+        cbGrupoSanguinio.setValue(null);
+        cbEsDonante.setValue(null);
+        cbSexo.setValue(null);
+        cbObservaciones.setValue(null);
+        imgFotoTitular.setImage(null);
+    }
+    
+    private void deshabilitarEdicionDatosDeTitular() {
+        
+        cbCalleTitular.setDisable(true);
+        tfNroAltura.setDisable(true);
+        tfPiso.setDisable(true);
+        tfNroInterno.setDisable(true);
+        cbSexo.setDisable(true);
+        cbGrupoSanguinio.setDisable(true);
+        cbEsDonante.setDisable(true);
+        cbObservaciones.setDisable(true);
+        cbClaseLicencia.setDisable(true);
+        btnSeleccionarFotografia.setDisable(true);
+        btnModificar.setDisable(true);
+        tfNombreTitular.setDisable(true);
+        tfApellidoTitular.setDisable(true);
+        dpFechaNacimiento.setDisable(true);
+    }
+    
+    @FXML
+    private void seleccionarFotografia(ActionEvent event){
+        FileChooser.ExtensionFilter filtroImagenes = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.jpeg");
+        FileChooser fc = new FileChooser();
+        fc.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
+        fc.getExtensionFilters().add(filtroImagenes);
+        File file = fc.showOpenDialog(GestorDeConfiguracion.getVentanaActual());
+        
+        if(file == null)
+            return;
+        
+        Image foto = new Image(file.toURI().toString());
+        imgFotoTitular.setImage(foto);
+        rutaDeFotoDeTitular = file.getAbsolutePath();
     }
 }

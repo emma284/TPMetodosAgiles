@@ -78,8 +78,15 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
         
         listaLicencias = gestorLicencias.buscarLicenciasExpiradas(nombre,apellido,clase,fechaDesde,fechaHasta);
         
-        if(listaLicencias == null){
+        if(listaLicencias.isEmpty()){
+            licenciaObservableList.clear();
             System.out.println("No se han encontrado Licencias");
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("No hay licencias");
+            mensajeErrores.setHeaderText("No se han encontrado licencias para los filtros de búsqueda ingresados");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+            
         }
         else{
             setDatosDeLicenciasEnTabla();
