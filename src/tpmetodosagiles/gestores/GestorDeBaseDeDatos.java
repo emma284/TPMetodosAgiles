@@ -93,14 +93,14 @@ public class GestorDeBaseDeDatos {
 
         if((fechaDesde!=null)||(fechaFinal!=null)){
             if((fechaDesde!=null)&&(fechaFinal!=null)){
-                arreglo = arreglo + "fecha_vencimiento BETWEEN " + fechaDesde + " AND " + fechaFinal + " "; 
+                arreglo = arreglo + "fecha_vencimiento BETWEEN '" + fechaDesde + "' AND '" + fechaFinal + "' "; 
             }
             else{
                 if(fechaDesde!=null){
-                arreglo = arreglo + "fecha_vencimiento BETWEEN " + fechaDesde + " AND now() "; 
+                arreglo = arreglo + "fecha_vencimiento BETWEEN '" + fechaDesde + "' AND now() "; 
                 }
                 else{
-                arreglo = arreglo + "fecha_vencimiento < " + fechaFinal + " "; 
+                arreglo = arreglo + "fecha_vencimiento < '" + fechaFinal + "' "; 
                 }
             }
         }

@@ -258,39 +258,39 @@ public class FXMLCostoDeLicenciasController implements Initializable {
         if (tfG1Anios.getText().isEmpty()) datosCorrectos = false;
 
         try{
-            Double.parseDouble(tfCostosAdministrativos.getText());
+            if((Double.parseDouble(tfCostosAdministrativos.getText())) <= 0)datosCorrectos = false;
             
-            Double.parseDouble(tfA5Anios.getText());
-            Double.parseDouble(tfB5Anios.getText());
-            Double.parseDouble(tfC5Anios.getText());
-            Double.parseDouble(tfD5Anios.getText());
-            Double.parseDouble(tfE5Anios.getText());
-            Double.parseDouble(tfF5Anios.getText());
-            Double.parseDouble(tfG5Anios.getText());
+            if((Double.parseDouble(tfA5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfB5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfC5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfD5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfE5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfF5Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfG5Anios.getText())) <= 0)datosCorrectos = false;
             
-            Double.parseDouble(tfA4Anios.getText());
-            Double.parseDouble(tfB4Anios.getText());
-            Double.parseDouble(tfC4Anios.getText());
-            Double.parseDouble(tfD4Anios.getText());
-            Double.parseDouble(tfE4Anios.getText());
-            Double.parseDouble(tfF4Anios.getText());
-            Double.parseDouble(tfG4Anios.getText());
+            if((Double.parseDouble(tfA4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfB4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfC4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfD4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfE4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfF4Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfG4Anios.getText())) <= 0)datosCorrectos = false;
             
-            Double.parseDouble(tfA3Anios.getText());
-            Double.parseDouble(tfB3Anios.getText());
-            Double.parseDouble(tfC3Anios.getText());
-            Double.parseDouble(tfD3Anios.getText());
-            Double.parseDouble(tfE3Anios.getText());
-            Double.parseDouble(tfF3Anios.getText());
-            Double.parseDouble(tfG3Anios.getText());
+            if((Double.parseDouble(tfA3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfB3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfC3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfD3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfE3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfF3Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfG3Anios.getText())) <= 0)datosCorrectos = false;
            
-            Double.parseDouble(tfA1Anios.getText());
-            Double.parseDouble(tfB1Anios.getText());
-            Double.parseDouble(tfC1Anios.getText());
-            Double.parseDouble(tfD1Anios.getText());
-            Double.parseDouble(tfE1Anios.getText());
-            Double.parseDouble(tfF1Anios.getText());
-            Double.parseDouble(tfG1Anios.getText());
+            if((Double.parseDouble(tfA1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfB1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfC1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfD1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfE1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfF1Anios.getText())) <= 0)datosCorrectos = false;
+            if((Double.parseDouble(tfG1Anios.getText())) <= 0)datosCorrectos = false;
             
         }
         catch(NumberFormatException fne){
