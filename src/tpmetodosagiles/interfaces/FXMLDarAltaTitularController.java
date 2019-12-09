@@ -210,7 +210,7 @@ public class FXMLDarAltaTitularController implements Initializable {
                     GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
                     cbObservaciones.getValue().toString(), rutaDeFotoDeTitular)){
                 
-                // Se registran el nuevo titular y licencia con exito
+                //Se registraron el nuevo titular y licencia con éxito => muestra un mensaje
                 Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
                 mensajeExito.setTitle("Transacción completada");
                 mensajeExito.setHeaderText("Se ha registrado el titular y la licencia en el sistema");

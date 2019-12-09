@@ -89,7 +89,7 @@ public class GestorDeLicencias {
         }
     }
      
-    public Double calcularCostoDeLicencia(Licencia licencia){
+    public static Double calcularCostoDeLicencia(Licencia licencia){
         
         Double costo = 0.0;
         long aniosVigencia = 0;
@@ -142,6 +142,22 @@ public class GestorDeLicencias {
         
     }
     
+    /**
+     * Devuelve los costos de emitir una licencia según el tipo.
+     * @return Retorna un arreglo de double con tres elementos: el costo de la licencia según la clase de licencia; el costo fijo debido a gastos administrativos; el costo total (suma de los anteriores)
+     */
+    public static double[] getArrayCostoLicencia(Licencia unaLicencia){
+        double costoLicencia = GestorDeLicencias.calcularCostoDeLicencia(unaLicencia);   //Costo de la clase licencia
+        double costoAdministrativoTotal = 0.0;
+        List<Object[]> gastos = gbd.getGastosGenerales();
+        for(Object[] gasto : gastos){
+            costoAdministrativoTotal += Double.parseDouble(gasto[1].toString());
+        }
+        
+        double [] resultado = {costoLicencia,costoAdministrativoTotal, (costoLicencia + costoAdministrativoTotal) };
+        
+        return resultado;
+    }
     
     private static String generarHTMLLicencia(Licencia licencia){
         StringBuffer html = new StringBuffer();
@@ -263,7 +279,7 @@ public class GestorDeLicencias {
         return html.toString();
     } 
     
-    public static void crearPDFLicencia(Licencia licencia, String destinationPath, int nroIntento) {     //TODO: quitar el static si es conveniente
+    public static void crearPDFLicencia(Licencia licencia, String destinationPath, int nroIntento) {
         try{
             File licenciaPDF = new File(destinationPath);
             OutputStream os = new FileOutputStream(licenciaPDF);
@@ -292,7 +308,7 @@ public class GestorDeLicencias {
     }
     
     
-    private static String generarHTMLComprobante(String costoLicencia, String costoFijo, String costoTotal){     //TODO: quitar el static si es conveniente
+    private static String generarHTMLComprobante(String costoLicencia, String costoFijo, String costoTotal){
         StringBuffer html = new StringBuffer();
         
         html.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n");
@@ -315,7 +331,7 @@ public class GestorDeLicencias {
         return html.toString();
     } 
     
-    public static void crearPDFComprobante(String costoLicencia, String costoFijo, String total, String destinationPath, int nroIntento) throws IOException, DocumentException {     //TODO: quitar el static si es conveniente
+    public static void crearPDFComprobante(String costoLicencia, String costoFijo, String total, String destinationPath, int nroIntento) {
         try{
             File comprobantePDF = new File(destinationPath);
             OutputStream os = new FileOutputStream(comprobantePDF);
@@ -336,6 +352,10 @@ public class GestorDeLicencias {
         catch (FileNotFoundException fnf){
             System.out.println("El archivo está siendo utilizado. Cierrelo para continuar.");
             crearPDFComprobante(costoLicencia, costoFijo, total,destinationPath.replaceFirst("\\d?.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
+        } catch (DocumentException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

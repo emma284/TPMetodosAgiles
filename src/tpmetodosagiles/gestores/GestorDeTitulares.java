@@ -79,7 +79,9 @@ public class GestorDeTitulares {
         unaLicencia.setTitular(unTitular);
         unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         
+        double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
         GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
+        GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);
         return (gbd.guardarTitular(unTitular) && gbd.guardarLicencia(unaLicencia));
     }
 
@@ -122,7 +124,11 @@ public class GestorDeTitulares {
         //edad del titular
         int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
         //tiempo desde que obtuvo su primera licencia de clase B
-        int antiguedadClaseB = (int)YEARS.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy);
+        int antiguedadClaseB;
+        if(unTitular.getFechaEmisionLicenciaTipoB() != null)
+            antiguedadClaseB = (int)YEARS.between(unTitular.getFechaEmisionLicenciaTipoB(), fechaHoy);
+        else
+            antiguedadClaseB = 0;
         //Recorrer listado de licencias que ha tenido el titular si no está vacío
         for (Licencia licencia : unTitular.getLicencias()) {
             if(licencia.getClaseLicencia()==claseLicencia && licencia.getFechaVencimiento().isAfter(fechaHoy)){
@@ -193,23 +199,6 @@ public class GestorDeTitulares {
         return retorno;
     }
     
-    private void printCostoLicencia(Licencia unaLicencia){
-        double costoLicencia = gdl.calcularCostoDeLicencia(unaLicencia);
-        double costoTotal = costoLicencia;
-        List<Object[]> gastos = gbd.getGastosGenerales();
-        String gastosTotales = "Costo de licencia:\t$"+costoLicencia;
-        for(Object[] gasto : gastos){
-            gastosTotales+= "\n"+gasto[0].toString()+":\t$"+gasto[1].toString();
-            costoTotal += Double.parseDouble(gasto[1].toString());
-        }
-        gastosTotales += "\n\nCosto Total:\t$"+costoTotal;
-        Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
-        mensajeExito.setTitle("Transacción completada");
-        mensajeExito.setHeaderText("Se ha registrado la licencia en el sistema.\n"+gastosTotales);
-        mensajeExito.initModality(Modality.APPLICATION_MODAL);
-        mensajeExito.show();
-    }
-    
     public boolean emitirLicencia(Titular unTitular, char claseLicencia) {
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
@@ -218,7 +207,17 @@ public class GestorDeTitulares {
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             if(gbd.guardarLicencia(unaLicencia)){
-                printCostoLicencia(unaLicencia);
+                double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
+                GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
+                GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);
+                
+                //Se registraron la nueva licencia con éxito => muestra un mensaje
+                Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
+                mensajeExito.setTitle("Transacción completada");
+                mensajeExito.setHeaderText("Se ha registrado la licencia en el sistema");
+                mensajeExito.initModality(Modality.APPLICATION_MODAL);
+                mensajeExito.show();
+                
                 return true;
             }
         }
@@ -235,7 +234,17 @@ public class GestorDeTitulares {
             if(gbd.guardarLicencia(unaLicencia)){
                 unaLicenciaARenovar.setFechaVencimiento(LocalDate.now().minusDays(1));
                 gbd.modificarLicencia(unaLicenciaARenovar);
-                printCostoLicencia(unaLicencia);
+                double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
+                GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
+                GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);
+                
+                //Se registraron la nueva licencia con éxito => muestra un mensaje
+                Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
+                mensajeExito.setTitle("Transacción completada");
+                mensajeExito.setHeaderText("Se ha registrado la licencia en el sistema");
+                mensajeExito.initModality(Modality.APPLICATION_MODAL);
+                mensajeExito.show();
+                
                 return true;
             }
         }
