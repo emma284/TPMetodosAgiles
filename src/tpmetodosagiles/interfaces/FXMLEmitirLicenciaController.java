@@ -16,10 +16,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.entidades.Usuario;
@@ -83,10 +85,18 @@ public class FXMLEmitirLicenciaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
         cbTipoDocumento.setItems(tiposDocumentos);
-        //cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());
-        
-        
-    }   
+        //cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());    
+    }
+    
+    public void titularNoEncontrado(){
+        Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+        mensajeErrores.setTitle("No se puede encontrar el titular");
+        mensajeErrores.setHeaderText("Los datos de búsqueda no coinciden con los de un titular registrado en el sistema.");
+        mensajeErrores.setContentText("Verifique que los datos de 'Tipo de documento' y 'Número de documento' hayan sido ingresados correctamente.");
+        mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+        mensajeErrores.show();
+    }
+    
     
     public void setDatosTitular(){
         tfNombres.setText(unTitular.getNombre());
@@ -148,39 +158,47 @@ public class FXMLEmitirLicenciaController implements Initializable {
         lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
     }
     
+    public void validarDatos(){
+        if(cbTipoDocumento.getSelectionModel().isEmpty() && tfNumeroDocumento.getText().isEmpty()){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos incorrectos");
+            mensajeErrores.setHeaderText("Los datos de búsqueda son incorrectos o están incompletos");
+            mensajeErrores.setContentText("Verifique que los datos de 'Tipo de documento' y 'Número de documento' hayan sido ingresado correctamente.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }
+        else{
+            unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
+            if(unTitular == null){
+                titularNoEncontrado();
+            }else{
+                setDatosTitular();
+            }
+        }
+    }
     
     @FXML
     public void onEnter(ActionEvent ae){
-        unTitular = gestorTitular.getTitularPorDNI(cbTipoDocumento.getSelectionModel().getSelectedItem().toString(), tfNumeroDocumento.getText());
-        if(unTitular == null){
-            System.out.println("Usuario no encontrado");
-        }else{
-            setDatosTitular();
-        }
-        //borrar desde acá
-        /*unTitular = new Titular();
-        unTitular.setNombre("emmanuel");
-        unTitular.setApellido("ábrego");
-        unTitular.setFechaNacimiento(new Date());
-        unTitular.setEsDonante(true);
-        unTitular.setSexo('m');
-        unTitular.setTipoDeDocumento("DNI");
-        unTitular.setGrupoSanguinio("A+");
-       
-        System.out.println(unTitular.getNombre());*///hasta acá      
+       validarDatos();
     }
     
     
     @FXML
     public void emitirLicenciaOnClick(){
         //TODO Settear fecha de emisión de primera licencia de clase B
-        gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
+        if(gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0))){
+            validarDatos();
+        }
+        
 //        unaLicencia.setClaseLicencia(cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
 //        unaLicencia.setFechaEmision(LocalDate.MIN);
     }
     
     @FXML
     public void renovarLicenciaOnClick(){
-        gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem());
+        if(gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem())){
+            validarDatos();
+        }
+        
     }
 }

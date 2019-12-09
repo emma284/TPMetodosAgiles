@@ -112,6 +112,7 @@ public class GestorDeTitulares {
 
     private boolean validarLicenciaAEmitir(Titular unTitular, char claseLicencia) {
         boolean retorno;
+        StringBuffer errores = new StringBuffer("");
         //fecha actual
         LocalDate fechaHoy = LocalDate.now();
         boolean poseeLicenciaVigenteMismaClase = false;
@@ -133,9 +134,12 @@ public class GestorDeTitulares {
                 //Caso de que no haya tenido licencia de clase B desde hace, por lo menos, un año y  es menor de 21 años
                 if(antiguedadClaseB < 1 || edad < 21){
                     retorno = false;
+                    errores.append(antiguedadClaseB<1 ? "-Debe tener una licencia de clase B emitida hace, al menos, un año.\n" : "");
+                    errores.append(edad<21 ? "-Debe tener más de 21 años.\n" : "");
                 }
                 //Solo entra al else en caso de que lleve al menos un año con licencia de clase B y la edad sea mayor o igual a 21
                 else{
+                    errores.append(edad<65 ? "" : "-Debe ser menor de 65 años.\n");
                     retorno = (edad < 65);
                 }
                 break;
@@ -143,26 +147,45 @@ public class GestorDeTitulares {
             case 'B':
             case 'F':
             case 'G':
+                //Nunca debería mostrar este error.
+                errores.append(poseeLicenciaVigenteMismaClase ? "-Ya posee una licencia de clase " + claseLicencia + " vigente.\n" : "");
                 retorno = !poseeLicenciaVigenteMismaClase;
                 break;
             default:
                 retorno = false;
                 break;
         }
-        
+        if(!retorno){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Error");
+            mensajeErrores.setHeaderText("La licencia no puede ser emitida.");
+            mensajeErrores.setContentText(errores.toString());
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }
         return retorno;
     }
     
     public boolean validarLicenciaARenovar(Titular unTitular, Licencia unaLicencia){
         boolean retorno;
+        StringBuffer errores = new StringBuffer("");
         LocalDate fechaHoy = LocalDate.now();
         LocalDate fechaNacimiento = unTitular.getFechaNacimiento();
         int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
-        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento()) && YEARS.between(fechaHoy, unaLicencia.getFechaVencimiento())<1){
+        if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento()) && YEARS.between(fechaHoy, unaLicencia.getFechaVencimiento())<1){            
             retorno = MONTHS.between(fechaNacimiento,fechaHoy.minusYears(edad)) >= 10;
         }
         else{
-            retorno = true;
+            retorno = false;
+        }
+        
+        if(!retorno){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Error");
+            mensajeErrores.setHeaderText("La licencia no puede ser renovada.");
+            mensajeErrores.setContentText(errores.toString());
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
         }
         return retorno;
     }
@@ -184,7 +207,7 @@ public class GestorDeTitulares {
         mensajeExito.show();
     }
     
-    public void emitirLicencia(Titular unTitular, char claseLicencia) {
+    public boolean emitirLicencia(Titular unTitular, char claseLicencia) {
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
@@ -193,11 +216,13 @@ public class GestorDeTitulares {
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             if(gbd.guardarLicencia(unaLicencia)){
                 printCostoLicencia(unaLicencia);
+                return true;
             }
         }
+        return false;
     }
     
-    public void renovarLicencia(Licencia unaLicenciaARenovar){
+    public boolean renovarLicencia(Licencia unaLicenciaARenovar){
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
         if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar)){
@@ -206,11 +231,10 @@ public class GestorDeTitulares {
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             if(gbd.guardarLicencia(unaLicencia)){
                 printCostoLicencia(unaLicencia);
+                return true;
             }
         }
-        else{
-            System.out.println("Esta licencia no se puede renovar");
-        }
+        return false;
     }
     
     public void guardarModificacionTitular(Titular unTitular){
