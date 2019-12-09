@@ -30,126 +30,53 @@ public class GestorDeLicencias {
         return gbd.guardarLicencia(unaLicencia);*/return true;
     }
 
-    
+        
     public LocalDate calcularVigenciaDeLicencia(LocalDate fechaNacimiento,Integer idTitular, char claseLicencia){
 
         long edad = YEARS.between(fechaNacimiento,LocalDate.now());
+	LocalDate fechaVencimiento = fechaNacimiento.plusYears(edad);
+	Boolean aMenosDeDosMesesDeCumpleanios = MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10;
+	if(aMenosDeDosMesesDeCumpleanios){
+		//se encuentra a menos de 2 meses de cumplir años
+		fechaVencimiento = fechaVencimiento.plusYears(1);
+	}
         
         if(edad < 17){
             //Caso menor de 17 años
             return null;
         }
-        else if(edad > 16 && edad < 20){
+        else if((edad > 16 && edad < 20) || (edad == 20 && !aMenosDeDosMesesDeCumpleanios)){
             //caso entre 17 y 21
             if(idTitular==null)
                 return null ;
             else
                 //Se verifica si el titular ya tiene alguna licencia registrada
                 if(!gbd.titularRenovanteDeLicenciaClaseX(idTitular, claseLicencia)) {
-                    //Caso primera vez que obtiene licencia
-                    if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                    //se encuentra a menos de 2 meses de cumplir años
-                    return fechaNacimiento.plusYears(edad+1+1);
-                    }
-                    else{
-                        return fechaNacimiento.plusYears(edad+1);
-                    }
+			//Caso primera vez que obtiene licencia
+                	return fechaVencimiento.plusYears(1);
                 }
                 else{
                     //caso renovación
-                    if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                    //se encuentra a menos de 2 meses de cumplir años
-                    return fechaNacimiento.plusYears(edad+1+3);
-                    }
-                    else{
-                        return fechaNacimiento.plusYears(edad+3);
-                    }
+                        return fechaVencimiento.plusYears(3); 
                 }
         }
-        else if(edad == 20){
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+5);
-            }
-            else{
-                //Se verifica si el titular ya tiene alguna licencia registrada
-                if(!gbd.titularRenovanteDeLicenciaClaseX(idTitular, claseLicencia)){
-                    return fechaNacimiento.plusYears(edad+1);
-                }
-                else{
-                    return fechaNacimiento.plusYears(edad+3);
-                }
-            }
+        else if((edad < 46) || (edad == 46 && !aMenosDeDosMesesDeCumpleanios)){
+            //caso menor a 47 años
+                return fechaVencimiento.plusYears(5);
         }
-        else if(edad < 46){
-            //caso hasta 46 años
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+5);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+5);
-            }
+        else if((edad < 60) || (edad == 60 && !aMenosDeDosMesesDeCumpleanios)){
+            //caso menor a 61 años
+                return fechaVencimiento.plusYears(4);
         }
-        else if(edad == 46){
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+4);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+5);
-            }
-        }
-        else if(edad < 60){
-            //caso hasta 60 años
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+4);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+4);
-            }
-        }
-        else if (edad == 60){
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+3);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+4);
-            }
-        }
-        else if(edad < 70){
-            //caso hasta 70 años
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+3);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+3);
-            }
-        }
-        else if (edad == 70){
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+1);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+3);
-            }
+        else if((edad < 70) || (edad == 70 && !aMenosDeDosMesesDeCumpleanios)){
+            //caso menor a 71 años
+                return fechaVencimiento.plusYears(3);
         }
         else{
             //caso de 71 en adelante
-            if(MONTHS.between(fechaNacimiento,LocalDate.now().minusYears(edad)) >= 10){
-                //se encuentra a menos de 2 meses de cumplir años
-                return fechaNacimiento.plusYears(edad+1+1);
-            }
-            else{
-                return fechaNacimiento.plusYears(edad+1);
-            }
+                return fechaVencimiento.plusYears(1);
         }
     }
-  
      
     public Double calcularCostoDeLicencia(Licencia licencia){
         
