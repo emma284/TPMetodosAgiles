@@ -232,6 +232,8 @@ public class GestorDeTitulares {
             unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             if(gbd.guardarLicencia(unaLicencia)){
+                unaLicenciaARenovar.setFechaVencimiento(LocalDate.now().minusDays(1));
+                gbd.modificarLicencia(unaLicenciaARenovar);
                 printCostoLicencia(unaLicencia);
                 return true;
             }

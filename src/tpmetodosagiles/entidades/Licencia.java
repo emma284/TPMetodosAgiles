@@ -140,6 +140,10 @@ public class Licencia {
         return fechaVencimiento;
     }
 
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
     @Override
     public String toString() {
         return "Licencia{" + "idLicencia=" + idLicencia + ", fechaEmision=" + fechaEmision + ", fechaVencimiento=" + fechaVencimiento + ", claseLicencia=" + claseLicencia + ", numeroDeRenovacion=" + numeroDeRenovacion + ", numeroDeCopia=" + numeroDeCopia + ", titular=" + titular + ", usuarioResponsable=" + usuarioResponsable + '}';

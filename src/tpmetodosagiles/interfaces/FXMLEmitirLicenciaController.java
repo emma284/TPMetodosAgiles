@@ -111,20 +111,19 @@ public class FXMLEmitirLicenciaController implements Initializable {
         tfNroInterno.setText(campos[2]);
         tfPiso.setText(campos[3]);
         
-        cbObservaciones.getSelectionModel().select(unTitular.getObservaciones());
         //Listas de los desplegables
        
         
-        ObservableList <String> grupoSanguineo = FXCollections.observableArrayList( GestorDeDatosDeInterface.getGrupoSanguinio() );
-        cbGrupoSanguineo.setItems(grupoSanguineo);
+//        ObservableList <String> grupoSanguineo = FXCollections.observableArrayList( GestorDeDatosDeInterface.getGrupoSanguinio() );
+//        cbGrupoSanguineo.setItems(grupoSanguineo);
         cbGrupoSanguineo.getSelectionModel().select(unTitular.getGrupoSanguinio());
         
-        ObservableList <String> esDonante = FXCollections.observableArrayList( GestorDeDatosDeInterface.getEsDonante() );
-        cbEsDonante.setItems(esDonante);
+//        ObservableList <String> esDonante = FXCollections.observableArrayList( GestorDeDatosDeInterface.getEsDonante() );
+//        cbEsDonante.setItems(esDonante);
         cbEsDonante.getSelectionModel().select(unTitular.getEsDonante() ? "Sí" : "No");
         
-        ObservableList <String> sexos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getSexos() );
-        cbSexo.setItems(sexos);
+//        ObservableList <String> sexos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getSexos() );
+//        cbSexo.setItems(sexos);
         switch(unTitular.getSexo()){
             case 'm':
             case 'M':
@@ -136,11 +135,12 @@ public class FXMLEmitirLicenciaController implements Initializable {
                 break;
         }
         
-        ObservableList <String> calles = FXCollections.observableArrayList( GestorDeDatosDeInterface.getCalles() );
-        cbCalleTitular.setItems(calles);
+//        ObservableList <String> calles = FXCollections.observableArrayList( GestorDeDatosDeInterface.getCalles() );
+//        cbCalleTitular.setItems(calles);
         
-        ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
-        cbObservaciones.setItems(observaciones);
+//        ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
+//        cbObservaciones.setItems(observaciones);
+        cbObservaciones.getSelectionModel().select(unTitular.getObservaciones());
         licenciaObservableList.clear();
         for(Licencia licencia: unTitular.getLicencias()){
             if(licencia.getFechaVencimiento().isAfter(LocalDate.now()) || licencia.getFechaVencimiento().isEqual(LocalDate.now())){
@@ -185,8 +185,13 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void emitirLicenciaOnClick(){
-        //TODO Settear fecha de emisión de primera licencia de clase B
-        if(gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0))){
+        if(cbClaseLicencia.getSelectionModel().getSelectedItem()==null){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos faltantes");
+            mensajeErrores.setHeaderText("Debe seleccionar la clase de licencia que desea emitir.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }else if(gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0))){
             validarDatos();
         }
         
@@ -196,7 +201,13 @@ public class FXMLEmitirLicenciaController implements Initializable {
     
     @FXML
     public void renovarLicenciaOnClick(){
-        if(gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem())){
+        if(lvLicencias.getSelectionModel().getSelectedItem()==null){
+            Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
+            mensajeErrores.setTitle("Datos faltantes");
+            mensajeErrores.setHeaderText("Debe seleccionar de la lista la licencia que desea renovar.");
+            mensajeErrores.initModality(Modality.APPLICATION_MODAL);
+            mensajeErrores.show();
+        }else if(gestorTitular.renovarLicencia(lvLicencias.getSelectionModel().getSelectedItem())){
             validarDatos();
         }
         
