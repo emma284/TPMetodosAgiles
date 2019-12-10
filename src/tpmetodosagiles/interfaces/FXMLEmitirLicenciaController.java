@@ -157,13 +157,14 @@ public class FXMLEmitirLicenciaController implements Initializable {
         cbGrupoSanguineo.setValue(null);
         cbEsDonante.setValue(null);
         cbSexo.setValue(null);
-        cbObservaciones.setValue(null);
         cbClaseLicencia.setValue(null);
+        cbClaseLicencia.setItems(FXCollections.observableArrayList());
+        cbObservaciones.setValue(null);
         licenciaObservableList.clear();
     }
     
     public void validarDatos(){
-        if(cbTipoDocumento.getSelectionModel().isEmpty() && tfNumeroDocumento.getText().isEmpty()){
+        if(cbTipoDocumento.getSelectionModel().isEmpty() || tfNumeroDocumento.getText().isEmpty()){
             limpiarDatosTitular();
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("Datos incorrectos");
