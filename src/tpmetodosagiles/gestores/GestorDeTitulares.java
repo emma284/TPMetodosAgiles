@@ -204,6 +204,9 @@ public class GestorDeTitulares {
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
+            if(claseLicencia == 'B' && unTitular.getFechaEmisionLicenciaTipoB() == null){
+                unTitular.setFechaEmisionLicenciaTipoB(LocalDate.now());
+            }
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
             if(gbd.guardarLicencia(unaLicencia)){
