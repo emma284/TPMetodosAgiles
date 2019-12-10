@@ -287,11 +287,10 @@ public class FXMLDarAltaTitularController implements Initializable {
             errores.append("-Debe seleccionar una de las opciones de 'Clase de Licencia Solicitada'.\n");
             datosCorrectos = false;
         }
-        if (rutaDeFotoDeTitular == GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto()){
+        if (rutaDeFotoDeTitular.equals(GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto())){
             errores.append("-Debe seleccionar una foto de identificación del titular.\n");
             datosCorrectos = false;
         }
-        //TODO: Emir-Luciano: verificar que se haya seleccionado una fotografía (que no sea la de 'por defecto')
         
         if (!datosCorrectos){
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);

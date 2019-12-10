@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
  *
  * @author usuario
  */
-public class TextFieldSoloNumeros extends TextField {
+public class TextFieldSoloFloat extends TextField {
     private int longitudMaxima = 10;
     
     //TODO: Restringir la longitud de texto cuando se pega texto
@@ -37,7 +37,7 @@ public class TextFieldSoloNumeros extends TextField {
     private boolean validar(String text)
     {
         //Tener en cuenta que 'this.getText()' retorna el último texto valido del TextField (sin el último valor ingresado, que está en la variable 'text')
-        return (text.matches("[0-9]*") && ( this.getText()+text ).length() <= this.longitudMaxima);
+        return ((this.getText() + text).matches("[0-9]*\\.?[0-9]*\\Z") && ( this.getText()+text).length() <= this.longitudMaxima);
     }
     
     public void setLongitudMaxima(int longitud){

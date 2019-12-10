@@ -254,8 +254,10 @@ public class GestorDeTitulares {
         return false;
     }
     
-    public void guardarModificacionTitular(Titular unTitular){
+    public void guardarModificacionTitular(Titular unTitular, String rutaDeFotoDeTitular){
         gbd.guardarTitular(unTitular);
+        if(rutaDeFotoDeTitular != null)
+            GestorDeBaseDeDatos.guardarFotoTitular(rutaDeFotoDeTitular, String.valueOf(unTitular.getNumeroDocumento()));
     }
     
 

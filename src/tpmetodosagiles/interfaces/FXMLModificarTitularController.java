@@ -28,6 +28,7 @@ import javafx.stage.Modality;
 import javax.swing.filechooser.FileSystemView;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.enums.SexoEnum;
+import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeTitulares;
@@ -66,8 +67,6 @@ public class FXMLModificarTitularController implements Initializable {
     private ComboBox cbEsDonante;
     @FXML
     private ComboBox cbSexo;
-    @FXML
-    private ComboBox cbClaseLicencia;
     @FXML
     private DatePicker dpFechaNacimiento;
     @FXML
@@ -128,9 +127,10 @@ public class FXMLModificarTitularController implements Initializable {
         unTitular.setSexo(sexo);
         unTitular.setObservaciones(observaciones);
         if(rutaDeFotoDeTitular.isEmpty())rutaDeFotoDeTitular=null;
+        if(rutaDeFotoDeTitular.equals(GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto()))rutaDeFotoDeTitular=null;
         unTitular.setRutaDeFotoDeTitular(rutaDeFotoDeTitular);
         
-        gestorTitular.guardarModificacionTitular(unTitular); 
+        gestorTitular.guardarModificacionTitular(unTitular,rutaDeFotoDeTitular); 
     
        
         Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
@@ -237,7 +237,7 @@ public class FXMLModificarTitularController implements Initializable {
         
         
         /*
-        borrar datos introducidos (no olvidar imagen)
+        borrar datos introducidos
         deshabilitar datos de titular introducidos y habilitar datos de busqueda
         */
     }
@@ -361,7 +361,8 @@ public class FXMLModificarTitularController implements Initializable {
         cbEsDonante.setValue(null);
         cbSexo.setValue(null);
         cbObservaciones.setValue(null);
-        imgFotoTitular.setImage(null);
+        imgFotoTitular.setImage(GestorDeBaseDeDatos.getFotoTitularPorDefecto());
+        rutaDeFotoDeTitular = GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto();
     }
     
     private void deshabilitarEdicionDatosDeTitular() {
@@ -374,7 +375,6 @@ public class FXMLModificarTitularController implements Initializable {
         cbGrupoSanguinio.setDisable(true);
         cbEsDonante.setDisable(true);
         cbObservaciones.setDisable(true);
-        cbClaseLicencia.setDisable(true);
         btnSeleccionarFotografia.setDisable(true);
         btnModificar.setDisable(true);
         tfNombreTitular.setDisable(true);

@@ -299,7 +299,7 @@ public class GestorDeLicencias {
        }
         catch (FileNotFoundException fnf){
             System.out.println("El archivo está siendo utilizado. Cierrelo para continuar.");
-            crearPDFLicencia(licencia,destinationPath.replaceFirst("\\d?.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
+            crearPDFLicencia(licencia,destinationPath.replaceFirst("\\d?\\.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
         } catch (DocumentException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
@@ -351,7 +351,7 @@ public class GestorDeLicencias {
        }
         catch (FileNotFoundException fnf){
             System.out.println("El archivo está siendo utilizado. Cierrelo para continuar.");
-            crearPDFComprobante(costoLicencia, costoFijo, total,destinationPath.replaceFirst("\\d?.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
+            crearPDFComprobante(costoLicencia, costoFijo, total,destinationPath.replaceFirst("\\d?\\.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
         } catch (DocumentException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
