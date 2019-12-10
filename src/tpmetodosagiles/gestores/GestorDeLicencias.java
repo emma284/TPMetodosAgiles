@@ -169,7 +169,9 @@ public class GestorDeLicencias {
         html.append("<td style=\"width: 490px; padding: 5px 0px 0px 0px;\">\n<h3 class=\"main\">LICENCIA DE CONDUCIR - SANTA FE CIUDAD</h3>\n");
         html.append("<hr/>\n</td>\n</tr>\n<tr>\n<td style=\"width: 490px; padding-top: 0px;\">\n<table style=\"width: 482px;\">\n<tbody>\n<tr>\n");
         html.append("<td style=\"width: 154px; padding: 5px 5px 0px 10px;\" valign=\"top\"><img src=\"");
-        if( (new File(licencia.getTitular().getRutaDeFotoDeTitular())).exists() )
+        if(licencia.getTitular().getRutaDeFotoDeTitular() == null)
+            html.append( GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto().replace('\\', '/'));
+        else if( (new File(licencia.getTitular().getRutaDeFotoDeTitular())).exists() )
             html.append(licencia.getTitular().getRutaDeFotoDeTitular().replace('\\', '/'));
         else
             html.append( GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto().replace('\\', '/'));
