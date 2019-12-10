@@ -188,12 +188,12 @@ public class GestorDeTitulares {
         return retorno;
     }
     
-    public boolean validarLicenciaARenovar(Titular unTitular, Licencia unaLicencia){
+    public boolean validarLicenciaARenovar(Licencia unaLicencia){
         boolean retorno;
         StringBuffer errores = new StringBuffer("");
         LocalDate fechaHoy = LocalDate.now();
-        LocalDate fechaNacimiento = unTitular.getFechaNacimiento();
-        int edad = (int)YEARS.between(unTitular.getFechaNacimiento(), fechaHoy);
+        LocalDate fechaNacimiento = unaLicencia.getTitular().getFechaNacimiento();
+        int edad = (int)YEARS.between(unaLicencia.getTitular().getFechaNacimiento(), fechaHoy);
         if(fechaHoy.isBefore(unaLicencia.getFechaVencimiento()) && YEARS.between(fechaHoy, unaLicencia.getFechaVencimiento())<1){            
             retorno = MONTHS.between(fechaNacimiento,fechaHoy.minusYears(edad)) >= 10;
         }
@@ -256,7 +256,7 @@ public class GestorDeTitulares {
     public boolean renovarLicencia(Licencia unaLicenciaARenovar){
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unaLicenciaARenovar.getTitular().getFechaNacimiento(), null, unaLicenciaARenovar.getClaseLicencia());
-        if(validarLicenciaARenovar(unaLicenciaARenovar.getTitular(), unaLicenciaARenovar)){
+        if(validarLicenciaARenovar(unaLicenciaARenovar)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,unaLicenciaARenovar.getClaseLicencia(),1,unaLicenciaARenovar.getNumeroDeRenovacion()+1);
             unaLicencia.setTitular(unaLicenciaARenovar.getTitular());
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
