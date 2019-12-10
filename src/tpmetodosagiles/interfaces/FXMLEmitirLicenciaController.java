@@ -142,17 +142,15 @@ public class FXMLEmitirLicenciaController implements Initializable {
 //        cbObservaciones.setItems(observaciones);
         cbObservaciones.getSelectionModel().select(unTitular.getObservaciones());
         licenciaObservableList.clear();
+        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
         for(Licencia licencia: unTitular.getLicencias()){
             if(licencia.getFechaVencimiento().isAfter(LocalDate.now()) || licencia.getFechaVencimiento().isEqual(LocalDate.now())){
                 licenciaObservableList.add(licencia);
+                claseLicencia.remove(String.valueOf(licencia.getClaseLicencia()));
             }
         }
-        
-        ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
-        for(Licencia licencia : licenciaObservableList){
-            claseLicencia.remove(String.valueOf(licencia.getClaseLicencia()));
-        }
         cbClaseLicencia.setItems(claseLicencia);
+        
         
         lvLicencias.setItems(licenciaObservableList);
         lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
