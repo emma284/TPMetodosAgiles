@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -252,7 +252,7 @@ public class GestorDeBaseDeDatos {
             case 5: columnaAniosVigencia = "vigencia5anios"; break;
             case 4: columnaAniosVigencia = "vigencia4anios"; break;
             case 3: columnaAniosVigencia = "vigencia3anios"; break;
-            case 1: columnaAniosVigencia = "vigencia1anios"; break;
+            case 1: columnaAniosVigencia = "vigencia1anio"; break;
         }
         
         unaQuery = session.createSQLQuery("SELECT "+columnaAniosVigencia+
