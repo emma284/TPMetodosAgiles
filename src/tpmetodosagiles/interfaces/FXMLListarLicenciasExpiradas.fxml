@@ -11,9 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-
-<!--<?import tpmetodosagiles.layouts.TextFieldSoloLetras?>-->
-<!--<?import tpmetodosagiles.layouts.TextFieldSoloNumeros?>-->
+<?import tpmetodosagiles.layouts.TextFieldNombre?>
 
 <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="668.0" prefWidth="677.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLListarLicenciasExpiradasController">
    <columnConstraints>
@@ -45,9 +43,9 @@
    </rowConstraints>
    <children>
       <Label text="Nombres:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <TextField fx:id="tfNombreTitular" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextFieldNombre fx:id="tfNombreTitular" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="Apellidos:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <TextField fx:id="tfApellidoTitular" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <TextFieldNombre fx:id="tfApellidoTitular" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       <Label text="Desde Fecha:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
       <DatePicker fx:id="dpFechaDesde" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <HBox alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="12">

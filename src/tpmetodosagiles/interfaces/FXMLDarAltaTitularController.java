@@ -114,6 +114,13 @@ public class FXMLDarAltaTitularController implements Initializable {
     
     @FXML
     private void buscarEnBDCiudad(ActionEvent event){
+        /*
+        llamar al ADB2 y pedirle el contribuyente
+        verificar si el contribuyente existe
+        si existe => deshabilitar las opciones de búsqueda y habilitar los de datos del titular; y rellenar los datos de la pantalla que estén disponibles
+        si no existe => mostrar mensaje
+        */
+        
         if(!this.datosDeBusquedaValidos((String) cbTipoDocumento.getValue(), tfNumeroDocumento.getText())){
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("Datos incorrectos");
@@ -145,15 +152,6 @@ public class FXMLDarAltaTitularController implements Initializable {
             this.deshabilitarBusqueda();
             this.habilitarEdicionDatosDeTitular();
         }
-        
-        
-        /*
-        llamar al ADB2 y pedirle el contribuyente
-        verificar si el contribuyente existe
-        si existe => deshabilitar las opciones de búsqueda y habilitar los de datos del titular; y rellenar los datos de la pantalla que estén disponibles
-        si no existe => mostrar mensaje
-        
-        */
     }
     
     

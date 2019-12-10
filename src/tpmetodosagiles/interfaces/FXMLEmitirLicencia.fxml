@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import tpmetodosagiles.layouts.TextFieldSoloNumeros?>
 
 <ScrollPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLEmitirLicenciaController">
    <content>
@@ -42,8 +43,8 @@
               <Label prefWidth="111.0" text="Tipo de Documento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
               <ComboBox fx:id="cbTipoDocumento" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
               <Label text="Nro de Documento:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#onEnter" prefHeight="25.0" prefWidth="92.0" text="Buscar" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-              <TextField fx:id="tfNumeroDocumento" onAction="#onEnter" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+              <Button mnemonicParsing="false" onAction="#onEnter" prefHeight="25.0" prefWidth="92.0" text="Buscar" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+              <TextFieldSoloNumeros fx:id="tfNumeroDocumento" onAction="#onEnter" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                 <GridPane alignment="BOTTOM_LEFT" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="250.0" prefWidth="607.0" style="-fx-background-color: #EEE; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border: 2px; -fx-border-color: #555;" vgap="10.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />

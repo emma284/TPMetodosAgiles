@@ -41,7 +41,7 @@ public class FXMLEmitirLicenciaController implements Initializable {
     @FXML
     private ComboBox cbTipoDocumento;
     @FXML
-    private TextField tfNumeroDocumento;
+    private TextFieldSoloNumeros tfNumeroDocumento;
     @FXML
     private TextField tfNombres;
     @FXML
@@ -84,7 +84,9 @@ public class FXMLEmitirLicenciaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
-        cbTipoDocumento.setItems(tiposDocumentos);   
+        cbTipoDocumento.setItems(tiposDocumentos);
+        
+        tfNumeroDocumento.setLongitudMaxima(8);
     }
     
     public void titularNoEncontrado(){

@@ -11,23 +11,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import tpmetodosagiles.entidades.Licencia;
 import tpmetodosagiles.entidades.Titular;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeLicencias;
 import tpmetodosagiles.gestores.GestorDeTitulares;
+import tpmetodosagiles.layouts.TextFieldNombre;
 //import tpmetodosagiles.layouts.TextFieldSoloLetras;
 
 /**
@@ -39,9 +35,9 @@ public class FXMLListarLicenciasExpiradasController implements Initializable {
 
     GestorDeLicencias gestorLicencias;
     @FXML
-    private TextField tfNombreTitular;
+    private TextFieldNombre tfNombreTitular;
     @FXML
-    private TextField tfApellidoTitular;
+    private TextFieldNombre tfApellidoTitular;
     @FXML
     private DatePicker dpFechaDesde;
     @FXML
