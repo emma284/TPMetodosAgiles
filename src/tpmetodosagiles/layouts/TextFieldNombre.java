@@ -11,9 +11,9 @@ import javafx.scene.control.TextField;
  *
  * @author usuario
  */
-public class TextFieldSoloFloat extends TextField {
+public class TextFieldNombre extends TextField{
     
-    private int longitudMaxima = 10;
+    private int longitudMaxima = 70;
     
     
     @Override
@@ -37,7 +37,7 @@ public class TextFieldSoloFloat extends TextField {
     private boolean validar(String text)
     {
         //Tener en cuenta que 'this.getText()' retorna el último texto valido del TextField (sin el último valor ingresado, que está en la variable 'text')
-        return ((this.getText() + text).matches("[0-9]*\\.?[0-9]*\\Z") && ( this.getText()+text).length() <= this.longitudMaxima);
+        return (text.matches("[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ\\s']*") && ( this.getText()+text ).length() <= this.longitudMaxima);
     }
     
     public void setLongitudMaxima(int longitud){

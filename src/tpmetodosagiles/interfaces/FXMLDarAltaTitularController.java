@@ -28,7 +28,7 @@ import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeContribuyente;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeTitulares;
-import tpmetodosagiles.layouts.TextFieldSoloLetras;
+import tpmetodosagiles.layouts.TextFieldNombre;
 import tpmetodosagiles.layouts.TextFieldSoloNumeros;
 
 /**
@@ -41,9 +41,9 @@ public class FXMLDarAltaTitularController implements Initializable {
     @FXML
     private TextFieldSoloNumeros tfNumeroDocumento;
     @FXML
-    private TextFieldSoloLetras tfNombreTitular;
+    private TextFieldNombre tfNombreTitular;
     @FXML
-    private TextFieldSoloLetras tfApellidoTitular;
+    private TextFieldNombre tfApellidoTitular;
     @FXML
     private TextFieldSoloNumeros tfNroAltura;
     @FXML

@@ -19,8 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import tpmetodosagiles.gestores.GestorDeLicencias;
+import tpmetodosagiles.layouts.TextFieldDouble;
 //import tpmetodosagiles.layouts.TextFieldSoloLetras;
-
 /**
  * FXML Controller class
  *
@@ -30,63 +30,63 @@ public class FXMLCostoDeLicenciasController implements Initializable {
 
     GestorDeLicencias gestorLicencias;
     @FXML
-    private TextField tfCostosAdministrativos;
+    private TextFieldDouble tfCostosAdministrativos;
     @FXML
-    private TextField tfA5Anios;
+    private TextFieldDouble tfA5Anios;
     @FXML
-    private TextField tfB5Anios;
+    private TextFieldDouble tfB5Anios;
     @FXML
-    private TextField tfC5Anios;
+    private TextFieldDouble tfC5Anios;
     @FXML
-    private TextField tfD5Anios;
+    private TextFieldDouble tfD5Anios;
     @FXML
-    private TextField tfE5Anios;
+    private TextFieldDouble tfE5Anios;
     @FXML
-    private TextField tfF5Anios;
+    private TextFieldDouble tfF5Anios;
     @FXML
-    private TextField tfG5Anios;
+    private TextFieldDouble tfG5Anios;
     @FXML
-    private TextField tfA4Anios;
+    private TextFieldDouble tfA4Anios;
     @FXML
-    private TextField tfB4Anios;
+    private TextFieldDouble tfB4Anios;
     @FXML
-    private TextField tfC4Anios;
+    private TextFieldDouble tfC4Anios;
     @FXML
-    private TextField tfD4Anios;
+    private TextFieldDouble tfD4Anios;
     @FXML
-    private TextField tfE4Anios;
+    private TextFieldDouble tfE4Anios;
     @FXML
-    private TextField tfF4Anios;
+    private TextFieldDouble tfF4Anios;
     @FXML
-    private TextField tfG4Anios;
+    private TextFieldDouble tfG4Anios;
     @FXML
-    private TextField tfA3Anios;
+    private TextFieldDouble tfA3Anios;
     @FXML
-    private TextField tfB3Anios;
+    private TextFieldDouble tfB3Anios;
     @FXML
-    private TextField tfC3Anios;
+    private TextFieldDouble tfC3Anios;
     @FXML
-    private TextField tfD3Anios;
+    private TextFieldDouble tfD3Anios;
     @FXML
-    private TextField tfE3Anios;
+    private TextFieldDouble tfE3Anios;
     @FXML
-    private TextField tfF3Anios;
+    private TextFieldDouble tfF3Anios;
     @FXML
-    private TextField tfG3Anios;
+    private TextFieldDouble tfG3Anios;
     @FXML
-    private TextField tfA1Anios;
+    private TextFieldDouble tfA1Anios;
     @FXML
-    private TextField tfB1Anios;
+    private TextFieldDouble tfB1Anios;
     @FXML
-    private TextField tfC1Anios;
+    private TextFieldDouble tfC1Anios;
     @FXML
-    private TextField tfD1Anios;
+    private TextFieldDouble tfD1Anios;
     @FXML
-    private TextField tfE1Anios;
+    private TextFieldDouble tfE1Anios;
     @FXML
-    private TextField tfF1Anios;
+    private TextFieldDouble tfF1Anios;
     @FXML
-    private TextField tfG1Anios;
+    private TextFieldDouble tfG1Anios;
 
     private List<List<Double>> listaDeCostos;
     private Double costoAdministrativo;

@@ -32,6 +32,8 @@ import tpmetodosagiles.gestores.GestorDeBaseDeDatos;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
 import tpmetodosagiles.gestores.GestorDeDatosDeInterface;
 import tpmetodosagiles.gestores.GestorDeTitulares;
+import tpmetodosagiles.layouts.TextFieldNombre;
+import tpmetodosagiles.layouts.TextFieldSoloNumeros;
 
 /**
  * FXML Controller class
@@ -44,19 +46,19 @@ public class FXMLModificarTitularController implements Initializable {
 //    @FXML
 //    private TextField tfTipoDocumento;
     @FXML
-    private TextField tfNumeroDocumento;
+    private TextFieldSoloNumeros tfNumeroDocumento;
     @FXML
-    private TextField tfNombreTitular;
+    private TextFieldNombre tfNombreTitular;
     @FXML
-    private TextField tfApellidoTitular;
+    private TextFieldNombre tfApellidoTitular;
     @FXML
     private ComboBox cbObservaciones;
     @FXML
-    private TextField tfNroAltura;
+    private TextFieldSoloNumeros tfNroAltura;
     @FXML
-    private TextField tfNroInterno;
+    private TextFieldSoloNumeros tfNroInterno;
     @FXML
-    private TextField tfPiso;
+    private TextFieldSoloNumeros tfPiso;
     @FXML
     private ComboBox cbTipoDocumento;
     @FXML
@@ -104,6 +106,11 @@ public class FXMLModificarTitularController implements Initializable {
         
         ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
         cbObservaciones.setItems(observaciones);
+        
+        tfNumeroDocumento.setLongitudMaxima(8);
+        tfNroAltura.setLongitudMaxima(6);
+        tfNroInterno.setLongitudMaxima(5);
+        tfPiso.setLongitudMaxima(2);
         
     }
     

@@ -5,13 +5,14 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import tpmetodosagiles.layouts.TextFieldSoloNumeros?>
+<?import tpmetodosagiles.layouts.TextFieldNombre?>
 
 <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="668.0" prefWidth="677.0" vgap="10.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tpmetodosagiles.interfaces.FXMLModificarTitularController">
    <columnConstraints>
@@ -41,12 +42,12 @@
       <Label text="Tipo de Documento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
       <ComboBox fx:id="cbTipoDocumento" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Label text="Nro de Documento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <TextField fx:id="tfNumeroDocumento" onAction="#buscarTitular" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <TextFieldSoloNumeros fx:id="tfNumeroDocumento" onAction="#buscarTitular" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Button fx:id="btnBuscarTitular" mnemonicParsing="false" onAction="#buscarTitular" prefHeight="25.0" prefWidth="96.0" text="Buscar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
       <Label text="Nombres:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-      <TextField fx:id="tfNombreTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <TextFieldNombre fx:id="tfNombreTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Label text="Apellidos:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-      <TextField fx:id="tfApellidoTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <TextFieldNombre fx:id="tfApellidoTitular" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <Label text="Fecha de Nacimiento:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
       <DatePicker fx:id="dpFechaNacimiento" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="6" />
       <Label text="Calle:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
@@ -58,31 +59,31 @@
                   <Insets />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfNroAltura" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
+            <TextFieldSoloNumeros fx:id="tfNroAltura" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
-            </TextField>
+            </TextFieldSoloNumeros>
             <Label text="Nro. Interno:">
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfNroInterno" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
+            <TextFieldSoloNumeros fx:id="tfNroInterno" alignment="CENTER_RIGHT" disable="true" prefWidth="60.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
-            </TextField>
+            </TextFieldSoloNumeros>
             <Label text="Piso:">
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfPiso" alignment="CENTER_RIGHT" disable="true" prefWidth="40.0">
+            <TextFieldSoloNumeros fx:id="tfPiso" alignment="CENTER_RIGHT" disable="true" prefWidth="40.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
-            </TextField>
+            </TextFieldSoloNumeros>
          </children>
          <GridPane.margin>
             <Insets top="-5.0" />
