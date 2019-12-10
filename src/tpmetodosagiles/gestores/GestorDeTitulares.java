@@ -215,6 +215,19 @@ public class GestorDeTitulares {
     public boolean emitirLicencia(Titular unTitular, char claseLicencia) {
         LocalDate fechaVencimientoLicencia = 
                 gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseLicencia);
+        boolean licenciaProfesional = (claseLicencia == 'C' || claseLicencia == 'D' || claseLicencia == 'E');
+        Licencia licenciaB = new Licencia();
+        boolean actualizaLicenciaB = false;
+        if(licenciaProfesional){
+            for(Licencia licencia : unTitular.getLicencias()){
+                if(licencia.getClaseLicencia() == 'B' && (LocalDate.now().isBefore(licencia.getFechaVencimiento()) || LocalDate.now().isEqual(licencia.getFechaVencimiento()))){
+                    licencia.setFechaVencimiento(LocalDate.now().minusDays(1));
+                    //licenciaActualizada = gbd.guardarLicencia(licenciaB);
+                    actualizaLicenciaB = true;
+                    licenciaB=licencia;
+                }
+            }
+        }
         if(validarLicenciaAEmitir(unTitular, claseLicencia)){
             Licencia unaLicencia = new Licencia(LocalDate.now(),fechaVencimientoLicencia,claseLicencia,1,1);
             if(claseLicencia == 'B' && unTitular.getFechaEmisionLicenciaTipoB() == null){
@@ -222,7 +235,7 @@ public class GestorDeTitulares {
             }
             unaLicencia.setTitular(unTitular);
             unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-            if(gbd.guardarLicencia(unaLicencia)){
+            if(gbd.guardarLicencia(unaLicencia) && (actualizaLicenciaB ? gbd.guardarLicencia(licenciaB) : true)){
                 double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
                 GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
                 GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);

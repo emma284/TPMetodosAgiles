@@ -84,11 +84,11 @@ public class FXMLEmitirLicenciaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList <String> tiposDocumentos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getTipoDeDocumento() );
-        cbTipoDocumento.setItems(tiposDocumentos);
-        //cbTipoDocumento.getSelectionModel().select(unTitular.getTipoDeDocumento());    
+        cbTipoDocumento.setItems(tiposDocumentos);   
     }
     
     public void titularNoEncontrado(){
+        limpiarDatosTitular();
         Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
         mensajeErrores.setTitle("No se puede encontrar el titular");
         mensajeErrores.setHeaderText("Los datos de búsqueda no coinciden con los de un titular registrado en el sistema.");
@@ -112,18 +112,11 @@ public class FXMLEmitirLicenciaController implements Initializable {
         tfPiso.setText(campos[3]);
         
         //Listas de los desplegables
-       
-        
-//        ObservableList <String> grupoSanguineo = FXCollections.observableArrayList( GestorDeDatosDeInterface.getGrupoSanguinio() );
-//        cbGrupoSanguineo.setItems(grupoSanguineo);
+
         cbGrupoSanguineo.getSelectionModel().select(unTitular.getGrupoSanguinio());
-        
-//        ObservableList <String> esDonante = FXCollections.observableArrayList( GestorDeDatosDeInterface.getEsDonante() );
-//        cbEsDonante.setItems(esDonante);
+
         cbEsDonante.getSelectionModel().select(unTitular.getEsDonante() ? "Sí" : "No");
         
-//        ObservableList <String> sexos = FXCollections.observableArrayList( GestorDeDatosDeInterface.getSexos() );
-//        cbSexo.setItems(sexos);
         switch(unTitular.getSexo()){
             case 'm':
             case 'M':
@@ -135,13 +128,9 @@ public class FXMLEmitirLicenciaController implements Initializable {
                 break;
         }
         
-//        ObservableList <String> calles = FXCollections.observableArrayList( GestorDeDatosDeInterface.getCalles() );
-//        cbCalleTitular.setItems(calles);
-        
-//        ObservableList <String> observaciones = FXCollections.observableArrayList( GestorDeDatosDeInterface.getObservaciones() );
-//        cbObservaciones.setItems(observaciones);
         cbObservaciones.getSelectionModel().select(unTitular.getObservaciones());
         licenciaObservableList.clear();
+        /*Se revisan todas las licencias vigentes del titular, se agregan las vigentes al listado de licencias vigentes y las que se pueden emitir en el desplegable.*/
         ObservableList <String> claseLicencia = FXCollections.observableArrayList( GestorDeDatosDeInterface.getLicencias());
         for(Licencia licencia: unTitular.getLicencias()){
             if(licencia.getFechaVencimiento().isAfter(LocalDate.now()) || licencia.getFechaVencimiento().isEqual(LocalDate.now())){
@@ -151,13 +140,29 @@ public class FXMLEmitirLicenciaController implements Initializable {
         }
         cbClaseLicencia.setItems(claseLicencia);
         
-        
         lvLicencias.setItems(licenciaObservableList);
         lvLicencias.setCellFactory(studentListView -> new FXMLCeldaListaLicenciasController());
     }
     
+    public void limpiarDatosTitular(){
+        tfNombres.clear();
+        tfApellidos.clear();
+        dpFechaNacimiento.setValue(null);
+        cbCalleTitular.setValue(null);
+        tfNroAltura.clear();
+        tfNroInterno.clear();
+        tfPiso.clear();
+        cbGrupoSanguineo.setValue(null);
+        cbEsDonante.setValue(null);
+        cbSexo.setValue(null);
+        cbObservaciones.setValue(null);
+        cbClaseLicencia.setValue(null);
+        licenciaObservableList.clear();
+    }
+    
     public void validarDatos(){
         if(cbTipoDocumento.getSelectionModel().isEmpty() && tfNumeroDocumento.getText().isEmpty()){
+            limpiarDatosTitular();
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("Datos incorrectos");
             mensajeErrores.setHeaderText("Los datos de búsqueda son incorrectos o están incompletos");
@@ -192,9 +197,6 @@ public class FXMLEmitirLicenciaController implements Initializable {
         }else if(gestorTitular.emitirLicencia(unTitular,cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0))){
             validarDatos();
         }
-        
-//        unaLicencia.setClaseLicencia(cbClaseLicencia.getSelectionModel().getSelectedItem().toString().charAt(0));
-//        unaLicencia.setFechaEmision(LocalDate.MIN);
     }
     
     @FXML
