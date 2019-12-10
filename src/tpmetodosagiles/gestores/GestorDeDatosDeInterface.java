@@ -166,22 +166,6 @@ public class GestorDeDatosDeInterface {
     }
     
     /**
-     * Separa el nombre de la calle de los demás datos de domicilio.
-     * @param <i>domicilio</i> - Domicilio en formato predefinido.
-     */
-    public static String getdomicilioNombreDeCalle(String domicilio){
-        Pattern patronDomicilio = Pattern.compile("\\A([a-zA-Z 0-9]*)%([0-9]*)%([0-9]*)%([0-9]*)\\Z");
-        Matcher coincidencia = patronDomicilio.matcher(domicilio);
-        try{
-            String nombreCalle = coincidencia.group(0);
-            return nombreCalle;
-        }
-        catch(Exception e){
-            return "";
-        }
-    }
-    
-    /**
      * Convierte los posibles valores de los ComboBox de 'esDonante' en su equivalente booleano
      */
     public static boolean esDonanteToBoolean(String esDonante){

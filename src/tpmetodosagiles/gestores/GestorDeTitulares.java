@@ -29,26 +29,22 @@ public class GestorDeTitulares {
             Boolean esDonante, char sexo, char claseDeLicencia, String observaciones, String rutaDeFotoDeTitular){
         
        
-        //Verifica si se trata de una licencia de clase B para indicarlo en el atributo de Titular
+        //Verifica si se trata de una licencia de clase B para indicar la fecha en que se obtuvo la primer licencia de clase B en el atributo correspondiente del Titular
         LocalDate emisionLicenciaClaseB;
         if(claseDeLicencia == 'B')
             emisionLicenciaClaseB = LocalDate.now();
         else
             emisionLicenciaClaseB = null;
         
-        //Guarda la foto seleccionada del titular y verifica si se logró guardar correctamente.
-        String rutaDestinoDeFotoTitular = GestorDeBaseDeDatos.guardarFotoTitular(rutaDeFotoDeTitular, String.valueOf(numeroDocumento));
-        if (rutaDestinoDeFotoTitular == null)
-            return false;
-        
-        //Genera el Titular con sus datos
+        //Genera instancia de Titular con sus datos
         Titular unTitular = new Titular(tipoDeDocumento, numeroDocumento, apellido, nombre, 
                 fechaNacimiento, domicilio,  grupoSanguinio, esDonante, sexo, LocalDate.now(), 
-                emisionLicenciaClaseB, observaciones, rutaDestinoDeFotoTitular);
+                emisionLicenciaClaseB, observaciones, null);
         unTitular.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
-        System.out.println(unTitular.getUsuarioResponsable().getApellido());
-        //Verifica si el usuario actual ya está en el sistema
-        if(gbd.getTitularPorDNI(tipoDeDocumento, ""+numeroDocumento) != null){
+        
+        //Verifica si el titular ya está en el sistema
+        if(gbd.getTitularPorDNI(tipoDeDocumento, String.valueOf(numeroDocumento)) != null){
+            //El titular ya se encontraba registrado => se cancela la operación
             Alert mensajeErrores = new Alert(Alert.AlertType.INFORMATION);
             mensajeErrores.setTitle("No se pudo registrar el titular");
             mensajeErrores.setHeaderText("El titular ingresado ya se encuentra registrado en el sistema");
@@ -60,8 +56,7 @@ public class GestorDeTitulares {
         }
         
         //Calcula la fecha de vencimiento de la licencia que se está emitiendo
-        LocalDate fechaVencimientoLicencia = 
-                gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseDeLicencia);
+        LocalDate fechaVencimientoLicencia = gdl.calcularVigenciaDeLicencia(unTitular.getFechaNacimiento(), null, claseDeLicencia);
         
         if(fechaVencimientoLicencia == null){
             //Ocurre si el titular no tiene más de 17 años
@@ -75,14 +70,32 @@ public class GestorDeTitulares {
             return false;
         }
         
+        //Guarda la foto seleccionada del titular y verifica si se logró guardar correctamente.
+        String rutaDestinoDeFotoTitular = GestorDeBaseDeDatos.guardarFotoTitular(rutaDeFotoDeTitular, String.valueOf(numeroDocumento));
+        if (rutaDestinoDeFotoTitular == null)
+            //Si no se logra guardar la foto => se cancela la operación
+            return false;
+        else
+            unTitular.setRutaDeFotoDeTitular(rutaDestinoDeFotoTitular);
+        
+        //Se crea la instancia de Licencia y se le setean sus atributos
         Licencia unaLicencia = new Licencia(LocalDate.now(), fechaVencimientoLicencia, claseDeLicencia, 1, 1);
         unaLicencia.setTitular(unTitular);
         unaLicencia.setUsuarioResponsable(GestorDeConfiguracion.getUsuarioActual());
         
-        double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
-        GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
-        GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);
-        return (gbd.guardarTitular(unTitular) && gbd.guardarLicencia(unaLicencia));
+        //Se intenta registrar el nuevo Titular y la Licencia
+        if (gbd.guardarTitularYLicencia(unTitular,unaLicencia)){
+            //Si se logra registrar correctamente el nuevo titular y la licencia => se genera la licencia (en formato PDF) y el comprobante (en formato PDF)
+            double [] costo = GestorDeLicencias.getArrayCostoLicencia(unaLicencia);
+            GestorDeLicencias.crearPDFLicencia(unaLicencia,"src\\tpmetodosagiles\\recursos\\temp\\licencia.pdf", 1);
+            GestorDeLicencias.crearPDFComprobante( Double.toString(costo[0]),  Double.toString(costo[1]),  Double.toString(costo[2]), "src\\tpmetodosagiles\\recursos\\temp\\comprobante.pdf", 1);
+            
+            return true;
+        }
+        else{
+            //No se logró registrar correctamente el nuevo titular y la licencia
+            return false;
+        }
     }
 
     public Titular getTitularPorDNI(String tipoDocumento, String numDocumento) {

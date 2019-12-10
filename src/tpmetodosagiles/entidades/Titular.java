@@ -68,8 +68,6 @@ public class Titular {
     @Column (name = "observaciones")
     private String observaciones;
     
-    //TODO: Emir-Luciano: Agregar Observaciones 
-    
     @OneToMany(mappedBy = "titular", cascade= CascadeType.ALL)
     private List<Licencia> licencias = new ArrayList<Licencia>();
     

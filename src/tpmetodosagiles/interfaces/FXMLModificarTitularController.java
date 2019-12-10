@@ -126,8 +126,10 @@ public class FXMLModificarTitularController implements Initializable {
         unTitular.setEsDonante(esDonante);
         unTitular.setSexo(sexo);
         unTitular.setObservaciones(observaciones);
-        if(rutaDeFotoDeTitular.isEmpty())rutaDeFotoDeTitular=null;
-        if(rutaDeFotoDeTitular.equals(GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto()))rutaDeFotoDeTitular=null;
+        if(rutaDeFotoDeTitular != null){
+            if(rutaDeFotoDeTitular.isEmpty())rutaDeFotoDeTitular=null;
+            if(rutaDeFotoDeTitular.equals(GestorDeBaseDeDatos.getRutaFotoTitularPorDefecto()))rutaDeFotoDeTitular=null;
+        }
         unTitular.setRutaDeFotoDeTitular(rutaDeFotoDeTitular);
         
         gestorTitular.guardarModificacionTitular(unTitular,rutaDeFotoDeTitular); 

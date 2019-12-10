@@ -1,4 +1,4 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -82,6 +82,19 @@ public class GestorDeBaseDeDatos {
         return true;
     }
     
+    public boolean guardarTitularYLicencia(Titular unTitular, Licencia unaLicancia){
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(unaLicancia);
+            session.saveOrUpdate(unTitular);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("------------------------\n" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
     
     public List<Licencia> getLicenciasExpiradas(String nombre, String apellido, char clase, LocalDate fechaDesde, LocalDate fechaHasta){
         
@@ -173,10 +186,10 @@ public class GestorDeBaseDeDatos {
         return null;
     }
     
-    //TODO retornar null en caso de no encontrar el usuario en lugar de unUsuario que solo está inicializado?
+    
     public Usuario getUsuarioPorId(int id) {
         session.beginTransaction();
-        Usuario unUsuario = new Usuario();
+        Usuario unUsuario = null;
         List<Usuario> result = session.createSQLQuery("SELECT * FROM usuario u "
             + "WHERE u.id = " + id).addEntity(Usuario.class).list();
         if (!result.isEmpty()) {

@@ -42,8 +42,8 @@ public class Usuario {
     @Column (name = "nombre")
     private String nombre;
     
-    //TODO: Emir-Luciano: fotografia;
-    //private String fotografia;
+    @Column (name = "foto")
+    private String rutaDeFotoDeUsuario;
     
     @Column (name = "fecha_de_nacimiento")
     private Date fechaNacimiento;

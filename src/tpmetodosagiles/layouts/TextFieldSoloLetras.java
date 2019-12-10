@@ -12,9 +12,9 @@ import javafx.scene.control.TextField;
  * @author usuario
  */
 public class TextFieldSoloLetras extends TextField{
+    
     private int longitudMaxima = 70;
     
-    //TODO: Restringir la longitud de texto cuando se pega texto
     
     @Override
     public void replaceText(int start, int end, String text)
