@@ -283,16 +283,19 @@ public class GestorDeLicencias {
     
     public static void crearPDFLicencia(Licencia licencia, String destinationPath, int nroIntento) {
         try{
+            //Genera una referencia al archivo que se creará
             File licenciaPDF = new File(destinationPath);
             OutputStream os = new FileOutputStream(licenciaPDF);
 
             ITextRenderer renderer = new ITextRenderer();
+            //Setea código HTML para generar el PDF
             renderer.setDocumentFromString(generarHTMLLicencia(licencia));
+            //Escribe el archivo
             renderer.layout();
             renderer.createPDF(os);
-
             os.close();
             
+            //Abre el archivo PDF generado 
             Desktop desktop = Desktop.getDesktop();
             if(licenciaPDF.exists())
                 desktop.open(licenciaPDF);
@@ -300,6 +303,7 @@ public class GestorDeLicencias {
             System.out.println("Se creó la licencia en el intento Nro. " + nroIntento);
        }
         catch (FileNotFoundException fnf){
+            //Se detecta que el archivo aún está abierto => se vuelve a intentar generar el PDF pero añadiendo o incrementando la numeración
             System.out.println("El archivo está siendo utilizado. Cierrelo para continuar.");
             crearPDFLicencia(licencia,destinationPath.replaceFirst("\\d?\\.pdf\\z",nroIntento++ + ".pdf"), nroIntento++);
         } catch (DocumentException ex) {

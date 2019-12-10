@@ -162,12 +162,6 @@ public class FXMLDarAltaTitularController implements Initializable {
         this.borrarDatosTitular();
         this.deshabilitarEdicionDatosDeTitular();
         this.habilitarBusqueda();
-        
-        
-        /*
-        borrar datos introducidos
-        deshabilitar datos de titular introducidos y habilitar datos de búsqueda
-        */
     }
     
     @FXML
@@ -187,6 +181,7 @@ public class FXMLDarAltaTitularController implements Initializable {
     }
     
     
+    //Ocurre cuando se presiona el botón de 'Dar de Alta' en la interface
     @FXML
     private void darDeAltaTitular(ActionEvent event){
         //Verifica que todos los datos obligatorios hayan sido cargados a la interface (que no esté vacía la opción)
@@ -195,13 +190,13 @@ public class FXMLDarAltaTitularController implements Initializable {
         
         //Obtiene el valor booleano correspondiente al elemento elegido en el ComboBox cbEsDonante
         boolean esDonante = GestorDeDatosDeInterface.esDonanteToBoolean(cbEsDonante.getValue().toString());
-        //Obtiene el domicilio formateado
+        //Obtiene el domicilio con el formato 'CALLE%ALTURA%NroINTERNO%PISO' (ya que de esa manera se guarda como un único atributo en la base de datos)
         String domicilio = GestorDeDatosDeInterface.domicilioFormateado(cbCalleTitular.getValue().toString(), tfNroAltura.getText(), tfNroInterno.getText(), tfPiso.getText() );
-        //Obtiene el valor char de sexo
+        //Obtiene el valor char de sexo (M- Masculino, F- Femenino)
         char sexo = GestorDeDatosDeInterface.sexoToChar(cbSexo.getValue().toString());
        
         
-        //Intenta crear un nuevo titular
+        //Intenta registrar un nuevo titular en la base de datos
         GestorDeTitulares gestTitular = new GestorDeTitulares();
         try{
             if (gestTitular.emitirTitularYLicencia(cbTipoDocumento.getValue().toString(), Integer.parseInt(tfNumeroDocumento.getText()),
@@ -210,7 +205,7 @@ public class FXMLDarAltaTitularController implements Initializable {
                     GestorDeDatosDeInterface.tipoLicenciaToChar(cbClaseLicencia.getValue().toString()),
                     cbObservaciones.getValue().toString(), rutaDeFotoDeTitular)){
                 
-                //Se registraron el nuevo titular y licencia con éxito => muestra un mensaje
+                //Se registraron el nuevo titular y la licencia con éxito => muestra un mensaje
                 Alert mensajeExito = new Alert(Alert.AlertType.INFORMATION);
                 mensajeExito.setTitle("Transacción completada");
                 mensajeExito.setHeaderText("Se ha registrado el titular y la licencia en el sistema");
