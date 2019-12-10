@@ -5,6 +5,7 @@
  */
 package tpmetodosagiles.interfaces;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tpmetodosagiles.entidades.Usuario;
 import tpmetodosagiles.gestores.GestorDeConfiguracion;
@@ -28,11 +31,24 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     private GridPane gpAreaDeTrabajo;
     @FXML
     private VBox vbMenu;
+    @FXML
+    private ImageView imgShowHideMenuPanel;
     
+    Image imageShow;
+    Image imageHide;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        File fileShow = new File("src\\tpmetodosagiles\\recursos\\imagenes\\imgDeInterface\\Show_32.png");
+        if(fileShow.exists()){
+            imageShow = new Image(fileShow.toURI().toString());
+        }
+        
+        File fileHide = new File("src\\tpmetodosagiles\\recursos\\imagenes\\imgDeInterface\\Hide_32.png");
+        if(fileHide.exists()){
+            imageHide = new Image(fileHide.toURI().toString());
+        }
     }
     
     @FXML
@@ -107,9 +123,15 @@ public class FXMLVentanaSuperusuarioController implements Initializable {
     private void irAOcultarMenu(ActionEvent event) throws IOException{
         if(vbMenu.getPrefWidth() > 45){
             vbMenu.setPrefWidth(45);
+            
+            if(imageShow != null)
+                imgShowHideMenuPanel.setImage(imageShow);
         }
         else{
             vbMenu.setPrefWidth(150);
+            
+            if(imageHide != null)
+                imgShowHideMenuPanel.setImage(imageHide);
         }
     }
     
